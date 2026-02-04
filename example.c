@@ -12,9 +12,9 @@ int main()
     linkedlist_add(l, &var1);
     linkedlist_add(l, &var2);
     linkedlist_add(l, &var3);
-    // 	linkedlist_add_int(l, 12);
-    // 	linkedlist_add_string(l, "Hi!");
-    // 	linkedlist_add_double(l, 3.14);
+    linkedlist_add_int(l, 12);
+    linkedlist_add_string(l, "Hi!");
+    linkedlist_add_double(l, 3.14);
 
     // 	/* Let's list them with a loop! */
     // 	void* i;

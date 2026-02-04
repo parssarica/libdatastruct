@@ -34,3 +34,21 @@ void linkedlist_add(linkedlist *ll, void *data)
     obj->next->prev = obj;
     obj->next->next = NULL;
 }
+
+void linkedlist_add_int(linkedlist *ll, int value)
+{
+    int x = value;
+    linkedlist_add(ll, &x);
+}
+
+void linkedlist_add_string(linkedlist *ll, char *value)
+{
+    char *x = value;
+    linkedlist_add(ll, &x);
+}
+
+void linkedlist_add_double(linkedlist *ll, double value)
+{
+    double x = value;
+    linkedlist_add(ll, &x);
+}

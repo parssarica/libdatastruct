@@ -11,3 +11,6 @@ typedef struct _linkedlist
 
 linkedlist *create_linkedlist(void);
 void linkedlist_add(linkedlist *, void *);
+void linkedlist_add_int(linkedlist *, int);
+void linkedlist_add_string(linkedlist *, char *);
+void linkedlist_add_double(linkedlist *, double);
