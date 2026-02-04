@@ -17,3 +17,4 @@ void linkedlist_add_string(linkedlist *, char *);
 void linkedlist_add_double(linkedlist *, double);
 int linkedlist_length(linkedlist *);
 void *linkedlist_get(linkedlist *, int);
+void linkedlist_delete(linkedlist *, int);

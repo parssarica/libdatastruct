@@ -32,14 +32,21 @@ int main()
                    *(int *)linkedlist_get(l, j));
     }
 
-    // 	/* Let's delete an element */
-    // 	linkedlist_delete(l, 1);
-    // 	printf("After deleting:\n");
-    // 	for(j = 0; j < linkedlist_length(l); j++)
-    // 	{
-    // 		printf("%d. value of linked list: %d\n", j, linkedlist_get(l,
-    // j));
-    // 	}
+    /* Let's delete an element */
+    linkedlist_delete(l, 1);
+    printf("After deleting:\n");
+    for (j = 0; j < linkedlist_length(l); j++)
+    {
+        if (j == 3)
+            printf("%d. value of linked list: %s\n", j,
+                   (char *)linkedlist_get(l, j));
+        else if (j == 4)
+            printf("%d. value of linked list: %f\n", j,
+                   *(double *)linkedlist_get(l, j));
+        else
+            printf("%d. value of linked list: %d\n", j,
+                   *(int *)linkedlist_get(l, j));
+    }
 
     // 	/* Let's update an element */
     // 	char* newvar = "A new value.";

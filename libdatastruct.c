@@ -151,3 +151,33 @@ void *linkedlist_get(linkedlist *ll, int index)
 
     return x->data;
 }
+
+void linkedlist_delete(linkedlist *ll, int index)
+{
+    int length = 0;
+    linkedlist *x = ll;
+
+    index++;
+
+    while (1)
+    {
+        if (x->next == NULL || length == index)
+        {
+            break;
+        }
+        else
+        {
+            x = x->next;
+        }
+        length++;
+    }
+
+    if (x->next != NULL)
+        x->prev->next = x->next;
+
+    if (x->prev != NULL)
+        x->next->prev = x->prev;
+
+    if (x->stored_in_heap)
+        free(x);
+}
