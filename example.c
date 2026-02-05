@@ -1,5 +1,6 @@
 #include "libdatastruct.h"
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
@@ -9,9 +10,9 @@ int main()
     int var1 = 1;
     int var2 = 2;
     int var3 = 3;
-    linkedlist_add(l, &var1);
-    linkedlist_add(l, &var2);
-    linkedlist_add(l, &var3);
+    linkedlist_add(l, &var1, sizeof(int));
+    linkedlist_add(l, &var2, sizeof(int));
+    linkedlist_add(l, &var3, sizeof(int));
 
     /* Let's list them with a loop! */
     void *i;
@@ -33,7 +34,7 @@ int main()
 
     /* Let's update an element */
     char *newvar = "A new value.";
-    linkedlist_update(l, 1, newvar);
+    linkedlist_update(l, 1, newvar, strlen(newvar));
     printf("After updating:\n");
     for (j = 0; j < linkedlist_length(l); j++)
     {
@@ -53,5 +54,5 @@ int main()
 
     printf("This is the final length of the list: %d\n", linkedlist_length(l));
 
-    // 	linkedlist_free(l);
+    linkedlist_free(l);
 }
