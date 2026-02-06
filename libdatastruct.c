@@ -13,6 +13,7 @@ linkedlist *create_linkedlist(void)
     llist->data = NULL;
     llist->prev = NULL;
     llist->next = NULL;
+    return llist;
 }
 
 void linkedlist_add(linkedlist *ll, void *data, size_t datatype_size)
@@ -103,11 +104,13 @@ void linkedlist_delete(linkedlist *ll, int index)
     }
 
     free(x->data);
-    if (x->next != NULL)
+    if (x->next != NULL && x->prev != NULL)
+    {
         x->prev->next = x->next;
-
-    if (x->prev != NULL)
         x->next->prev = x->prev;
+    }
+
+    free(x);
 }
 
 void linkedlist_update(linkedlist *ll, int index, void *newvar,
@@ -140,18 +143,55 @@ void linkedlist_update(linkedlist *ll, int index, void *newvar,
 void linkedlist_free(linkedlist *ll)
 {
     linkedlist *tmp;
+    int to_break = 0;
+
     while (1)
     {
         tmp = ll;
-        ll = ll->next;
-        if (ll == NULL)
-        {
-            break;
-        }
         if (tmp->data != NULL)
         {
             free(tmp->data);
         }
+        if (ll->next == NULL)
+        {
+            to_break = 1;
+        }
+        else
+        {
+            ll = ll->next;
+        }
+
         free(tmp);
+        if (to_break)
+        {
+            break;
+        }
     }
+}
+
+void linkedlist_insert(linkedlist *ll, void *data, size_t datatype_size,
+                       int index)
+{
+    linkedlist *previous;
+    int length = 0;
+
+    index++;
+    while (1)
+    {
+        if (ll->next == NULL || length == index)
+        {
+            break;
+        }
+        else
+        {
+            ll = ll->next;
+        }
+        length++;
+    }
+    previous = ll->prev;
+    previous->next = malloc(sizeof(linkedlist));
+    previous->next->data = malloc(datatype_size);
+    previous->next->prev = previous;
+    previous->next->next = ll;
+    memcpy(previous->next->data, data, datatype_size);
 }
