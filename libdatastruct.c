@@ -196,26 +196,46 @@ void linkedlist_insert(linkedlist *ll, void *data, size_t datatype_size,
     memcpy(previous->next->data, data, datatype_size);
 }
 
-hashmap *create_hashmap(void)
+map *create_map(void)
 {
-    hashmap *map = malloc(sizeof(hashmap));
-    map->node_count = 0;
-    map->items = NULL;
+    map *table = malloc(sizeof(map));
+    table->node_count = 0;
+    table->items = NULL;
 
-    return map;
+    return table;
 }
 
-void hashmap_add(hashmap *map, void *key, size_t keysize, void *value,
-                 size_t valuesize)
+void map_add(map *table, void *key, size_t keysize, void *value,
+             size_t valuesize)
 {
-    map->items =
-        realloc(map->items, sizeof(hashmapitem) * (map->node_count + 1));
+    table->items =
+        realloc(table->items, sizeof(mapitem) * (table->node_count + 1));
 
-    map->items[map->node_count].key = malloc(keysize);
-    map->items[map->node_count].value = malloc(valuesize);
+    table->items[table->node_count].key = malloc(keysize);
+    table->items[table->node_count].value = malloc(valuesize);
+    table->items[table->node_count].keysize = keysize;
+    table->items[table->node_count].valuesize = valuesize;
 
-    memcpy(map->items[map->node_count].key, key, keysize);
-    memcpy(map->items[map->node_count].value, value, valuesize);
+    memcpy(table->items[table->node_count].key, key, keysize);
+    memcpy(table->items[table->node_count].value, value, valuesize);
 
-    map->node_count++;
+    table->node_count++;
+}
+
+int map_length(map *table) { return table->node_count; }
+
+void *map_get(map *table, void *key, size_t keysize)
+{
+    int i;
+
+    for (i = 0; i < table->node_count; i++)
+    {
+        if ((keysize == table->items[i].keysize) &&
+            (memcmp(key, table->items[i].key, keysize) == 0))
+        {
+            return table->items[i].value;
+        }
+    }
+
+    return NULL;
 }

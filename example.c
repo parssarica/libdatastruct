@@ -78,9 +78,9 @@ int main()
 
     linkedlist_free(l);
 
-    /* Let's create a hash map! */
+    /* Let's create a map! */
 
-    hashmap *map = create_hashmap();
+    map *map = create_map();
     int key1 = 1;
     int value1 = 2;
     int key2 = 3;
@@ -88,7 +88,13 @@ int main()
     int key3 = 5;
     int value3 = 6;
 
-    hashmap_add(map, &key1, sizeof(int), &value1, sizeof(int));
-    hashmap_add(map, &key2, sizeof(int), &value2, sizeof(int));
-    hashmap_add(map, &key3, sizeof(int), &value3, sizeof(int));
+    map_add(map, &key1, sizeof(int), &value1, sizeof(int));
+    map_add(map, &key2, sizeof(int), &value2, sizeof(int));
+    map_add(map, &key3, sizeof(int), &value3, sizeof(int));
+
+    /* Retrieving the length of  map */
+    printf("Map length: %d\n", map_length(map));
+
+    /* Getting some values from keys */
+    printf("Value of key1: %d\n", *(int *)map_get(map, &key1, sizeof(int)));
 }
