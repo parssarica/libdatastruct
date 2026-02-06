@@ -195,3 +195,27 @@ void linkedlist_insert(linkedlist *ll, void *data, size_t datatype_size,
     previous->next->next = ll;
     memcpy(previous->next->data, data, datatype_size);
 }
+
+hashmap *create_hashmap(void)
+{
+    hashmap *map = malloc(sizeof(hashmap));
+    map->node_count = 0;
+    map->items = NULL;
+
+    return map;
+}
+
+void hashmap_add(hashmap *map, void *key, size_t keysize, void *value,
+                 size_t valuesize)
+{
+    map->items =
+        realloc(map->items, sizeof(hashmapitem) * (map->node_count + 1));
+
+    map->items[map->node_count].key = malloc(keysize);
+    map->items[map->node_count].value = malloc(valuesize);
+
+    memcpy(map->items[map->node_count].key, key, keysize);
+    memcpy(map->items[map->node_count].value, value, valuesize);
+
+    map->node_count++;
+}

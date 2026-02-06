@@ -11,6 +11,18 @@ typedef struct _linkedlist
     struct _linkedlist *next;
 } linkedlist;
 
+typedef struct
+{
+    void *key;
+    void *value;
+} hashmapitem;
+
+typedef struct
+{
+    int node_count;
+    hashmapitem *items;
+} hashmap;
+
 linkedlist *create_linkedlist(void);
 void linkedlist_add(linkedlist *, void *, size_t);
 int linkedlist_length(linkedlist *);
@@ -19,3 +31,5 @@ void linkedlist_delete(linkedlist *, int);
 void linkedlist_update(linkedlist *, int, void *, size_t);
 void linkedlist_insert(linkedlist *, void *, size_t, int);
 void linkedlist_free(linkedlist *);
+hashmap *create_hashmap(void);
+void hashmap_add(hashmap *, void *, size_t, void *, size_t);

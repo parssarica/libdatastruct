@@ -77,4 +77,18 @@ int main()
     printf("This is the final length of the list: %d\n", linkedlist_length(l));
 
     linkedlist_free(l);
+
+    /* Let's create a hash map! */
+
+    hashmap *map = create_hashmap();
+    int key1 = 1;
+    int value1 = 2;
+    int key2 = 3;
+    int value2 = 4;
+    int key3 = 5;
+    int value3 = 6;
+
+    hashmap_add(map, &key1, sizeof(int), &value1, sizeof(int));
+    hashmap_add(map, &key2, sizeof(int), &value2, sizeof(int));
+    hashmap_add(map, &key3, sizeof(int), &value3, sizeof(int));
 }
