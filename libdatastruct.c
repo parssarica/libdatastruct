@@ -288,3 +288,27 @@ void map_delete(map *table, void *key, size_t keysize)
 
     table->items[i].deleted = 1;
 }
+
+void map_update_key(map *table, void *key_old, size_t old_keysize,
+                    void *key_new, size_t new_keysize)
+{
+    int i = map_get_index(table, key_old, old_keysize);
+    if (i == -1)
+        return;
+
+    free(table->items[i].key);
+    table->items[i].key = malloc(new_keysize);
+    memcpy(table->items[i].key, key_new, new_keysize);
+}
+
+void map_update_value(map *table, void *key, size_t keysize, void *newvalue,
+                      size_t new_valuesize)
+{
+    int i = map_get_index(table, key, keysize);
+    if (i == -1)
+        return;
+
+    free(table->items[i].value);
+    table->items[i].value = malloc(new_valuesize);
+    memcpy(table->items[i].value, newvalue, new_valuesize);
+}

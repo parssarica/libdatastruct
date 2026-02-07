@@ -119,4 +119,19 @@ int main()
         printf("%d. key: %d\n", ++j, *(int *)key);
         printf("%d. value: %d\n", j, *(int *)value);
     }
+
+    /* Updating first key */
+
+    int new_key = 314;
+    int new_value = 314159;
+
+    map_update_key(m, &key2, sizeof(int), &new_key, sizeof(int));
+    map_update_value(m, &key3, sizeof(int), &new_value, sizeof(int));
+    printf("After updating:\n");
+    j = 0;
+    loopMap(m, key, value)
+    {
+        printf("%d. key: %d\n", ++j, *(int *)key);
+        printf("%d. value: %d\n", j, *(int *)value);
+    }
 }
