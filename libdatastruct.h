@@ -23,6 +23,7 @@ typedef struct
 typedef struct
 {
     int node_count;
+    int capacity;
     mapitem *items;
 } map;
 

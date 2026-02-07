@@ -200,6 +200,7 @@ map *create_map(void)
 {
     map *table = malloc(sizeof(map));
     table->node_count = 0;
+    table->capacity = 0;
     table->items = NULL;
 
     return table;
@@ -234,9 +235,19 @@ void map_add(map *table, void *key, size_t keysize, void *value,
     }
     else
     {
-        table->items =
-            realloc(table->items, sizeof(mapitem) * (table->node_count + 1));
-
+        if (table->node_count == table->capacity)
+        {
+            if (table->capacity == 0)
+            {
+                table->capacity = 1;
+            }
+            else
+            {
+                table->capacity *= 2;
+            }
+            table->items =
+                realloc(table->items, sizeof(mapitem) * table->capacity);
+        }
         table->items[table->node_count].key = malloc(keysize);
         table->items[table->node_count].value = malloc(valuesize);
         table->items[table->node_count].keysize = keysize;
