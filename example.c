@@ -80,7 +80,7 @@ int main()
 
     /* Let's create a map! */
 
-    map *map = create_map();
+    map *m = create_map();
     int key1 = 1;
     int value1 = 2;
     int key2 = 3;
@@ -88,13 +88,23 @@ int main()
     int key3 = 5;
     int value3 = 6;
 
-    map_add(map, &key1, sizeof(int), &value1, sizeof(int));
-    map_add(map, &key2, sizeof(int), &value2, sizeof(int));
-    map_add(map, &key3, sizeof(int), &value3, sizeof(int));
+    map_add(m, &key1, sizeof(int), &value1, sizeof(int));
+    map_add(m, &key2, sizeof(int), &value2, sizeof(int));
+    map_add(m, &key3, sizeof(int), &value3, sizeof(int));
 
     /* Retrieving the length of  map */
-    printf("Map length: %d\n", map_length(map));
+    printf("Map length: %d\n", map_length(m));
 
     /* Getting some values from keys */
-    printf("Value of key1: %d\n", *(int *)map_get(map, &key1, sizeof(int)));
+    printf("Value of key1: %d\n", *(int *)map_get(m, &key1, sizeof(int)));
+
+    /* Looping through map */
+    void *key;
+    void *value;
+
+    loopMap(m, key, value, j)
+    {
+        printf("%d. key: %d\n", j + 1, *(int *)key);
+        printf("%d. value: %d\n", j + 1, *(int *)value);
+    }
 }

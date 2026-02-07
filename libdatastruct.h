@@ -25,6 +25,11 @@ typedef struct
     mapitem *items;
 } map;
 
+#define loopMap(m, key, value, i)                                              \
+    for (i = 0; j < m->node_count &&                                           \
+                (key = m->items[i].key, value = m->items[i].value, 1);         \
+         i++)
+
 linkedlist *create_linkedlist(void);
 void linkedlist_add(linkedlist *, void *, size_t);
 int linkedlist_length(linkedlist *);
