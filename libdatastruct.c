@@ -208,34 +208,83 @@ map *create_map(void)
 void map_add(map *table, void *key, size_t keysize, void *value,
              size_t valuesize)
 {
-    table->items =
-        realloc(table->items, sizeof(mapitem) * (table->node_count + 1));
+    int i = 0;
+    int found = 0;
+    for (i = 0; i < table->node_count; i++)
+    {
+        if (table->items[i].deleted)
+        {
+            found = 1;
+            break;
+        }
+    }
 
-    table->items[table->node_count].key = malloc(keysize);
-    table->items[table->node_count].value = malloc(valuesize);
-    table->items[table->node_count].keysize = keysize;
-    table->items[table->node_count].valuesize = valuesize;
+    if (found)
+    {
+        free(table->items[i].key);
+        free(table->items[i].value);
+        table->items[i].key = malloc(keysize);
+        table->items[i].value = malloc(valuesize);
+        table->items[i].keysize = keysize;
+        table->items[i].valuesize = valuesize;
+        table->items[i].deleted = 0;
 
-    memcpy(table->items[table->node_count].key, key, keysize);
-    memcpy(table->items[table->node_count].value, value, valuesize);
+        memcpy(table->items[i].key, key, keysize);
+        memcpy(table->items[i].value, value, valuesize);
+    }
+    else
+    {
+        table->items =
+            realloc(table->items, sizeof(mapitem) * (table->node_count + 1));
 
-    table->node_count++;
+        table->items[table->node_count].key = malloc(keysize);
+        table->items[table->node_count].value = malloc(valuesize);
+        table->items[table->node_count].keysize = keysize;
+        table->items[table->node_count].valuesize = valuesize;
+        table->items[table->node_count].deleted = 0;
+
+        memcpy(table->items[table->node_count].key, key, keysize);
+        memcpy(table->items[table->node_count].value, value, valuesize);
+
+        table->node_count++;
+    }
 }
 
 int map_length(map *table) { return table->node_count; }
 
-void *map_get(map *table, void *key, size_t keysize)
+static int map_get_index(map *table, void *key, size_t keysize)
 {
     int i;
 
     for (i = 0; i < table->node_count; i++)
     {
-        if ((keysize == table->items[i].keysize) &&
+        if ((!table->items[i].deleted) &&
+            (keysize == table->items[i].keysize) &&
             (memcmp(key, table->items[i].key, keysize) == 0))
         {
-            return table->items[i].value;
+            return i;
         }
     }
 
+    return -1;
+}
+
+void *map_get(map *table, void *key, size_t keysize)
+{
+    int i = map_get_index(table, key, keysize);
+    if (i != -1)
+    {
+        return table->items[i].value;
+    }
+
     return NULL;
+}
+
+void map_delete(map *table, void *key, size_t keysize)
+{
+    int i = map_get_index(table, key, keysize);
+    if (i == -1)
+        return;
+
+    table->items[i].deleted = 1;
 }

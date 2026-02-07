@@ -92,7 +92,7 @@ int main()
     map_add(m, &key2, sizeof(int), &value2, sizeof(int));
     map_add(m, &key3, sizeof(int), &value3, sizeof(int));
 
-    /* Retrieving the length of  map */
+    /* Retrieving the length of map */
     printf("Map length: %d\n", map_length(m));
 
     /* Getting some values from keys */
@@ -101,10 +101,22 @@ int main()
     /* Looping through map */
     void *key;
     void *value;
+    j = 0;
 
-    loopMap(m, key, value, j)
+    loopMap(m, key, value)
     {
-        printf("%d. key: %d\n", j + 1, *(int *)key);
-        printf("%d. value: %d\n", j + 1, *(int *)value);
+        printf("%d. key: %d\n", ++j, *(int *)key);
+        printf("%d. value: %d\n", j, *(int *)value);
+    }
+
+    /* Let's delete a key from map! */
+    map_delete(m, &key1, sizeof(int));
+
+    printf("After deleting:\n");
+    j = 0;
+    loopMap(m, key, value)
+    {
+        printf("%d. key: %d\n", ++j, *(int *)key);
+        printf("%d. value: %d\n", j, *(int *)value);
     }
 }

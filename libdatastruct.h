@@ -17,6 +17,7 @@ typedef struct
     void *value;
     size_t keysize;
     size_t valuesize;
+    int deleted;
 } mapitem;
 
 typedef struct
@@ -25,10 +26,13 @@ typedef struct
     mapitem *items;
 } map;
 
-#define loopMap(m, key, value, i)                                              \
-    for (i = 0; j < m->node_count &&                                           \
-                (key = m->items[i].key, value = m->items[i].value, 1);         \
-         i++)
+#define loopMap(m, key, value)                                                 \
+    for (int i = 0; i < m->node_count &&                                       \
+                    (key = m->items[i].key, value = m->items[i].value, 1);     \
+         i++)                                                                  \
+        if (m->items[i].deleted)                                               \
+            continue;                                                          \
+        else
 
 linkedlist *create_linkedlist(void);
 void linkedlist_add(linkedlist *, void *, size_t);
@@ -42,3 +46,4 @@ map *create_map(void);
 void map_add(map *, void *, size_t, void *, size_t);
 int map_length(map *);
 void *map_get(map *, void *, size_t);
+void map_delete(map *, void *, size_t);
