@@ -138,4 +138,20 @@ int main()
     /* Freeing map */
 
     map_free(m);
+
+    /* Creating a stack */
+
+    stack *s = create_stack();
+
+    /* Pushing values to stack */
+
+    int stack_val1 = 1;
+    int stack_val2 = 2;
+    int stack_val3 = 3;
+    int stack_val4 = 4;
+
+    stack_push(s, &stack_val1, sizeof(int));
+    stack_push(s, &stack_val2, sizeof(int));
+    stack_push(s, &stack_val3, sizeof(int));
+    stack_push(s, &stack_val4, sizeof(int));
 }

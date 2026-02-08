@@ -27,6 +27,18 @@ typedef struct
     mapitem *items;
 } map;
 
+typedef struct
+{
+    void *item;
+} stackitem;
+
+typedef struct
+{
+    int node_count;
+    int capacity;
+    stackitem *items;
+} stack;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -51,3 +63,5 @@ void map_delete(map *, void *, size_t);
 void map_update_key(map *, void *, size_t, void *, size_t);
 void map_update_value(map *, void *, size_t, void *, size_t);
 void map_free(map *);
+stack *create_stack(void);
+void stack_push(stack *, void *, size_t);

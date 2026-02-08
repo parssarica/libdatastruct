@@ -335,3 +335,36 @@ void map_free(map *table)
     free(table->items);
     free(table);
 }
+
+stack *create_stack(void)
+{
+    stack *s = malloc(sizeof(stack));
+
+    s->node_count = 0;
+    s->capacity = 0;
+    s->items = NULL;
+
+    return s;
+}
+
+void stack_push(stack *s, void *value, size_t valuesize)
+{
+    if (s->node_count == s->capacity)
+    {
+        if (s->capacity == 0)
+        {
+            s->capacity = 1;
+        }
+        else
+        {
+            s->capacity *= 2;
+        }
+
+        s->items = realloc(s->items, s->capacity * (sizeof(stackitem)));
+    }
+
+    s->items[s->node_count].item = malloc(valuesize);
+    memcpy(s->items[s->node_count].item, value, valuesize);
+
+    s->node_count++;
+}
