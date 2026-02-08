@@ -43,6 +43,7 @@ typedef struct
 typedef struct
 {
     void *item;
+    int size;
 } queueitem;
 
 typedef struct
@@ -83,3 +84,4 @@ void *stack_peek(stack *);
 void stack_free(stack *);
 queue *create_queue(void);
 void enqueue(queue *, void *, size_t);
+void *dequeue(queue *);

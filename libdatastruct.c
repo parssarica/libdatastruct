@@ -7,8 +7,10 @@ Pars SARICA <pars@parssarica.com>
 #include <stdlib.h>
 #include <string.h>
 
-void **to_free_list;
-int to_free_list_length;
+void **to_free_list_stack;
+int to_free_list_stack_length;
+void **to_free_list_queue;
+int to_free_list_queue_length;
 
 linkedlist *create_linkedlist(void)
 {
@@ -382,9 +384,9 @@ void *stack_pop(stack *s)
     memcpy(val, s->items[s->node_count].item, s->items[s->node_count].size);
     free(s->items[s->node_count].item);
 
-    to_free_list =
-        realloc(to_free_list, sizeof(void *) * ++to_free_list_length);
-    to_free_list[to_free_list_length - 1] = val;
+    to_free_list_stack = realloc(to_free_list_stack,
+                                 sizeof(void *) * ++to_free_list_stack_length);
+    to_free_list_stack[to_free_list_stack_length - 1] = val;
     return val;
 }
 
@@ -402,12 +404,12 @@ void stack_free(stack *s)
 
     free(s);
 
-    for (i = 0; i < to_free_list_length; i++)
+    for (i = 0; i < to_free_list_stack_length; i++)
     {
-        free(to_free_list[i]);
+        free(to_free_list_stack[i]);
     }
-    free(to_free_list);
-    to_free_list_length = 0;
+    free(to_free_list_stack);
+    to_free_list_stack_length = 0;
 }
 
 queue *create_queue(void)
@@ -438,7 +440,29 @@ void enqueue(queue *q, void *data, size_t datasize)
     }
 
     q->items[q->node_count].item = malloc(datasize);
+    q->items[q->node_count].size = datasize;
     memcpy(q->items[q->node_count].item, data, datasize);
 
     q->node_count++;
+}
+
+void *dequeue(queue *q)
+{
+    void *val;
+    void *items;
+
+    q->node_count--;
+    val = malloc(q->items[0].size);
+    memcpy(val, q->items[0].item, q->items[0].size);
+
+    items = malloc(sizeof(queueitem) * (q->capacity - 1));
+    memcpy(items, &q->items[1], sizeof(queueitem) * (q->capacity - 1));
+    free(q->items[0].item);
+
+    q->items = items;
+
+    to_free_list_queue = realloc(to_free_list_queue,
+                                 sizeof(void *) * ++to_free_list_queue_length);
+    to_free_list_queue[to_free_list_queue_length - 1] = val;
+    return val;
 }

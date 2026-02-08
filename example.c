@@ -185,4 +185,9 @@ int main()
     enqueue(q, &queue_val3, sizeof(int));
     enqueue(q, &queue_val4, sizeof(int));
     enqueue(q, &queue_val5, sizeof(int));
+    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    printf("Value dequeued: %d\n", *(int *)dequeue(q));
 }
