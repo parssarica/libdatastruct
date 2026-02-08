@@ -65,3 +65,4 @@ void map_update_value(map *, void *, size_t, void *, size_t);
 void map_free(map *);
 stack *create_stack(void);
 void stack_push(stack *, void *, size_t);
+void *stack_pop(stack *);

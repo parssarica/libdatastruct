@@ -154,4 +154,10 @@ int main()
     stack_push(s, &stack_val2, sizeof(int));
     stack_push(s, &stack_val3, sizeof(int));
     stack_push(s, &stack_val4, sizeof(int));
+
+    /* Popping some values from stack */
+    printf("Popped: %d\n", *(int *)stack_pop(s));
+    printf("Popped: %d\n", *(int *)stack_pop(s));
+    printf("Popped: %d\n", *(int *)stack_pop(s));
+    printf("Popped: %d\n", *(int *)stack_pop(s));
 }

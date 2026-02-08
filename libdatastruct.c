@@ -368,3 +368,9 @@ void stack_push(stack *s, void *value, size_t valuesize)
 
     s->node_count++;
 }
+
+void *stack_pop(stack *s)
+{
+    s->node_count--;
+    return s->items[s->node_count].item;
+}
