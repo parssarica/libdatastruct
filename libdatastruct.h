@@ -50,3 +50,4 @@ void *map_get(map *, void *, size_t);
 void map_delete(map *, void *, size_t);
 void map_update_key(map *, void *, size_t, void *, size_t);
 void map_update_value(map *, void *, size_t, void *, size_t);
+void map_free(map *);

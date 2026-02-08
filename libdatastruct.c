@@ -323,3 +323,15 @@ void map_update_value(map *table, void *key, size_t keysize, void *newvalue,
     table->items[i].value = malloc(new_valuesize);
     memcpy(table->items[i].value, newvalue, new_valuesize);
 }
+
+void map_free(map *table)
+{
+    int i = 0;
+    for (i = 0; i < table->node_count; i++)
+    {
+        free(table->items[i].key);
+        free(table->items[i].value);
+    }
+    free(table->items);
+    free(table);
+}

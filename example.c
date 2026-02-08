@@ -134,4 +134,8 @@ int main()
         printf("%d. key: %d\n", ++j, *(int *)key);
         printf("%d. value: %d\n", j, *(int *)value);
     }
+
+    /* Freeing map */
+
+    map_free(m);
 }
