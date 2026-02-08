@@ -30,6 +30,7 @@ typedef struct
 typedef struct
 {
     void *item;
+    int size;
 } stackitem;
 
 typedef struct
@@ -67,3 +68,4 @@ stack *create_stack(void);
 void stack_push(stack *, void *, size_t);
 void *stack_pop(stack *);
 void *stack_peek(stack *);
+void stack_free(stack *);

@@ -166,4 +166,7 @@ int main()
     stack_push(s, &stack_val1, sizeof(int));
     printf("Peeked: %d\n", *(int *)stack_peek(s));
     printf("Popped: %d\n", *(int *)stack_pop(s));
+
+    /* Freeing stack */
+    stack_free(s);
 }

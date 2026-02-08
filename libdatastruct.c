@@ -367,6 +367,7 @@ void stack_push(stack *s, void *value, size_t valuesize)
     }
 
     s->items[s->node_count].item = malloc(valuesize);
+    s->items[s->node_count].size = valuesize;
     memcpy(s->items[s->node_count].item, value, valuesize);
 
     s->node_count++;
@@ -374,11 +375,37 @@ void stack_push(stack *s, void *value, size_t valuesize)
 
 void *stack_pop(stack *s)
 {
+    void *val;
+
     s->node_count--;
+    val = malloc(s->items[s->node_count].size);
+    memcpy(val, s->items[s->node_count].item, s->items[s->node_count].size);
+    free(s->items[s->node_count].item);
+
     to_free_list =
         realloc(to_free_list, sizeof(void *) * ++to_free_list_length);
-    to_free_list[to_free_list_length - 1] = s->items[s->node_count].item;
-    return s->items[s->node_count].item;
+    to_free_list[to_free_list_length - 1] = val;
+    return val;
 }
 
 void *stack_peek(stack *s) { return s->items[s->node_count - 1].item; }
+
+void stack_free(stack *s)
+{
+    int i = 0;
+    for (i = 0; i < s->node_count; i++)
+    {
+        free(s->items[i].item);
+    }
+
+    free(s->items);
+
+    free(s);
+
+    for (i = 0; i < to_free_list_length; i++)
+    {
+        free(to_free_list[i]);
+    }
+    free(to_free_list);
+    to_free_list_length = 0;
+}
