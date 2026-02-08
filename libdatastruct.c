@@ -7,6 +7,9 @@ Pars SARICA <pars@parssarica.com>
 #include <stdlib.h>
 #include <string.h>
 
+void **to_free_list;
+int to_free_list_length;
+
 linkedlist *create_linkedlist(void)
 {
     linkedlist *llist = malloc(sizeof(linkedlist));
@@ -372,5 +375,10 @@ void stack_push(stack *s, void *value, size_t valuesize)
 void *stack_pop(stack *s)
 {
     s->node_count--;
+    to_free_list =
+        realloc(to_free_list, sizeof(void *) * ++to_free_list_length);
+    to_free_list[to_free_list_length - 1] = s->items[s->node_count].item;
     return s->items[s->node_count].item;
 }
+
+void *stack_peek(stack *s) { return s->items[s->node_count - 1].item; }

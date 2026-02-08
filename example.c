@@ -160,4 +160,10 @@ int main()
     printf("Popped: %d\n", *(int *)stack_pop(s));
     printf("Popped: %d\n", *(int *)stack_pop(s));
     printf("Popped: %d\n", *(int *)stack_pop(s));
+
+    /* Peeking a value from stack */
+
+    stack_push(s, &stack_val1, sizeof(int));
+    printf("Peeked: %d\n", *(int *)stack_peek(s));
+    printf("Popped: %d\n", *(int *)stack_pop(s));
 }
