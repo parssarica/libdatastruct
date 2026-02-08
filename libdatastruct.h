@@ -40,6 +40,18 @@ typedef struct
     stackitem *items;
 } stack;
 
+typedef struct
+{
+    void *item;
+} queueitem;
+
+typedef struct
+{
+    int node_count;
+    int capacity;
+    queueitem *items;
+} queue;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -69,3 +81,5 @@ void stack_push(stack *, void *, size_t);
 void *stack_pop(stack *);
 void *stack_peek(stack *);
 void stack_free(stack *);
+queue *create_queue(void);
+void enqueue(queue *, void *, size_t);

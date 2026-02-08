@@ -169,4 +169,20 @@ int main()
 
     /* Freeing stack */
     stack_free(s);
+
+    /* Creating a new queue */
+
+    queue *q = create_queue();
+
+    int queue_val1 = 1;
+    int queue_val2 = 2;
+    int queue_val3 = 3;
+    int queue_val4 = 4;
+    int queue_val5 = 5;
+
+    enqueue(q, &queue_val1, sizeof(int));
+    enqueue(q, &queue_val2, sizeof(int));
+    enqueue(q, &queue_val3, sizeof(int));
+    enqueue(q, &queue_val4, sizeof(int));
+    enqueue(q, &queue_val5, sizeof(int));
 }

@@ -409,3 +409,36 @@ void stack_free(stack *s)
     free(to_free_list);
     to_free_list_length = 0;
 }
+
+queue *create_queue(void)
+{
+    queue *q = malloc(sizeof(queue));
+
+    q->node_count = 0;
+    q->capacity = 0;
+    q->items = NULL;
+
+    return q;
+}
+
+void enqueue(queue *q, void *data, size_t datasize)
+{
+    if (q->node_count == q->capacity)
+    {
+        if (q->capacity == 0)
+        {
+            q->capacity = 1;
+        }
+        else
+        {
+            q->capacity *= 2;
+        }
+
+        q->items = realloc(q->items, sizeof(queueitem) * q->capacity);
+    }
+
+    q->items[q->node_count].item = malloc(datasize);
+    memcpy(q->items[q->node_count].item, data, datasize);
+
+    q->node_count++;
+}
