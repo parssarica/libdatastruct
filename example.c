@@ -129,6 +129,10 @@ int main()
     map_update_value(m, &key3, sizeof(int), &new_value, sizeof(int));
     printf("After updating:\n");
     j = 0;
+
+    /* Minimizing the map */
+    map_minimize(m);
+
     loopMap(m, key, value)
     {
         printf("%d. key: %d\n", ++j, *(int *)key);

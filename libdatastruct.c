@@ -341,6 +341,12 @@ void map_free(map *table)
     free(table);
 }
 
+void map_minimize(map *table)
+{
+    table->items = realloc(table->items, sizeof(mapitem) * table->node_count);
+    table->capacity = table->node_count;
+}
+
 stack *create_stack(void)
 {
     stack *s = malloc(sizeof(stack));

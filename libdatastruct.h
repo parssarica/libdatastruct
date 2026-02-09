@@ -86,3 +86,4 @@ queue *create_queue(void);
 void enqueue(queue *, void *, size_t);
 void *dequeue(queue *);
 void queue_free(queue *);
+void map_minimize(map *);
