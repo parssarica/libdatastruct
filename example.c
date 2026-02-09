@@ -180,14 +180,22 @@ int main()
     int queue_val4 = 4;
     int queue_val5 = 5;
 
+    /* Putting some values to our queue, via enqueueing */
+
     enqueue(q, &queue_val1, sizeof(int));
     enqueue(q, &queue_val2, sizeof(int));
     enqueue(q, &queue_val3, sizeof(int));
     enqueue(q, &queue_val4, sizeof(int));
     enqueue(q, &queue_val5, sizeof(int));
+
+    /* Dequeueing them to access them again */
+
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
+
+    /* Freeing our queue */
+    queue_free(q);
 }

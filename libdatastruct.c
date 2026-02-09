@@ -449,15 +449,27 @@ void enqueue(queue *q, void *data, size_t datasize)
 void *dequeue(queue *q)
 {
     void *val;
-    void *items;
+    int i;
+    queueitem *items;
 
     q->node_count--;
     val = malloc(q->items[0].size);
     memcpy(val, q->items[0].item, q->items[0].size);
 
-    items = malloc(sizeof(queueitem) * (q->capacity - 1));
-    memcpy(items, &q->items[1], sizeof(queueitem) * (q->capacity - 1));
-    free(q->items[0].item);
+    items = malloc(sizeof(queueitem) * q->capacity);
+    for (i = 0; i < q->node_count; i++)
+    {
+        items[i].item = malloc(q->items[i + 1].size);
+        items[i].size = q->items[i + 1].size;
+        memcpy(items[i].item, q->items[i + 1].item, q->items[i + 1].size);
+    }
+
+    for (i = 0; i <= q->node_count; i++)
+    {
+        free(q->items[i].item);
+    }
+
+    free(q->items);
 
     q->items = items;
 
@@ -465,4 +477,24 @@ void *dequeue(queue *q)
                                  sizeof(void *) * ++to_free_list_queue_length);
     to_free_list_queue[to_free_list_queue_length - 1] = val;
     return val;
+}
+
+void queue_free(queue *q)
+{
+    int i = 0;
+    for (i = 0; i < q->node_count; i++)
+    {
+        free(q->items[i].item);
+    }
+
+    free(q->items);
+
+    free(q);
+
+    for (i = 0; i < to_free_list_queue_length; i++)
+    {
+        free(to_free_list_queue[i]);
+    }
+    free(to_free_list_queue);
+    to_free_list_queue_length = 0;
 }
