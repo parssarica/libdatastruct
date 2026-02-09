@@ -594,7 +594,7 @@ bintree *create_bintree(void)
     bintree *b = malloc(sizeof(bintree));
 
     b->data = NULL;
-    b->datasize = 0;
+    b->size = 0;
     b->left = NULL;
     b->right = NULL;
 
@@ -607,11 +607,19 @@ void bintree_set_nodes(bintree *b)
     b->right = malloc(sizeof(bintree));
 
     b->left->data = NULL;
-    b->left->datasize = 0;
+    b->left->size = 0;
     b->left->left = NULL;
     b->left->right = NULL;
     b->right->data = NULL;
-    b->right->datasize = 0;
+    b->right->size = 0;
     b->right->left = NULL;
     b->right->right = NULL;
+}
+
+void bintree_set(bintree *b, void *data, size_t datasize)
+{
+    b->data = malloc(datasize);
+    b->size = datasize;
+
+    memcpy(b->data, data, datasize);
 }

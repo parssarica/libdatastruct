@@ -56,7 +56,7 @@ typedef struct
 typedef struct _bintree
 {
     void *data;
-    int datasize;
+    int size;
     struct _bintree *left;
     struct _bintree *right;
 } bintree;
@@ -100,3 +100,4 @@ void queue_minimize(queue *);
 void *queue_front(queue *);
 bintree *create_bintree(void);
 void bintree_set_nodes(bintree *);
+void bintree_set(bintree *, void *, size_t);
