@@ -625,3 +625,19 @@ void bintree_set(bintree *b, void *data, size_t datasize)
 }
 
 void *bintree_get(bintree *b) { return b->data; }
+
+void bintree_destroy(bintree *b)
+{
+    free(b->data);
+    if (b->left != NULL)
+    {
+        bintree_destroy(b->left);
+    }
+
+    if (b->right != NULL)
+    {
+        bintree_destroy(b->right);
+    }
+
+    free(b);
+}

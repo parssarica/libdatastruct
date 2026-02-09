@@ -244,4 +244,7 @@ int main()
            *(int *)bintree_get(b->left->right));
     printf("Value of tree's right node's left node: %d\n",
            *(int *)bintree_get(b->right->left));
+
+    /* Cleaning up */
+    bintree_destroy(b);
 }
