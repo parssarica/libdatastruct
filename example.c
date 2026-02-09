@@ -203,6 +203,9 @@ int main()
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
     printf("Value dequeued: %d\n", *(int *)dequeue(q));
 
+    /* Minimizing queue */
+    queue_minimize(q);
+
     /* Freeing our queue */
     queue_free(q);
 }

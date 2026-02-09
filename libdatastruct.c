@@ -506,6 +506,9 @@ void enqueue(queue *q, void *data, size_t datasize)
 
 void *dequeue(queue *q)
 {
+    if (q->items == NULL)
+        return NULL;
+
     void *val;
     int i;
     queueitem *items;
@@ -540,14 +543,15 @@ void *dequeue(queue *q)
 void queue_free(queue *q)
 {
     int i = 0;
-    for (i = 0; i < q->node_count; i++)
+    if (q->items != NULL)
     {
-        free(q->items[i].item);
+        for (i = 0; i < q->node_count; i++)
+        {
+            free(q->items[i].item);
+        }
+
+        free(q->items);
     }
-
-    free(q->items);
-
-    free(q);
 
     for (i = 0; i < to_free_list_queue_length; i++)
     {
@@ -555,4 +559,24 @@ void queue_free(queue *q)
     }
     free(to_free_list_queue);
     to_free_list_queue_length = 0;
+
+    free(q);
+}
+
+void queue_minimize(queue *q)
+{
+    if (q->items == NULL)
+        return;
+
+    if (q->node_count == 0)
+    {
+        free(q->items);
+        q->items = NULL;
+    }
+    else
+    {
+        q->items = realloc(q->items, sizeof(stackitem) * q->node_count);
+    }
+
+    q->capacity = q->node_count;
 }
