@@ -236,4 +236,12 @@ int main()
     bintree_set(b->left->right, &bintree_val5, sizeof(int));
     bintree_set(b->right->left, &bintree_val6, sizeof(int));
     bintree_set(b->right->right, &bintree_val7, sizeof(int));
+
+    /* Accessing values */
+
+    printf("Value of tree's left node: %d\n", *(int *)bintree_get(b->left));
+    printf("Value of tree's left node's right node: %d\n",
+           *(int *)bintree_get(b->left->right));
+    printf("Value of tree's right node's left node: %d\n",
+           *(int *)bintree_get(b->right->left));
 }

@@ -623,3 +623,5 @@ void bintree_set(bintree *b, void *data, size_t datasize)
 
     memcpy(b->data, data, datasize);
 }
+
+void *bintree_get(bintree *b) { return b->data; }

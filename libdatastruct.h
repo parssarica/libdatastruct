@@ -101,3 +101,4 @@ void *queue_front(queue *);
 bintree *create_bintree(void);
 void bintree_set_nodes(bintree *);
 void bintree_set(bintree *, void *, size_t);
+void *bintree_get(bintree *);
