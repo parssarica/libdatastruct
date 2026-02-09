@@ -171,6 +171,9 @@ int main()
     printf("Peeked: %d\n", *(int *)stack_peek(s));
     printf("Popped: %d\n", *(int *)stack_pop(s));
 
+    /* Minimizing stack */
+    stack_minimize(s);
+
     /* Freeing stack */
     stack_free(s);
 

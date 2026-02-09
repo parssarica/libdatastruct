@@ -270,6 +270,9 @@ int map_length(map *table) { return table->node_count; }
 
 static int map_get_index(map *table, void *key, size_t keysize)
 {
+    if (table->items == NULL)
+        return -1;
+
     int i;
 
     for (i = 0; i < table->node_count; i++)
@@ -287,6 +290,9 @@ static int map_get_index(map *table, void *key, size_t keysize)
 
 void *map_get(map *table, void *key, size_t keysize)
 {
+    if (table->items == NULL)
+        return NULL;
+
     int i = map_get_index(table, key, keysize);
     if (i != -1)
     {
@@ -298,6 +304,9 @@ void *map_get(map *table, void *key, size_t keysize)
 
 void map_delete(map *table, void *key, size_t keysize)
 {
+    if (table->items == NULL)
+        return;
+
     int i = map_get_index(table, key, keysize);
     if (i == -1)
         return;
@@ -308,6 +317,9 @@ void map_delete(map *table, void *key, size_t keysize)
 void map_update_key(map *table, void *key_old, size_t old_keysize,
                     void *key_new, size_t new_keysize)
 {
+    if (table->items == NULL)
+        return;
+
     int i = map_get_index(table, key_old, old_keysize);
     if (i == -1)
         return;
@@ -320,6 +332,9 @@ void map_update_key(map *table, void *key_old, size_t old_keysize,
 void map_update_value(map *table, void *key, size_t keysize, void *newvalue,
                       size_t new_valuesize)
 {
+    if (table->items == NULL)
+        return;
+
     int i = map_get_index(table, key, keysize);
     if (i == -1)
         return;
@@ -332,17 +347,25 @@ void map_update_value(map *table, void *key, size_t keysize, void *newvalue,
 void map_free(map *table)
 {
     int i = 0;
-    for (i = 0; i < table->node_count; i++)
+
+    if (table->items != NULL)
     {
-        free(table->items[i].key);
-        free(table->items[i].value);
+        for (i = 0; i < table->node_count; i++)
+        {
+            free(table->items[i].key);
+            free(table->items[i].value);
+        }
+        free(table->items);
     }
-    free(table->items);
+
     free(table);
 }
 
 void map_minimize(map *table)
 {
+    if (table->items == NULL)
+        return;
+
     table->items = realloc(table->items, sizeof(mapitem) * table->node_count);
     table->capacity = table->node_count;
 }
@@ -383,6 +406,9 @@ void stack_push(stack *s, void *value, size_t valuesize)
 
 void *stack_pop(stack *s)
 {
+    if (s->items == NULL)
+        return NULL;
+
     void *val;
 
     s->node_count--;
@@ -396,19 +422,26 @@ void *stack_pop(stack *s)
     return val;
 }
 
-void *stack_peek(stack *s) { return s->items[s->node_count - 1].item; }
+void *stack_peek(stack *s)
+{
+    if (s->items == NULL)
+        return NULL;
+
+    return s->items[s->node_count - 1].item;
+}
 
 void stack_free(stack *s)
 {
     int i = 0;
-    for (i = 0; i < s->node_count; i++)
+    if (s->items != NULL)
     {
-        free(s->items[i].item);
+        for (i = 0; i < s->node_count; i++)
+        {
+            free(s->items[i].item);
+        }
+
+        free(s->items);
     }
-
-    free(s->items);
-
-    free(s);
 
     for (i = 0; i < to_free_list_stack_length; i++)
     {
@@ -416,6 +449,25 @@ void stack_free(stack *s)
     }
     free(to_free_list_stack);
     to_free_list_stack_length = 0;
+
+    free(s);
+}
+
+void stack_minimize(stack *s)
+{
+    if (s->items == NULL)
+        return;
+
+    if (s->node_count == 0)
+    {
+        free(s->items);
+        s->items = NULL;
+    }
+    else
+    {
+        s->items = realloc(s->items, sizeof(stackitem) * s->node_count);
+    }
+    s->capacity = s->node_count;
 }
 
 queue *create_queue(void)
