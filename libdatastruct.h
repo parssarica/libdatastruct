@@ -89,3 +89,4 @@ void enqueue(queue *, void *, size_t);
 void *dequeue(queue *);
 void queue_free(queue *);
 void queue_minimize(queue *);
+void *queue_front(queue *);

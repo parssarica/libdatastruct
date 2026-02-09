@@ -580,3 +580,11 @@ void queue_minimize(queue *q)
 
     q->capacity = q->node_count;
 }
+
+void *queue_front(queue *q)
+{
+    if (q->items == NULL)
+        return NULL;
+
+    return q->items[q->node_count - 1].item;
+}
