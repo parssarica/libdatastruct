@@ -209,4 +209,14 @@ int main()
 
     /* Freeing our queue */
     queue_free(q);
+
+    /* Creating a binary tree */
+
+    bintree *b = create_bintree();
+
+    /* Initializing some nodes */
+
+    bintree_set_nodes(b);
+    bintree_set_nodes(b->left);
+    bintree_set_nodes(b->right);
 }

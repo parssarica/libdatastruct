@@ -53,6 +53,14 @@ typedef struct
     queueitem *items;
 } queue;
 
+typedef struct _bintree
+{
+    void *data;
+    int datasize;
+    struct _bintree *left;
+    struct _bintree *right;
+} bintree;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -90,3 +98,5 @@ void *dequeue(queue *);
 void queue_free(queue *);
 void queue_minimize(queue *);
 void *queue_front(queue *);
+bintree *create_bintree(void);
+void bintree_set_nodes(bintree *);

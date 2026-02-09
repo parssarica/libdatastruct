@@ -588,3 +588,30 @@ void *queue_front(queue *q)
 
     return q->items[q->node_count - 1].item;
 }
+
+bintree *create_bintree(void)
+{
+    bintree *b = malloc(sizeof(bintree));
+
+    b->data = NULL;
+    b->datasize = 0;
+    b->left = NULL;
+    b->right = NULL;
+
+    return b;
+}
+
+void bintree_set_nodes(bintree *b)
+{
+    b->left = malloc(sizeof(bintree));
+    b->right = malloc(sizeof(bintree));
+
+    b->left->data = NULL;
+    b->left->datasize = 0;
+    b->left->left = NULL;
+    b->left->right = NULL;
+    b->right->data = NULL;
+    b->right->datasize = 0;
+    b->right->left = NULL;
+    b->right->right = NULL;
+}
