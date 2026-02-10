@@ -267,4 +267,11 @@ int main()
     vector_add(v, &vector_var5, sizeof(int));
     vector_add(v, &vector_var6, sizeof(int));
     vector_add(v, &vector_var7, sizeof(int));
+
+    /* Looping through the vector */
+
+    void *i;
+    j = 1;
+
+    loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
 }

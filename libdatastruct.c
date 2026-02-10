@@ -670,6 +670,7 @@ void vector_add(vector *v, void *data, int datasize)
 
     v->items[v->node_count].item = malloc(datasize);
     v->items[v->node_count].size = datasize;
+    v->items[v->node_count].deleted = 0;
 
     memcpy(v->items[v->node_count].item, data, datasize);
 

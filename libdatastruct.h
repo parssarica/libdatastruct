@@ -65,6 +65,7 @@ typedef struct
 {
     void *item;
     int size;
+    int deleted;
 } vectoritem;
 
 typedef struct
@@ -79,6 +80,12 @@ typedef struct
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
          i++)                                                                  \
         if (m->items[i].deleted)                                               \
+            continue;                                                          \
+        else
+
+#define loopVector(v, out)                                                     \
+    for (int _i = 0; _i < v->node_count && (out = v->items[_i].item); _i++)    \
+        if (v->items[_i].deleted)                                              \
             continue;                                                          \
         else
 
