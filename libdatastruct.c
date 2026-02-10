@@ -641,3 +641,37 @@ void bintree_destroy(bintree *b)
 
     free(b);
 }
+
+vector *create_vector(void)
+{
+    vector *v = malloc(sizeof(vector));
+
+    v->node_count = 0;
+    v->capacity = 0;
+    v->items = NULL;
+
+    return v;
+}
+
+void vector_add(vector *v, void *data, int datasize)
+{
+    if (v->node_count == v->capacity)
+    {
+        if (v->capacity == 0)
+        {
+            v->capacity = 1;
+        }
+        else
+        {
+            v->capacity *= 2;
+        }
+        v->items = realloc(v->items, sizeof(vectoritem) * v->capacity);
+    }
+
+    v->items[v->node_count].item = malloc(datasize);
+    v->items[v->node_count].size = datasize;
+
+    memcpy(v->items[v->node_count].item, data, datasize);
+
+    v->node_count++;
+}

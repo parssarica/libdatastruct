@@ -61,6 +61,19 @@ typedef struct _bintree
     struct _bintree *right;
 } bintree;
 
+typedef struct
+{
+    void *item;
+    int size;
+} vectoritem;
+
+typedef struct
+{
+    int node_count;
+    int capacity;
+    vectoritem *items;
+} vector;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -103,3 +116,5 @@ void bintree_set_nodes(bintree *);
 void bintree_set(bintree *, void *, size_t);
 void *bintree_get(bintree *);
 void bintree_destroy(bintree *);
+vector *create_vector(void);
+void vector_add(vector *, void *, int);

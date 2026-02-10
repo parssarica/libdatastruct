@@ -247,4 +247,24 @@ int main()
 
     /* Cleaning up */
     bintree_destroy(b);
+
+    /* Creating a vector */
+    vector *v = create_vector();
+
+    /* Adding variables */
+    int vector_var1 = 1;
+    int vector_var2 = 2;
+    int vector_var3 = 3;
+    int vector_var4 = 4;
+    int vector_var5 = 5;
+    int vector_var6 = 6;
+    int vector_var7 = 7;
+
+    vector_add(v, &vector_var1, sizeof(int));
+    vector_add(v, &vector_var2, sizeof(int));
+    vector_add(v, &vector_var3, sizeof(int));
+    vector_add(v, &vector_var4, sizeof(int));
+    vector_add(v, &vector_var5, sizeof(int));
+    vector_add(v, &vector_var6, sizeof(int));
+    vector_add(v, &vector_var7, sizeof(int));
 }
