@@ -689,6 +689,55 @@ void vector_delete(vector *v, int index)
             v->items[i].item = NULL;
             v->items[i].size = 0;
             v->items[i].deleted = 1;
+            v->node_count--;
         }
     }
+}
+
+void vector_insert(vector *v, int index, void *data, int datasize)
+{
+    vectoritem *items;
+    int skipped = 0;
+    int i;
+
+    if (v->capacity > index && v->items[index].deleted == 1)
+    {
+        v->items[index].item = malloc(datasize);
+        v->items[index].size = datasize;
+        v->items[index].deleted = 0;
+
+        memcpy(v->items[index].item, data, datasize);
+
+        v->node_count++;
+        return;
+    }
+
+    if (v->capacity == v->node_count)
+    {
+        v->capacity *= 2;
+    }
+    items = malloc((v->capacity) * sizeof(vectoritem));
+    for (i = 0; i < v->capacity; i++)
+    {
+        if (i == index)
+        {
+            items[i].item = malloc(datasize);
+            items[i].size = datasize;
+            items[i].deleted = 0;
+
+            memcpy(items[i].item, data, datasize);
+            skipped++;
+        }
+        else
+        {
+            items[i].item = v->items[i - skipped].item;
+            items[i].size = v->items[i - skipped].size;
+            items[i].deleted = v->items[i - skipped].deleted;
+        }
+    }
+
+    free(v->items);
+
+    v->items = items;
+    v->node_count++;
 }

@@ -282,4 +282,13 @@ int main()
 
     j = 1;
     loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
+
+    /* Inserting item */
+    vector_insert(v, 3, &vector_var4, sizeof(int));
+    vector_insert(v, 3, &vector_var7, sizeof(int));
+
+    printf("Vector after insertions:\n");
+
+    j = 1;
+    loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
 }
