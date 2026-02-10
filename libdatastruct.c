@@ -676,3 +676,19 @@ void vector_add(vector *v, void *data, int datasize)
 
     v->node_count++;
 }
+
+void vector_delete(vector *v, int index)
+{
+    int i;
+
+    for (i = 0; i < v->capacity; i++)
+    {
+        if (i == index)
+        {
+            free(v->items[i].item);
+            v->items[i].item = NULL;
+            v->items[i].size = 0;
+            v->items[i].deleted = 1;
+        }
+    }
+}

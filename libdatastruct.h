@@ -84,7 +84,7 @@ typedef struct
         else
 
 #define loopVector(v, out)                                                     \
-    for (int _i = 0; _i < v->node_count && (out = v->items[_i].item); _i++)    \
+    for (int _i = 0; _i < v->node_count && (out = v->items[_i].item, 1); _i++) \
         if (v->items[_i].deleted)                                              \
             continue;                                                          \
         else
@@ -125,3 +125,4 @@ void *bintree_get(bintree *);
 void bintree_destroy(bintree *);
 vector *create_vector(void);
 void vector_add(vector *, void *, int);
+void vector_delete(vector *, int);

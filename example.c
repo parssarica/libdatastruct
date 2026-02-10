@@ -274,4 +274,12 @@ int main()
     j = 1;
 
     loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
+
+    /* Deleting items */
+    vector_delete(v, 3);
+
+    printf("Vector after deletion:\n");
+
+    j = 1;
+    loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
 }
