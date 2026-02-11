@@ -814,3 +814,19 @@ void trie_insert(trie *t, char *word)
         t = t->children[t->child_count - 1];
     }
 }
+
+int trie_search(trie *t, char *word)
+{
+    int i = 0;
+    size_t j = 0;
+
+    while (1)
+    {
+        i = trie_find(t, word[j++]);
+        if (i == -1)
+            break;
+        t = t->children[i];
+    }
+
+    return strlen(word) == --j;
+}

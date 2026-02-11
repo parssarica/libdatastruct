@@ -138,3 +138,4 @@ int vector_length(vector *);
 void vector_free(vector *);
 trie *trie_create(void);
 void trie_insert(trie *, char *);
+int trie_search(trie *, char *);

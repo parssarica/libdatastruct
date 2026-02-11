@@ -310,4 +310,15 @@ int main()
     trie_insert(t, "cat");
     trie_insert(t, "pet");
     trie_insert(t, "pen");
+
+    /* Searching words in trie */
+
+    printf("Is 'ace' in trie: %s\n", trie_search(t, "ace") ? "Yes" : "No");
+    printf("Is 'ant' in trie: %s\n", trie_search(t, "ant") ? "Yes" : "No");
+    printf("Is 'cat' in trie: %s\n", trie_search(t, "cat") ? "Yes" : "No");
+    printf("Is 'pet' in trie: %s\n", trie_search(t, "pet") ? "Yes" : "No");
+    printf("Is 'pen' in trie: %s\n", trie_search(t, "pen") ? "Yes" : "No");
+    printf("Is 'hello' in trie: %s\n", trie_search(t, "hello") ? "Yes" : "No");
+    printf("Is 'hi' in trie: %s\n", trie_search(t, "hi") ? "Yes" : "No");
+    printf("Is 'dog' in trie: %s\n", trie_search(t, "dog") ? "Yes" : "No");
 }
