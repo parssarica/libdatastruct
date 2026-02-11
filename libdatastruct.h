@@ -78,8 +78,8 @@ typedef struct
 typedef struct _trie
 {
     char character;
-    char is_end_of_word;
-    struct _trie *children;
+    int child_count;
+    struct _trie **children;
 } trie;
 
 #define loopMap(m, key, value)                                                 \
@@ -137,3 +137,4 @@ void vector_insert(vector *, int, void *, int);
 int vector_length(vector *);
 void vector_free(vector *);
 trie *trie_create(void);
+void trie_insert(trie *, char *);

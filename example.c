@@ -302,4 +302,12 @@ int main()
     /* Initializing a trie */
 
     trie *t = trie_create();
+
+    /* Inserting some words */
+
+    trie_insert(t, "ace");
+    trie_insert(t, "ant");
+    trie_insert(t, "cat");
+    trie_insert(t, "pet");
+    trie_insert(t, "pen");
 }

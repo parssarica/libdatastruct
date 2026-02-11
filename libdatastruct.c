@@ -767,8 +767,50 @@ trie *trie_create(void)
     trie *t = malloc(sizeof(trie));
 
     t->character = 0;
-    t->is_end_of_word = 0;
+    t->child_count = 0;
     t->children = NULL;
 
     return t;
+}
+
+static int trie_find(trie *t, char character)
+{
+    int found = -1;
+    int i;
+
+    for (i = 0; i < t->child_count; i++)
+    {
+        if (t->children[i]->character == character)
+        {
+            found = i;
+            break;
+        }
+    }
+
+    return found;
+}
+
+void trie_insert(trie *t, char *word)
+{
+    int i = 0;
+    int j = 0;
+
+    while (1)
+    {
+        i = trie_find(t, word[j++]);
+        if (i == -1)
+            break;
+        t = t->children[i];
+    }
+
+    j--;
+    while (1)
+    {
+        t->children = realloc(t->children, sizeof(trie *) * ++(t->child_count));
+        t->children[t->child_count - 1] = trie_create();
+        t->children[t->child_count - 1]->character = word[j++];
+        if (word[j] == '\0')
+            break;
+        t = t->children[t->child_count - 1];
+    }
 }
