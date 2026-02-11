@@ -761,3 +761,14 @@ void vector_free(vector *v)
     free(v->items);
     free(v);
 }
+
+trie *trie_create(void)
+{
+    trie *t = malloc(sizeof(trie));
+
+    t->character = 0;
+    t->is_end_of_word = 0;
+    t->children = NULL;
+
+    return t;
+}

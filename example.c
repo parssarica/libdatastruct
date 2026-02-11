@@ -298,4 +298,8 @@ int main()
 
     /* Cleaning up */
     vector_free(v);
+
+    /* Initializing a trie */
+
+    trie *t = trie_create();
 }

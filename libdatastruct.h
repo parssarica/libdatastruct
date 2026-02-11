@@ -75,6 +75,13 @@ typedef struct
     vectoritem *items;
 } vector;
 
+typedef struct _trie
+{
+    char character;
+    char is_end_of_word;
+    struct _trie *children;
+} trie;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -129,3 +136,4 @@ void vector_delete(vector *, int);
 void vector_insert(vector *, int, void *, int);
 int vector_length(vector *);
 void vector_free(vector *);
+trie *trie_create(void);
