@@ -295,4 +295,7 @@ int main()
     /* Getting the length */
 
     printf("Vector length: %d\n", vector_length(v));
+
+    /* Cleaning up */
+    vector_free(v);
 }

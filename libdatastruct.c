@@ -743,3 +743,21 @@ void vector_insert(vector *v, int index, void *data, int datasize)
 }
 
 int vector_length(vector *v) { return v->node_count; }
+
+void vector_free(vector *v)
+{
+    vectoritem *i;
+    int j;
+
+    for (j = 0; j < v->node_count; j++)
+    {
+        i = &v->items[j];
+        if (!i->deleted)
+        {
+            free(i->item);
+        }
+    }
+
+    free(v->items);
+    free(v);
+}
