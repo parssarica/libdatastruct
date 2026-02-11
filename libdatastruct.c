@@ -741,3 +741,5 @@ void vector_insert(vector *v, int index, void *data, int datasize)
     v->items = items;
     v->node_count++;
 }
+
+int vector_length(vector *v) { return v->node_count; }

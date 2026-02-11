@@ -127,3 +127,4 @@ vector *create_vector(void);
 void vector_add(vector *, void *, int);
 void vector_delete(vector *, int);
 void vector_insert(vector *, int, void *, int);
+int vector_length(vector *);

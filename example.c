@@ -291,4 +291,8 @@ int main()
 
     j = 1;
     loopVector(v, i) { printf("%d. value of vector: %d\n", j++, *(int *)i); }
+
+    /* Getting the length */
+
+    printf("Vector length: %d\n", vector_length(v));
 }
