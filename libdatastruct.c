@@ -830,3 +830,15 @@ int trie_search(trie *t, char *word)
 
     return strlen(word) == --j;
 }
+
+void trie_free(trie *t)
+{
+    int i;
+    for (i = 0; i < t->child_count; i++)
+    {
+        trie_free(t->children[i]);
+    }
+
+    free(t->children);
+    free(t);
+}

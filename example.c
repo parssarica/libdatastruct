@@ -321,4 +321,7 @@ int main()
     printf("Is 'hello' in trie: %s\n", trie_search(t, "hello") ? "Yes" : "No");
     printf("Is 'hi' in trie: %s\n", trie_search(t, "hi") ? "Yes" : "No");
     printf("Is 'dog' in trie: %s\n", trie_search(t, "dog") ? "Yes" : "No");
+
+    /* Cleaning up */
+    trie_free(t);
 }
