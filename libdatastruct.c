@@ -879,3 +879,15 @@ void trie_free(trie *t)
     free(t->children);
     free(t);
 }
+
+tree *create_tree(void)
+{
+    tree *t = malloc(sizeof(tree));
+
+    t->data = NULL;
+    t->children = NULL;
+    t->parent = NULL;
+    t->datasize = 0;
+
+    return t;
+}

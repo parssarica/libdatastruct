@@ -83,6 +83,14 @@ typedef struct _trie
     struct _trie **children;
 } trie;
 
+typedef struct _tree
+{
+    void *data;
+    size_t datasize;
+    struct _trie **children;
+    struct _trie *parent;
+} tree;
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -144,3 +152,4 @@ trie *trie_create(void);
 void trie_insert(trie *, char *);
 int trie_search(trie *, char *);
 void trie_free(trie *);
+tree *create_tree(void);

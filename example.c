@@ -302,27 +302,51 @@ int main()
 
     /* Initializing a trie */
 
-    trie *t = trie_create();
+    trie *trie_obj = trie_create();
 
     /* Inserting some words */
 
-    trie_insert(t, "ace");
-    trie_insert(t, "ant");
-    trie_insert(t, "cat");
-    trie_insert(t, "pet");
-    trie_insert(t, "pen");
+    trie_insert(trie_obj, "ace");
+    trie_insert(trie_obj, "ant");
+    trie_insert(trie_obj, "cat");
+    trie_insert(trie_obj, "pet");
+    trie_insert(trie_obj, "pen");
 
     /* Searching words in trie */
 
-    printf("Is 'ace' in trie: %s\n", trie_search(t, "ace") ? "Yes" : "No");
-    printf("Is 'ant' in trie: %s\n", trie_search(t, "ant") ? "Yes" : "No");
-    printf("Is 'cat' in trie: %s\n", trie_search(t, "cat") ? "Yes" : "No");
-    printf("Is 'pet' in trie: %s\n", trie_search(t, "pet") ? "Yes" : "No");
-    printf("Is 'pen' in trie: %s\n", trie_search(t, "pen") ? "Yes" : "No");
-    printf("Is 'hello' in trie: %s\n", trie_search(t, "hello") ? "Yes" : "No");
-    printf("Is 'hi' in trie: %s\n", trie_search(t, "hi") ? "Yes" : "No");
-    printf("Is 'dog' in trie: %s\n", trie_search(t, "dog") ? "Yes" : "No");
+    printf("Is 'ace' in trie: %s\n",
+           trie_search(trie_obj, "ace") ? "Yes" : "No");
+    printf("Is 'ant' in trie: %s\n",
+           trie_search(trie_obj, "ant") ? "Yes" : "No");
+    printf("Is 'cat' in trie: %s\n",
+           trie_search(trie_obj, "cat") ? "Yes" : "No");
+    printf("Is 'pet' in trie: %s\n",
+           trie_search(trie_obj, "pet") ? "Yes" : "No");
+    printf("Is 'pen' in trie: %s\n",
+           trie_search(trie_obj, "pen") ? "Yes" : "No");
+    printf("Is 'hello' in trie: %s\n",
+           trie_search(trie_obj, "hello") ? "Yes" : "No");
+    printf("Is 'hi' in trie: %s\n", trie_search(trie_obj, "hi") ? "Yes" : "No");
+    printf("Is 'dog' in trie: %s\n",
+           trie_search(trie_obj, "dog") ? "Yes" : "No");
 
     /* Cleaning up */
-    trie_free(t);
+    trie_free(trie_obj);
+
+    /* Creating a tree */
+    tree *t = create_tree();
+    tree *n1;
+    tree *n2;
+
+    int tree_val1 = 1;
+    int tree_val2 = 2;
+    int tree_val3 = 3;
+    int tree_val4 = 4;
+    int tree_val5 = 5;
+    int tree_val6 = 6;
+    int tree_val7 = 7;
+    int tree_val8 = 8;
+
+    /* Setting a value for root */
+    // tree_set(t, &tree_val1, sizeof(int));
 }
