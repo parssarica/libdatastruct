@@ -891,3 +891,15 @@ tree *create_tree(void)
 
     return t;
 }
+
+void tree_set(tree *t, void *data, size_t datasize)
+{
+    if (t->data != NULL)
+    {
+        free(t->data);
+    }
+
+    t->data = malloc(datasize);
+
+    memcpy(t->data, data, datasize);
+}

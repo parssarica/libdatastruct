@@ -348,5 +348,5 @@ int main()
     int tree_val8 = 8;
 
     /* Setting a value for root */
-    // tree_set(t, &tree_val1, sizeof(int));
+    tree_set(t, &tree_val1, sizeof(int));
 }

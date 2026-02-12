@@ -153,3 +153,4 @@ void trie_insert(trie *, char *);
 int trie_search(trie *, char *);
 void trie_free(trie *);
 tree *create_tree(void);
+void tree_set(tree *, void *, size_t);
