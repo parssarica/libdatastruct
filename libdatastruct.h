@@ -72,6 +72,7 @@ typedef struct
 {
     int node_count;
     int capacity;
+    int deleted_nodes;
     vectoritem *items;
 } vector;
 
@@ -91,7 +92,9 @@ typedef struct _trie
         else
 
 #define loopVector(v, out)                                                     \
-    for (int _i = 0; _i < v->node_count && (out = v->items[_i].item, 1); _i++) \
+    for (int _i = 0; _i < (v->node_count + v->deleted_nodes) &&                \
+                     (out = v->items[_i].item, 1);                             \
+         _i++)                                                                 \
         if (v->items[_i].deleted)                                              \
             continue;                                                          \
         else
@@ -136,6 +139,7 @@ void vector_delete(vector *, int);
 void vector_insert(vector *, int, void *, int);
 int vector_length(vector *);
 void vector_free(vector *);
+void vector_minimize(vector *);
 trie *trie_create(void);
 void trie_insert(trie *, char *);
 int trie_search(trie *, char *);

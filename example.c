@@ -267,6 +267,7 @@ int main()
     vector_add(v, &vector_var5, sizeof(int));
     vector_add(v, &vector_var6, sizeof(int));
     vector_add(v, &vector_var7, sizeof(int));
+    vector_minimize(v);
 
     /* Looping through the vector */
 

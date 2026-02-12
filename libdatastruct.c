@@ -649,6 +649,7 @@ vector *create_vector(void)
     v->node_count = 0;
     v->capacity = 0;
     v->items = NULL;
+    v->deleted_nodes = 0;
 
     return v;
 }
@@ -681,6 +682,11 @@ void vector_delete(vector *v, int index)
 {
     int i;
 
+    if (v->items == NULL)
+    {
+        return;
+    }
+
     for (i = 0; i < v->capacity; i++)
     {
         if (i == index)
@@ -690,6 +696,7 @@ void vector_delete(vector *v, int index)
             v->items[i].size = 0;
             v->items[i].deleted = 1;
             v->node_count--;
+            v->deleted_nodes++;
         }
     }
 }
@@ -698,13 +705,20 @@ void vector_insert(vector *v, int index, void *data, int datasize)
 {
     vectoritem *items;
     int skipped = 0;
+    int old_capacity;
     int i;
+
+    if (v->items == NULL || index >= v->capacity)
+    {
+        return;
+    }
 
     if (v->capacity > index && v->items[index].deleted == 1)
     {
         v->items[index].item = malloc(datasize);
         v->items[index].size = datasize;
         v->items[index].deleted = 0;
+        v->deleted_nodes--;
 
         memcpy(v->items[index].item, data, datasize);
 
@@ -712,12 +726,13 @@ void vector_insert(vector *v, int index, void *data, int datasize)
         return;
     }
 
+    old_capacity = v->capacity;
     if (v->capacity == v->node_count)
     {
         v->capacity *= 2;
     }
     items = malloc((v->capacity) * sizeof(vectoritem));
-    for (i = 0; i < v->capacity; i++)
+    for (i = 0; i < old_capacity + 1; i++)
     {
         if (i == index)
         {
@@ -749,17 +764,39 @@ void vector_free(vector *v)
     vectoritem *i;
     int j;
 
-    for (j = 0; j < v->node_count; j++)
+    if (v->items != NULL)
     {
-        i = &v->items[j];
-        if (!i->deleted)
+        for (j = 0; j < v->node_count; j++)
         {
-            free(i->item);
+            i = &v->items[j];
+            if (!i->deleted)
+            {
+                free(i->item);
+            }
         }
+        free(v->items);
     }
 
-    free(v->items);
     free(v);
+}
+
+void vector_minimize(vector *v)
+{
+    if (v->items == NULL)
+        return;
+
+    if (v->node_count == 0)
+    {
+        free(v->items);
+        v->items = NULL;
+    }
+    else
+    {
+        v->items = realloc(v->items, sizeof(vectoritem) * v->node_count);
+    }
+
+    v->capacity = v->node_count;
+    v->deleted_nodes = 0;
 }
 
 trie *trie_create(void)
