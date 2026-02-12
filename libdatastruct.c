@@ -888,6 +888,7 @@ tree *create_tree(void)
     t->children = NULL;
     t->parent = NULL;
     t->datasize = 0;
+    t->child_count = 0;
 
     return t;
 }
@@ -902,4 +903,20 @@ void tree_set(tree *t, void *data, size_t datasize)
     t->data = malloc(datasize);
 
     memcpy(t->data, data, datasize);
+}
+
+tree *tree_add(tree *t, void *data, size_t datasize)
+{
+    t->child_count++;
+    t->children = realloc(t->children, sizeof(tree *) * t->child_count);
+
+    t->children[t->child_count - 1] = malloc(sizeof(tree));
+    t->children[t->child_count - 1]->data = malloc(datasize);
+    memcpy(t->children[t->child_count - 1]->data, data, datasize);
+
+    t->children[t->child_count - 1]->child_count = 0;
+    t->children[t->child_count - 1]->children = NULL;
+    t->children[t->child_count - 1]->parent = t;
+
+    return t->children[t->child_count - 1];
 }

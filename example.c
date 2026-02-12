@@ -349,4 +349,15 @@ int main()
 
     /* Setting a value for root */
     tree_set(t, &tree_val1, sizeof(int));
+
+    /* Creating children nodes */
+    n1 = tree_add(t, &tree_val2, sizeof(int));
+    n2 = tree_add(t, &tree_val3, sizeof(int));
+    tree_add(n1, &tree_val4, sizeof(int));
+    tree_add(n1, &tree_val5, sizeof(int));
+    tree_add(n2, &tree_val6, sizeof(int));
+    tree_add(n2, &tree_val7, sizeof(int));
+
+    /* Changing a node's value, as we did in root */
+    tree_set(n1, &tree_val8, sizeof(int));
 }
