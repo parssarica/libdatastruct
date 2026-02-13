@@ -930,3 +930,5 @@ size_t tree_size(tree *t) { return t->datasize; }
 int tree_child_count(tree *t) { return t->child_count; }
 
 tree *tree_child(tree *t, int child) { return t->children[child]; }
+
+tree *tree_parent(tree *t) { return t->parent; }

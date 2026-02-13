@@ -160,3 +160,4 @@ void *tree_get(tree *);
 size_t tree_size(tree *);
 int tree_child_count(tree *);
 tree *tree_child(tree *, int);
+tree *tree_parent(tree *);

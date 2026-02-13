@@ -369,4 +369,8 @@ int main()
     /* Getting the nth child */
     tree *n3 = tree_child(t, 0);
     printf("Value of tree's first child: %d\n", *(int *)tree_get(n3));
+
+    /* Getting the parent */
+    tree *n4 = tree_parent(n3);
+    printf("Value of the previous node's parent: %d\n", *(int *)tree_get(n4));
 }
