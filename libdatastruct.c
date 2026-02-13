@@ -901,6 +901,7 @@ void tree_set(tree *t, void *data, size_t datasize)
     }
 
     t->data = malloc(datasize);
+    t->datasize = datasize;
 
     memcpy(t->data, data, datasize);
 }
@@ -912,6 +913,7 @@ tree *tree_add(tree *t, void *data, size_t datasize)
 
     t->children[t->child_count - 1] = malloc(sizeof(tree));
     t->children[t->child_count - 1]->data = malloc(datasize);
+    t->children[t->child_count - 1]->datasize = datasize;
     memcpy(t->children[t->child_count - 1]->data, data, datasize);
 
     t->children[t->child_count - 1]->child_count = 0;
@@ -922,3 +924,5 @@ tree *tree_add(tree *t, void *data, size_t datasize)
 }
 
 void *tree_get(tree *t) { return t->data; }
+
+size_t tree_size(tree *t) { return t->datasize; }

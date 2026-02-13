@@ -363,4 +363,5 @@ int main()
 
     /* Accessing values */
     printf("Node value: %d\n", *(int *)tree_get(n1));
+    printf("Node value size: %ld\n", tree_size(n1));
 }

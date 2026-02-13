@@ -157,3 +157,4 @@ tree *create_tree(void);
 void tree_set(tree *, void *, size_t);
 tree *tree_add(tree *, void *, size_t);
 void *tree_get(tree *);
+size_t tree_size(tree *);
