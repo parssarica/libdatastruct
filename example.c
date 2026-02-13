@@ -379,6 +379,9 @@ int main()
     /* Looping through the tree */
     tree_dfs(t, print_tree_dfs);
     printf("\n");
+
+    /* Cleaning up */
+    tree_destroy(t);
 }
 
 void print_tree_dfs(tree *t)

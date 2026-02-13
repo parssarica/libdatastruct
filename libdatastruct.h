@@ -162,3 +162,4 @@ int tree_child_count(tree *);
 tree *tree_child(tree *, int);
 tree *tree_parent(tree *);
 void tree_dfs(tree *, void (*)(tree *));
+void tree_destroy(tree *);

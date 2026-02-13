@@ -923,15 +923,45 @@ tree *tree_add(tree *t, void *data, size_t datasize)
     return t->children[t->child_count - 1];
 }
 
-void *tree_get(tree *t) { return t->data; }
+void *tree_get(tree *t)
+{
+    if (t == NULL)
+        return NULL;
 
-size_t tree_size(tree *t) { return t->datasize; }
+    return t->data;
+}
 
-int tree_child_count(tree *t) { return t->child_count; }
+size_t tree_size(tree *t)
+{
+    if (t == NULL)
+        return 0;
 
-tree *tree_child(tree *t, int child) { return t->children[child]; }
+    return t->datasize;
+}
 
-tree *tree_parent(tree *t) { return t->parent; }
+int tree_child_count(tree *t)
+{
+    if (t == NULL)
+        return 0;
+
+    return t->child_count;
+}
+
+tree *tree_child(tree *t, int child)
+{
+    if (t == NULL || child >= t->child_count || t->children == NULL)
+        return NULL;
+
+    return t->children[child];
+}
+
+tree *tree_parent(tree *t)
+{
+    if (t == NULL)
+        return NULL;
+
+    return t->parent;
+}
 
 void tree_dfs(tree *t, void (*visit)(tree *))
 {
@@ -946,4 +976,25 @@ void tree_dfs(tree *t, void (*visit)(tree *))
     {
         tree_dfs(t->children[i], visit);
     }
+}
+
+void tree_destroy(tree *t)
+{
+    int i;
+
+    if (t == NULL)
+        return;
+
+    if (t->data != NULL)
+    {
+        free(t->data);
+    }
+
+    for (i = 0; i < t->child_count; i++)
+    {
+        tree_destroy(t->children[i]);
+    }
+
+    free(t->children);
+    free(t);
 }
