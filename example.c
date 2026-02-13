@@ -360,4 +360,7 @@ int main()
 
     /* Changing a node's value, as we did in root */
     tree_set(n1, &tree_val8, sizeof(int));
+
+    /* Accessing values */
+    printf("Node value: %d\n", *(int *)tree_get(n1));
 }
