@@ -932,3 +932,18 @@ int tree_child_count(tree *t) { return t->child_count; }
 tree *tree_child(tree *t, int child) { return t->children[child]; }
 
 tree *tree_parent(tree *t) { return t->parent; }
+
+void tree_dfs(tree *t, void (*visit)(tree *))
+{
+    int i;
+
+    if (t == NULL)
+        return;
+
+    visit(t);
+
+    for (i = 0; i < t->child_count; i++)
+    {
+        tree_dfs(t->children[i], visit);
+    }
+}

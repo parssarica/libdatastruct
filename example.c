@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+void print_tree_dfs(tree *);
+
 int main()
 {
     linkedlist *l = create_linkedlist();
@@ -373,4 +375,14 @@ int main()
     /* Getting the parent */
     tree *n4 = tree_parent(n3);
     printf("Value of the previous node's parent: %d\n", *(int *)tree_get(n4));
+
+    /* Looping through the tree */
+    tree_dfs(t, print_tree_dfs);
+    printf("\n");
+}
+
+void print_tree_dfs(tree *t)
+{
+    /* Print function for tree_dfs function */
+    printf("%d ", *(int *)tree_get(t));
 }
