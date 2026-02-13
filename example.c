@@ -365,4 +365,8 @@ int main()
     printf("Node value: %d\n", *(int *)tree_get(n1));
     printf("Node value size: %ld\n", tree_size(n1));
     printf("Node child count: %d\n", tree_child_count(n1));
+
+    /* Getting the nth child */
+    tree *n3 = tree_child(t, 0);
+    printf("Value of tree's first child: %d\n", *(int *)tree_get(n3));
 }
