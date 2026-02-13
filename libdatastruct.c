@@ -926,3 +926,5 @@ tree *tree_add(tree *t, void *data, size_t datasize)
 void *tree_get(tree *t) { return t->data; }
 
 size_t tree_size(tree *t) { return t->datasize; }
+
+int tree_child_count(tree *t) { return t->child_count; }
