@@ -1089,3 +1089,5 @@ graph *graph_child(graph *g, int child)
         return NULL;
     return g->edges_from[child]->child;
 }
+
+void *graph_get(graph *g) { return g->data; }

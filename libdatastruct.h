@@ -188,3 +188,4 @@ graph *graph_add_weighted(graph *, void *, size_t, int);
 void graph_set(graph *, void *, size_t);
 void graph_set_weight(graph *, int, int);
 graph *graph_child(graph *, int);
+void *graph_get(graph *);

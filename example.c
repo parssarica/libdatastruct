@@ -415,6 +415,10 @@ int main()
 
     /* Getting nth child */
     g_n3 = graph_child(g_n1, 1);
+
+    /* Accessing values */
+    printf("Value of root's first node's second child: %d\n",
+           *(int *)graph_get(g_n3));
 }
 
 void print_tree_dfs(tree *t)
