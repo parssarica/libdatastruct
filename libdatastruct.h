@@ -98,6 +98,7 @@ typedef struct
 {
     graph *parent;
     graph *child;
+    int weight;
 } graphedge;
 
 struct _graph
@@ -105,7 +106,7 @@ struct _graph
     void *data;
     size_t datasize;
     int child_count;
-    struct _graph **edges;
+    graphedge **edges;
 };
 
 #define loopMap(m, key, value)                                                 \
@@ -180,3 +181,4 @@ tree *tree_parent(tree *);
 void tree_dfs(tree *, void (*)(tree *));
 void tree_destroy(tree *);
 graph *create_graph(void);
+graph *graph_add(graph *, void *, size_t);

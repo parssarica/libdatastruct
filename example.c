@@ -385,6 +385,22 @@ int main()
 
     /* Creating a graph */
     graph *g = create_graph();
+    graph *g_n1;
+    graph *g_n2;
+
+    /* Putting some new values */
+    int graph_val1 = 1;
+    int graph_val2 = 2;
+    int graph_val3 = 3;
+    int graph_val4 = 4;
+    int graph_val5 = 5;
+    int graph_val6 = 6;
+    int graph_val7 = 7;
+
+    g_n1 = graph_add(g, &graph_val2, sizeof(int));
+    g_n2 = graph_add(g, &graph_val3, sizeof(int));
+    graph_add(g_n1, &graph_val4, sizeof(int));
+    graph_add(g_n2, &graph_val6, sizeof(int));
 }
 
 void print_tree_dfs(tree *t)

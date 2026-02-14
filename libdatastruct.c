@@ -1010,3 +1010,22 @@ graph *create_graph(void)
 
     return g;
 }
+
+graph *graph_add(graph *g, void *data, size_t datasize)
+{
+    g->child_count++;
+    g->edges = realloc(g->edges, sizeof(graphedge) * g->child_count);
+    g->edges[g->child_count - 1] = malloc(sizeof(graphedge));
+    g->edges[g->child_count - 1]->parent = g;
+    g->edges[g->child_count - 1]->child = create_graph();
+    g->edges[g->child_count - 1]->weight = 0;
+
+    g->edges[g->child_count - 1]->child->data = malloc(datasize);
+    g->edges[g->child_count - 1]->child->datasize = datasize;
+    g->edges[g->child_count - 1]->child->child_count = 0;
+    g->edges[g->child_count - 1]->child->edges = NULL;
+
+    memcpy(g->edges[g->child_count - 1]->child->data, data, datasize);
+
+    return g->edges[g->child_count - 1]->child;
+}
