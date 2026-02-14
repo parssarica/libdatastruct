@@ -1091,3 +1091,8 @@ graph *graph_child(graph *g, int child)
 }
 
 void *graph_get(graph *g) { return g->data; }
+
+int graph_get_weight(graph *g, int edge_number)
+{
+    return g->edges_from[edge_number]->weight;
+}

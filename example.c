@@ -419,6 +419,11 @@ int main()
     /* Accessing values */
     printf("Value of root's first node's second child: %d\n",
            *(int *)graph_get(g_n3));
+
+    /* Accesing edge weights */
+    printf("Weight of edge between graph's root's first child and its second "
+           "child: %d\n",
+           graph_get_weight(g_n1, 1));
 }
 
 void print_tree_dfs(tree *t)
