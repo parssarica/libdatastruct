@@ -182,3 +182,4 @@ void tree_dfs(tree *, void (*)(tree *));
 void tree_destroy(tree *);
 graph *create_graph(void);
 graph *graph_add(graph *, void *, size_t);
+graph *graph_add_weighted(graph *, void *, size_t, int);

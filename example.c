@@ -400,7 +400,9 @@ int main()
     g_n1 = graph_add(g, &graph_val2, sizeof(int));
     g_n2 = graph_add(g, &graph_val3, sizeof(int));
     graph_add(g_n1, &graph_val4, sizeof(int));
+    graph_add_weighted(g_n1, &graph_val5, sizeof(int), 5);
     graph_add(g_n2, &graph_val6, sizeof(int));
+    graph_add_weighted(g_n2, &graph_val7, sizeof(int), 7);
 }
 
 void print_tree_dfs(tree *t)
