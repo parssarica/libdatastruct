@@ -105,8 +105,10 @@ struct _graph
 {
     void *data;
     size_t datasize;
-    int child_count;
-    graphedge **edges;
+    int child_count_from;
+    int child_count_to;
+    graphedge **edges_from;
+    graphedge **edges_to;
 };
 
 #define loopMap(m, key, value)                                                 \

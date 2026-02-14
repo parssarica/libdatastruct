@@ -1005,46 +1005,62 @@ graph *create_graph(void)
 
     g->data = NULL;
     g->datasize = 0;
-    g->child_count = 0;
-    g->edges = NULL;
+    g->child_count_from = 0;
+    g->child_count_to = 0;
+    g->edges_from = NULL;
+    g->edges_to = NULL;
 
     return g;
 }
 
 graph *graph_add(graph *g, void *data, size_t datasize)
 {
-    g->child_count++;
-    g->edges = realloc(g->edges, sizeof(graphedge) * g->child_count);
-    g->edges[g->child_count - 1] = malloc(sizeof(graphedge));
-    g->edges[g->child_count - 1]->parent = g;
-    g->edges[g->child_count - 1]->child = create_graph();
-    g->edges[g->child_count - 1]->weight = 0;
+    g->child_count_from++;
+    g->edges_from =
+        realloc(g->edges_from, sizeof(graphedge) * g->child_count_from);
+    g->edges_from[g->child_count_from - 1] = malloc(sizeof(graphedge));
+    g->edges_from[g->child_count_from - 1]->parent = g;
+    g->edges_from[g->child_count_from - 1]->child = create_graph();
+    g->edges_from[g->child_count_from - 1]->weight = 0;
 
-    g->edges[g->child_count - 1]->child->data = malloc(datasize);
-    g->edges[g->child_count - 1]->child->datasize = datasize;
-    g->edges[g->child_count - 1]->child->child_count = 0;
-    g->edges[g->child_count - 1]->child->edges = NULL;
+    g->edges_from[g->child_count_from - 1]->child->data = malloc(datasize);
+    g->edges_from[g->child_count_from - 1]->child->datasize = datasize;
+    g->edges_from[g->child_count_from - 1]->child->child_count_from = 0;
+    g->edges_from[g->child_count_from - 1]->child->child_count_to = 1;
+    g->edges_from[g->child_count_from - 1]->child->edges_from = NULL;
+    g->edges_from[g->child_count_from - 1]->child->edges_to =
+        malloc(sizeof(graphedge *));
+    g->edges_from[g->child_count_from - 1]->child->edges_to[0] =
+        malloc(sizeof(graphedge));
 
-    memcpy(g->edges[g->child_count - 1]->child->data, data, datasize);
-
-    return g->edges[g->child_count - 1]->child;
+    memcpy(g->edges_from[g->child_count_from - 1]->child->data, data, datasize);
+    memcpy(g->edges_from[g->child_count_from - 1]->child->edges_to[0],
+           g->edges_from[g->child_count_from - 1], sizeof(graphedge));
+    return g->edges_from[g->child_count_from - 1]->child;
 }
 
 graph *graph_add_weighted(graph *g, void *data, size_t datasize, int weight)
 {
-    g->child_count++;
-    g->edges = realloc(g->edges, sizeof(graphedge) * g->child_count);
-    g->edges[g->child_count - 1] = malloc(sizeof(graphedge));
-    g->edges[g->child_count - 1]->parent = g;
-    g->edges[g->child_count - 1]->child = create_graph();
-    g->edges[g->child_count - 1]->weight = weight;
+    g->child_count_from++;
+    g->edges_from =
+        realloc(g->edges_from, sizeof(graphedge) * g->child_count_from);
+    g->edges_from[g->child_count_from - 1] = malloc(sizeof(graphedge));
+    g->edges_from[g->child_count_from - 1]->parent = g;
+    g->edges_from[g->child_count_from - 1]->child = create_graph();
+    g->edges_from[g->child_count_from - 1]->weight = weight;
 
-    g->edges[g->child_count - 1]->child->data = malloc(datasize);
-    g->edges[g->child_count - 1]->child->datasize = datasize;
-    g->edges[g->child_count - 1]->child->child_count = 0;
-    g->edges[g->child_count - 1]->child->edges = NULL;
+    g->edges_from[g->child_count_from - 1]->child->data = malloc(datasize);
+    g->edges_from[g->child_count_from - 1]->child->datasize = datasize;
+    g->edges_from[g->child_count_from - 1]->child->child_count_from = 0;
+    g->edges_from[g->child_count_from - 1]->child->child_count_to = 1;
+    g->edges_from[g->child_count_from - 1]->child->edges_from = NULL;
+    g->edges_from[g->child_count_from - 1]->child->edges_to =
+        malloc(sizeof(graphedge *));
+    g->edges_from[g->child_count_from - 1]->child->edges_to[0] =
+        malloc(sizeof(graphedge));
 
-    memcpy(g->edges[g->child_count - 1]->child->data, data, datasize);
-
-    return g->edges[g->child_count - 1]->child;
+    memcpy(g->edges_from[g->child_count_from - 1]->child->data, data, datasize);
+    memcpy(g->edges_from[g->child_count_from - 1]->child->edges_to[0],
+           g->edges_from[g->child_count_from - 1], sizeof(graphedge));
+    return g->edges_from[g->child_count_from - 1]->child;
 }
