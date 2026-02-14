@@ -396,6 +396,7 @@ int main()
     int graph_val5 = 5;
     int graph_val6 = 6;
     int graph_val7 = 7;
+    int graph_val8 = 8;
 
     g_n1 = graph_add(g, &graph_val2, sizeof(int));
     g_n2 = graph_add(g, &graph_val3, sizeof(int));
@@ -403,6 +404,10 @@ int main()
     graph_add_weighted(g_n1, &graph_val5, sizeof(int), 5);
     graph_add(g_n2, &graph_val6, sizeof(int));
     graph_add_weighted(g_n2, &graph_val7, sizeof(int), 7);
+
+    /* Changing node data */
+    graph_set(g, &graph_val1, sizeof(int));
+    graph_set(g_n1, &graph_val8, sizeof(int));
 }
 
 void print_tree_dfs(tree *t)

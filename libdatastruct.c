@@ -1064,3 +1064,16 @@ graph *graph_add_weighted(graph *g, void *data, size_t datasize, int weight)
            g->edges_from[g->child_count_from - 1], sizeof(graphedge));
     return g->edges_from[g->child_count_from - 1]->child;
 }
+
+void graph_set(graph *g, void *data, size_t datasize)
+{
+    if (g->data != NULL)
+    {
+        free(g->data);
+    }
+
+    g->data = malloc(datasize);
+    g->datasize = datasize;
+
+    memcpy(g->data, data, datasize);
+}
