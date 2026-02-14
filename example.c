@@ -427,6 +427,9 @@ int main()
 
     /* Accessing node data size */
     printf("Size of root's first child's data size: %ld\n", graph_size(g_n1));
+
+    /* Getting child count */
+    printf("Child count of root: %d\n", graph_child_count(g));
 }
 
 void print_tree_dfs(tree *t)

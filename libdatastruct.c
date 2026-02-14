@@ -1098,3 +1098,5 @@ int graph_get_weight(graph *g, int edge_number)
 }
 
 size_t graph_size(graph *g) { return g->datasize; }
+
+int graph_child_count(graph *g) { return g->child_count_from; }
