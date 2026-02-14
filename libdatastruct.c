@@ -1082,3 +1082,10 @@ void graph_set_weight(graph *g, int edge_num, int new_weight)
 {
     g->edges_from[edge_num]->weight = new_weight;
 }
+
+graph *graph_child(graph *g, int child)
+{
+    if (child >= g->child_count_from)
+        return NULL;
+    return g->edges_from[child]->child;
+}

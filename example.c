@@ -387,6 +387,7 @@ int main()
     graph *g = create_graph();
     graph *g_n1;
     graph *g_n2;
+    graph *g_n3;
 
     /* Putting some new values */
     int graph_val1 = 1;
@@ -411,6 +412,9 @@ int main()
 
     /* Changing weight of edge */
     graph_set_weight(g_n1, 0, 3);
+
+    /* Getting nth child */
+    g_n3 = graph_child(g_n1, 1);
 }
 
 void print_tree_dfs(tree *t)
