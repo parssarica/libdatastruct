@@ -186,3 +186,4 @@ graph *create_graph(void);
 graph *graph_add(graph *, void *, size_t);
 graph *graph_add_weighted(graph *, void *, size_t, int);
 void graph_set(graph *, void *, size_t);
+void graph_set_weight(graph *, int, int);

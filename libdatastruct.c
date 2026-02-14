@@ -1077,3 +1077,8 @@ void graph_set(graph *g, void *data, size_t datasize)
 
     memcpy(g->data, data, datasize);
 }
+
+void graph_set_weight(graph *g, int edge_num, int new_weight)
+{
+    g->edges_from[edge_num]->weight = new_weight;
+}

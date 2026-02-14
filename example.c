@@ -408,6 +408,9 @@ int main()
     /* Changing node data */
     graph_set(g, &graph_val1, sizeof(int));
     graph_set(g_n1, &graph_val8, sizeof(int));
+
+    /* Changing weight of edge */
+    graph_set_weight(g_n1, 0, 3);
 }
 
 void print_tree_dfs(tree *t)
