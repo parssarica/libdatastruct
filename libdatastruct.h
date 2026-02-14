@@ -92,6 +92,22 @@ typedef struct _tree
     struct _tree *parent;
 } tree;
 
+typedef struct _graph graph;
+
+typedef struct
+{
+    graph *parent;
+    graph *child;
+} graphedge;
+
+struct _graph
+{
+    void *data;
+    size_t datasize;
+    int child_count;
+    struct _graph **edges;
+};
+
 #define loopMap(m, key, value)                                                 \
     for (int i = 0; i < m->node_count &&                                       \
                     (key = m->items[i].key, value = m->items[i].value, 1);     \
@@ -163,3 +179,4 @@ tree *tree_child(tree *, int);
 tree *tree_parent(tree *);
 void tree_dfs(tree *, void (*)(tree *));
 void tree_destroy(tree *);
+graph *create_graph(void);

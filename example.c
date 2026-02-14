@@ -382,6 +382,9 @@ int main()
 
     /* Cleaning up */
     tree_destroy(t);
+
+    /* Creating a graph */
+    graph *g = create_graph();
 }
 
 void print_tree_dfs(tree *t)

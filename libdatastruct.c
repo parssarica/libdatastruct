@@ -998,3 +998,15 @@ void tree_destroy(tree *t)
     free(t->children);
     free(t);
 }
+
+graph *create_graph(void)
+{
+    graph *g = malloc(sizeof(graph));
+
+    g->data = NULL;
+    g->datasize = 0;
+    g->child_count = 0;
+    g->edges = NULL;
+
+    return g;
+}
