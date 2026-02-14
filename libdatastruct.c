@@ -1096,3 +1096,5 @@ int graph_get_weight(graph *g, int edge_number)
 {
     return g->edges_from[edge_number]->weight;
 }
+
+size_t graph_size(graph *g) { return g->datasize; }

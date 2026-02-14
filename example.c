@@ -420,10 +420,13 @@ int main()
     printf("Value of root's first node's second child: %d\n",
            *(int *)graph_get(g_n3));
 
-    /* Accesing edge weights */
+    /* Accessing edge weights */
     printf("Weight of edge between graph's root's first child and its second "
            "child: %d\n",
            graph_get_weight(g_n1, 1));
+
+    /* Accessing node data size */
+    printf("Size of root's first child's data size: %ld\n", graph_size(g_n1));
 }
 
 void print_tree_dfs(tree *t)
