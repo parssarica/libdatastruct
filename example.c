@@ -149,6 +149,9 @@ int main()
 
     stack *s = create_stack();
 
+    /* Checking is stack empty */
+    printf("Is stack empty: %d\n", stack_empty(s));
+
     /* Pushing values to stack */
 
     int stack_val1 = 1;
@@ -160,6 +163,9 @@ int main()
     stack_push(s, &stack_val2, sizeof(int));
     stack_push(s, &stack_val3, sizeof(int));
     stack_push(s, &stack_val4, sizeof(int));
+
+    /* Checking is stack empty */
+    printf("Is stack empty: %d\n", stack_empty(s));
 
     /* Popping some values from stack */
     printf("Popped: %d\n", *(int *)stack_pop(s));

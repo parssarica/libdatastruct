@@ -150,6 +150,7 @@ void *stack_pop(stack *);
 void *stack_peek(stack *);
 void stack_free(stack *);
 void stack_minimize(stack *);
+int stack_empty(stack *);
 queue *create_queue(void);
 void enqueue(queue *, void *, size_t);
 void *dequeue(queue *);

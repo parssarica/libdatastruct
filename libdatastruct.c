@@ -470,6 +470,8 @@ void stack_minimize(stack *s)
     s->capacity = s->node_count;
 }
 
+int stack_empty(stack *s) { return s->node_count == 0; }
+
 queue *create_queue(void)
 {
     queue *q = malloc(sizeof(queue));
