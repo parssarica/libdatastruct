@@ -168,6 +168,7 @@ void vector_insert(vector *, int, void *, int);
 int vector_length(vector *);
 void vector_free(vector *);
 void vector_minimize(vector *);
+void *vector_get(vector *, int);
 trie *trie_create(void);
 void trie_insert(trie *, char *);
 int trie_search(trie *, char *);

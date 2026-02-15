@@ -299,6 +299,9 @@ int main()
 
     printf("Vector length: %d\n", vector_length(v));
 
+    /* Accessing by index */
+    printf("Vector's third item: %d\n", *(int *)vector_get(v, 2));
+
     /* Cleaning up */
     vector_free(v);
 

@@ -799,6 +799,14 @@ void vector_minimize(vector *v)
     v->deleted_nodes = 0;
 }
 
+void *vector_get(vector *v, int index)
+{
+    if (v == NULL || v->items == NULL || index >= v->node_count)
+        return NULL;
+
+    return v->items[index].item;
+}
+
 trie *trie_create(void)
 {
     trie *t = malloc(sizeof(trie));
