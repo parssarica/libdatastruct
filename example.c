@@ -433,6 +433,9 @@ int main()
 
     /* Getting child count */
     printf("Child count of root: %d\n", graph_child_count(g));
+
+    /* Cleaning up */
+    graph_destroy(g);
 }
 
 void print_tree_dfs(tree *t)

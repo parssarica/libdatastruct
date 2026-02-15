@@ -193,3 +193,4 @@ void *graph_get(graph *);
 int graph_get_weight(graph *, int);
 size_t graph_size(graph *);
 int graph_child_count(graph *);
+void graph_destroy(graph *);

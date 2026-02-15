@@ -801,8 +801,17 @@ void vector_minimize(vector *v)
 
 void *vector_get(vector *v, int index)
 {
+    int i;
     if (v == NULL || v->items == NULL || index >= v->node_count)
         return NULL;
+
+    for (i = 0; i < v->node_count; i++)
+    {
+        if (v->items[i].deleted)
+        {
+            index++;
+        }
+    }
 
     return v->items[index].item;
 }
@@ -1108,3 +1117,37 @@ int graph_get_weight(graph *g, int edge_number)
 size_t graph_size(graph *g) { return g->datasize; }
 
 int graph_child_count(graph *g) { return g->child_count_from; }
+
+void graph_destroy(graph *g)
+{
+    int i;
+
+    if (g == NULL)
+    {
+        return;
+    }
+
+    if (g->data)
+    {
+        free(g->data);
+    }
+
+    if (g->edges_to)
+    {
+        for (i = 0; i < g->child_count_to; i++)
+        {
+            free(g->edges_to[i]);
+        }
+
+        free(g->edges_to);
+    }
+
+    for (i = 0; i < g->child_count_from; i++)
+    {
+        graph_destroy(g->edges_from[i]->child);
+        free(g->edges_from[i]);
+    }
+
+    free(g->edges_from);
+    free(g);
+}
