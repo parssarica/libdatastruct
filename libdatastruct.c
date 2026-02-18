@@ -658,24 +658,35 @@ vector *create_vector(void)
 
 void vector_add(vector *v, void *data, int datasize)
 {
-    if (v->node_count == v->capacity)
+    int i;
+
+    i = v->node_count;
+    while (i < v->capacity && v->items[i].deleted)
     {
-        if (v->capacity == 0)
+        i++;
+    }
+
+    if (i >= v->capacity)
+    {
+        while (i >= v->capacity)
         {
-            v->capacity = 1;
-        }
-        else
-        {
-            v->capacity *= 2;
+            if (v->capacity == 0)
+            {
+                v->capacity = 1;
+            }
+            else
+            {
+                v->capacity *= 2;
+            }
         }
         v->items = realloc(v->items, sizeof(vectoritem) * v->capacity);
     }
 
-    v->items[v->node_count].item = malloc(datasize);
-    v->items[v->node_count].size = datasize;
-    v->items[v->node_count].deleted = 0;
+    v->items[i].item = malloc(datasize);
+    v->items[i].size = datasize;
+    v->items[i].deleted = 0;
 
-    memcpy(v->items[v->node_count].item, data, datasize);
+    memcpy(v->items[i].item, data, datasize);
 
     v->node_count++;
 }
@@ -689,11 +700,20 @@ void vector_delete(vector *v, int index)
         return;
     }
 
+    while (index < v->capacity && v->items[index].deleted)
+    {
+        index++;
+    }
+
     for (i = 0; i < v->capacity; i++)
     {
         if (i == index)
         {
-            free(v->items[i].item);
+            if (v->items[i].item != NULL)
+            {
+                free(v->items[i].item);
+            }
+
             v->items[i].item = NULL;
             v->items[i].size = 0;
             v->items[i].deleted = 1;
@@ -803,17 +823,16 @@ void vector_minimize(vector *v)
 
 void *vector_get(vector *v, int index)
 {
-    int i;
-    if (v == NULL || v->items == NULL || index >= v->node_count)
+    if (v == NULL || v->items == NULL)
         return NULL;
 
-    for (i = 0; i < v->node_count; i++)
+    while (v->items[index].deleted)
     {
-        if (v->items[i].deleted)
-        {
-            index++;
-        }
+        index++;
     }
+
+    if (index >= v->capacity)
+        return NULL;
 
     return v->items[index].item;
 }
@@ -1122,6 +1141,9 @@ int graph_child_count(graph *g) { return g->child_count_from; }
 
 void graph_destroy(graph *g)
 {
+    graph **g_null_checker;
+    vector *visited = create_vector();
+    vector *to_visit = create_vector();
     int i;
 
     if (g == NULL)
@@ -1129,27 +1151,60 @@ void graph_destroy(graph *g)
         return;
     }
 
-    if (g->data)
+    vector_add(to_visit, &g, sizeof(graph **));
+    while (vector_length(to_visit))
     {
-        free(g->data);
-    }
-
-    if (g->edges_to)
-    {
-        for (i = 0; i < g->child_count_to; i++)
+        for (i = 0; i < vector_length(visited); i++)
         {
-            free(g->edges_to[i]);
+            if (*(graph **)vector_get(visited, i) == g)
+            {
+                vector_delete(visited, 0);
+                continue;
+            }
         }
 
-        free(g->edges_to);
+        for (i = 0; i < g->child_count_from; i++)
+        {
+            vector_add(to_visit, &g->edges_from[i]->child, sizeof(graph **));
+        }
+
+        if (g->data)
+        {
+            free(g->data);
+        }
+
+        if (g->edges_from)
+        {
+            for (i = 0; i < g->child_count_from; i++)
+            {
+                free(g->edges_from[i]);
+            }
+            free(g->edges_from);
+        }
+
+        if (g->edges_to)
+        {
+            for (i = 0; i < g->child_count_to; i++)
+            {
+                free(g->edges_to[i]);
+            }
+            free(g->edges_to);
+        }
+
+        vector_add(visited, &g, sizeof(graph **));
+        vector_delete(to_visit, 0);
+        free(g);
+        g_null_checker = (graph **)vector_get(to_visit, 0);
+        if (g_null_checker != NULL)
+        {
+            g = *g_null_checker;
+        }
+        else
+        {
+            break;
+        }
     }
 
-    for (i = 0; i < g->child_count_from; i++)
-    {
-        graph_destroy(g->edges_from[i]->child);
-        free(g->edges_from[i]);
-    }
-
-    free(g->edges_from);
-    free(g);
+    vector_free(visited);
+    vector_free(to_visit);
 }
