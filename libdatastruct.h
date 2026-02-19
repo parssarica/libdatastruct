@@ -4,6 +4,8 @@ Pars SARICA <pars@parssarica.com>
 
 #include <stddef.h>
 
+#define safefree(x) free(x); x=NULL
+
 typedef struct _linkedlist
 {
     void *data;

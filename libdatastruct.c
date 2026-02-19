@@ -3,6 +3,7 @@ Pars SARICA <pars@parssarica.com>
 */
 
 #include "libdatastruct.h"
+#include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -108,14 +109,14 @@ void linkedlist_delete(linkedlist *ll, int index)
         length++;
     }
 
-    free(x->data);
+    safefree(x->data);
     if (x->next != NULL && x->prev != NULL)
     {
         x->prev->next = x->next;
         x->next->prev = x->prev;
     }
 
-    free(x);
+    safefree(x);
 }
 
 void linkedlist_update(linkedlist *ll, int index, void *newvar,
@@ -139,7 +140,7 @@ void linkedlist_update(linkedlist *ll, int index, void *newvar,
         length++;
     }
 
-    free(x->data);
+    safefree(x->data);
     x->data = malloc(datatype_size);
 
     memcpy(x->data, newvar, datatype_size);
@@ -155,7 +156,7 @@ void linkedlist_free(linkedlist *ll)
         tmp = ll;
         if (tmp->data != NULL)
         {
-            free(tmp->data);
+            safefree(tmp->data);
         }
         if (ll->next == NULL)
         {
@@ -166,7 +167,7 @@ void linkedlist_free(linkedlist *ll)
             ll = ll->next;
         }
 
-        free(tmp);
+        safefree(tmp);
         if (to_break)
         {
             break;
@@ -227,8 +228,8 @@ void map_add(map *table, void *key, size_t keysize, void *value,
 
     if (found)
     {
-        free(table->items[i].key);
-        free(table->items[i].value);
+        safefree(table->items[i].key);
+        safefree(table->items[i].value);
         table->items[i].key = malloc(keysize);
         table->items[i].value = malloc(valuesize);
         table->items[i].keysize = keysize;
@@ -324,7 +325,7 @@ void map_update_key(map *table, void *key_old, size_t old_keysize,
     if (i == -1)
         return;
 
-    free(table->items[i].key);
+    safefree(table->items[i].key);
     table->items[i].key = malloc(new_keysize);
     memcpy(table->items[i].key, key_new, new_keysize);
 }
@@ -339,7 +340,7 @@ void map_update_value(map *table, void *key, size_t keysize, void *newvalue,
     if (i == -1)
         return;
 
-    free(table->items[i].value);
+    safefree(table->items[i].value);
     table->items[i].value = malloc(new_valuesize);
     memcpy(table->items[i].value, newvalue, new_valuesize);
 }
@@ -352,13 +353,13 @@ void map_free(map *table)
     {
         for (i = 0; i < table->node_count; i++)
         {
-            free(table->items[i].key);
-            free(table->items[i].value);
+            safefree(table->items[i].key);
+            safefree(table->items[i].value);
         }
-        free(table->items);
+        safefree(table->items);
     }
 
-    free(table);
+    safefree(table);
 }
 
 void map_minimize(map *table)
@@ -414,7 +415,7 @@ void *stack_pop(stack *s)
     s->node_count--;
     val = malloc(s->items[s->node_count].size);
     memcpy(val, s->items[s->node_count].item, s->items[s->node_count].size);
-    free(s->items[s->node_count].item);
+    safefree(s->items[s->node_count].item);
 
     to_free_list_stack = realloc(to_free_list_stack,
                                  sizeof(void *) * ++to_free_list_stack_length);
@@ -437,20 +438,20 @@ void stack_free(stack *s)
     {
         for (i = 0; i < s->node_count; i++)
         {
-            free(s->items[i].item);
+            safefree(s->items[i].item);
         }
 
-        free(s->items);
+        safefree(s->items);
     }
 
     for (i = 0; i < to_free_list_stack_length; i++)
     {
-        free(to_free_list_stack[i]);
+        safefree(to_free_list_stack[i]);
     }
-    free(to_free_list_stack);
+    safefree(to_free_list_stack);
     to_free_list_stack_length = 0;
 
-    free(s);
+    safefree(s);
 }
 
 void stack_minimize(stack *s)
@@ -460,7 +461,7 @@ void stack_minimize(stack *s)
 
     if (s->node_count == 0)
     {
-        free(s->items);
+        safefree(s->items);
         s->items = NULL;
     }
     else
@@ -529,10 +530,10 @@ void *dequeue(queue *q)
 
     for (i = 0; i <= q->node_count; i++)
     {
-        free(q->items[i].item);
+        safefree(q->items[i].item);
     }
 
-    free(q->items);
+    safefree(q->items);
 
     q->items = items;
 
@@ -549,20 +550,20 @@ void queue_free(queue *q)
     {
         for (i = 0; i < q->node_count; i++)
         {
-            free(q->items[i].item);
+            safefree(q->items[i].item);
         }
 
-        free(q->items);
+        safefree(q->items);
     }
 
     for (i = 0; i < to_free_list_queue_length; i++)
     {
-        free(to_free_list_queue[i]);
+        safefree(to_free_list_queue[i]);
     }
-    free(to_free_list_queue);
+    safefree(to_free_list_queue);
     to_free_list_queue_length = 0;
 
-    free(q);
+    safefree(q);
 }
 
 void queue_minimize(queue *q)
@@ -572,7 +573,7 @@ void queue_minimize(queue *q)
 
     if (q->node_count == 0)
     {
-        free(q->items);
+        safefree(q->items);
         q->items = NULL;
     }
     else
@@ -630,7 +631,7 @@ void *bintree_get(bintree *b) { return b->data; }
 
 void bintree_destroy(bintree *b)
 {
-    free(b->data);
+    safefree(b->data);
     if (b->left != NULL)
     {
         bintree_destroy(b->left);
@@ -641,7 +642,7 @@ void bintree_destroy(bintree *b)
         bintree_destroy(b->right);
     }
 
-    free(b);
+    safefree(b);
 }
 
 vector *create_vector(void)
@@ -661,10 +662,6 @@ void vector_add(vector *v, void *data, int datasize)
     int i;
 
     i = v->node_count;
-    while (i < v->capacity && v->items[i].deleted)
-    {
-        i++;
-    }
 
     if (i >= v->capacity)
     {
@@ -694,24 +691,28 @@ void vector_add(vector *v, void *data, int datasize)
 void vector_delete(vector *v, int index)
 {
     int i;
+    int true_index = 0;
 
     if (v->items == NULL)
     {
         return;
     }
 
-    while (index < v->capacity && v->items[index].deleted)
+    while (true_index < index)
     {
-        index++;
+        if (!v->items[true_index].deleted)
+        {
+            true_index++;
+        }
     }
 
     for (i = 0; i < v->capacity; i++)
     {
-        if (i == index)
+        if (i == true_index)
         {
             if (v->items[i].item != NULL)
             {
-                free(v->items[i].item);
+                safefree(v->items[i].item);
             }
 
             v->items[i].item = NULL;
@@ -754,8 +755,11 @@ void vector_insert(vector *v, int index, void *data, int datasize)
         v->capacity *= 2;
     }
     items = malloc((v->capacity) * sizeof(vectoritem));
+    assert(items != NULL);
     for (i = 0; i < old_capacity + 1; i++)
     {
+        assert(i >= 0);
+        assert(items != NULL);
         if (i == index)
         {
             items[i].item = malloc(datasize);
@@ -767,13 +771,16 @@ void vector_insert(vector *v, int index, void *data, int datasize)
         }
         else
         {
+            assert(i - skipped >= 0);
+            assert(v->items != NULL);
+            assert(v->items[i - skipped].item != NULL);
             items[i].item = v->items[i - skipped].item;
             items[i].size = v->items[i - skipped].size;
             items[i].deleted = v->items[i - skipped].deleted;
         }
     }
 
-    free(v->items);
+    safefree(v->items);
 
     v->items = items;
     v->node_count++;
@@ -793,13 +800,13 @@ void vector_free(vector *v)
             i = &v->items[j];
             if (!i->deleted)
             {
-                free(i->item);
+                safefree(i->item);
             }
         }
-        free(v->items);
+        safefree(v->items);
     }
 
-    free(v);
+    safefree(v);
 }
 
 void vector_minimize(vector *v)
@@ -809,7 +816,7 @@ void vector_minimize(vector *v)
 
     if (v->node_count == 0)
     {
-        free(v->items);
+        safefree(v->items);
         v->items = NULL;
     }
     else
@@ -914,8 +921,8 @@ void trie_free(trie *t)
         trie_free(t->children[i]);
     }
 
-    free(t->children);
-    free(t);
+    safefree(t->children);
+    safefree(t);
 }
 
 tree *create_tree(void)
@@ -935,7 +942,7 @@ void tree_set(tree *t, void *data, size_t datasize)
 {
     if (t->data != NULL)
     {
-        free(t->data);
+        safefree(t->data);
     }
 
     t->data = malloc(datasize);
@@ -1025,7 +1032,7 @@ void tree_destroy(tree *t)
 
     if (t->data != NULL)
     {
-        free(t->data);
+        safefree(t->data);
     }
 
     for (i = 0; i < t->child_count; i++)
@@ -1033,8 +1040,8 @@ void tree_destroy(tree *t)
         tree_destroy(t->children[i]);
     }
 
-    free(t->children);
-    free(t);
+    safefree(t->children);
+    safefree(t);
 }
 
 graph *create_graph(void)
@@ -1107,7 +1114,7 @@ void graph_set(graph *g, void *data, size_t datasize)
 {
     if (g->data != NULL)
     {
-        free(g->data);
+        safefree(g->data);
     }
 
     g->data = malloc(datasize);
@@ -1143,7 +1150,7 @@ void graph_destroy(graph *g)
 {
     graph **g_null_checker;
     vector *visited = create_vector();
-    vector *to_visit = create_vector();
+    queue *to_visit = create_queue();
     int i;
 
     if (g == NULL)
@@ -1151,8 +1158,8 @@ void graph_destroy(graph *g)
         return;
     }
 
-    vector_add(to_visit, &g, sizeof(graph **));
-    while (vector_length(to_visit))
+    enqueue(to_visit, &g, sizeof(graph **));
+    while (to_visit->node_count == 0)
     {
         for (i = 0; i < vector_length(visited); i++)
         {
@@ -1165,36 +1172,36 @@ void graph_destroy(graph *g)
 
         for (i = 0; i < g->child_count_from; i++)
         {
-            vector_add(to_visit, &g->edges_from[i]->child, sizeof(graph **));
+            enqueue(to_visit, &g->edges_from[i]->child, sizeof(graph **));
         }
 
         if (g->data)
         {
-            free(g->data);
+            safefree(g->data);
         }
 
         if (g->edges_from)
         {
             for (i = 0; i < g->child_count_from; i++)
             {
-                free(g->edges_from[i]);
+                safefree(g->edges_from[i]);
             }
-            free(g->edges_from);
+            safefree(g->edges_from);
         }
 
         if (g->edges_to)
         {
             for (i = 0; i < g->child_count_to; i++)
             {
-                free(g->edges_to[i]);
+                safefree(g->edges_to[i]);
             }
-            free(g->edges_to);
+            safefree(g->edges_to);
         }
 
         vector_add(visited, &g, sizeof(graph **));
-        vector_delete(to_visit, 0);
-        free(g);
-        g_null_checker = (graph **)vector_get(to_visit, 0);
+        dequeue(to_visit);
+        safefree(g);
+        g_null_checker = (graph **)queue_front(to_visit);
         if (g_null_checker != NULL)
         {
             g = *g_null_checker;
@@ -1206,5 +1213,5 @@ void graph_destroy(graph *g)
     }
 
     vector_free(visited);
-    vector_free(to_visit);
+    queue_free(to_visit);
 }
