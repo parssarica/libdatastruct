@@ -4,7 +4,9 @@ Pars SARICA <pars@parssarica.com>
 
 #include <stddef.h>
 
-#define safefree(x) free(x); x=NULL
+#define safefree(x)                                                            \
+    free(x);                                                                   \
+    x = NULL
 
 typedef struct _linkedlist
 {
@@ -67,14 +69,12 @@ typedef struct
 {
     void *item;
     int size;
-    int deleted;
 } vectoritem;
 
 typedef struct
 {
     int node_count;
     int capacity;
-    int deleted_nodes;
     vectoritem *items;
 } vector;
 
@@ -122,12 +122,7 @@ struct _graph
         else
 
 #define loopVector(v, out)                                                     \
-    for (int _i = 0; _i < (v->node_count + v->deleted_nodes) &&                \
-                     (out = v->items[_i].item, 1);                             \
-         _i++)                                                                 \
-        if (v->items[_i].deleted)                                              \
-            continue;                                                          \
-        else
+    for (int _i = 0; _i < (v->node_count) && (out = v->items[_i].item, 1); _i++)
 
 linkedlist *create_linkedlist(void);
 void linkedlist_add(linkedlist *, void *, size_t);

@@ -652,7 +652,6 @@ vector *create_vector(void)
     v->node_count = 0;
     v->capacity = 0;
     v->items = NULL;
-    v->deleted_nodes = 0;
 
     return v;
 }
@@ -681,7 +680,6 @@ void vector_add(vector *v, void *data, int datasize)
 
     v->items[i].item = malloc(datasize);
     v->items[i].size = datasize;
-    v->items[i].deleted = 0;
 
     memcpy(v->items[i].item, data, datasize);
 
@@ -690,100 +688,65 @@ void vector_add(vector *v, void *data, int datasize)
 
 void vector_delete(vector *v, int index)
 {
+    vectoritem *items;
     int i;
-    int true_index = 0;
+    int skipped = 0;
 
-    if (v->items == NULL)
+    items = malloc(sizeof(vectoritem) * v->capacity);
+
+    for (i = 0; i < v->node_count - 1; i++)
     {
-        return;
+        if (i == index)
+            skipped++;
+        items[i].item = v->items[i + skipped].item;
+        items[i].size = v->items[i + skipped].size;
     }
 
-    while (true_index < index)
-    {
-        if (!v->items[true_index].deleted)
-        {
-            true_index++;
-        }
-    }
+    safefree(v->items);
 
-    for (i = 0; i < v->capacity; i++)
-    {
-        if (i == true_index)
-        {
-            if (v->items[i].item != NULL)
-            {
-                safefree(v->items[i].item);
-            }
-
-            v->items[i].item = NULL;
-            v->items[i].size = 0;
-            v->items[i].deleted = 1;
-            v->node_count--;
-            v->deleted_nodes++;
-        }
-    }
+    v->items = items;
+    v->node_count--;
 }
 
 void vector_insert(vector *v, int index, void *data, int datasize)
 {
     vectoritem *items;
-    int skipped = 0;
-    int old_capacity;
     int i;
+    int skipped = 0;
 
-    if (v->items == NULL || index >= v->capacity)
+    while (v->node_count + 1 >= v->capacity)
     {
-        return;
+        if (v->capacity == 0)
+        {
+            v->capacity = 1;
+        }
+        else
+        {
+            v->capacity *= 2;
+        }
     }
+    items = malloc(sizeof(vectoritem) * v->capacity);
 
-    if (v->capacity > index && v->items[index].deleted == 1)
+    for (i = 0; i < v->node_count; i++)
     {
-        v->items[index].item = malloc(datasize);
-        v->items[index].size = datasize;
-        v->items[index].deleted = 0;
-        v->deleted_nodes--;
-
-        memcpy(v->items[index].item, data, datasize);
-
-        v->node_count++;
-        return;
-    }
-
-    old_capacity = v->capacity;
-    if (v->capacity == v->node_count)
-    {
-        v->capacity *= 2;
-    }
-    items = malloc((v->capacity) * sizeof(vectoritem));
-    assert(items != NULL);
-    for (i = 0; i < old_capacity + 1; i++)
-    {
-        assert(i >= 0);
-        assert(items != NULL);
         if (i == index)
         {
             items[i].item = malloc(datasize);
             items[i].size = datasize;
-            items[i].deleted = 0;
-
             memcpy(items[i].item, data, datasize);
             skipped++;
         }
         else
         {
-            assert(i - skipped >= 0);
-            assert(v->items != NULL);
-            assert(v->items[i - skipped].item != NULL);
-            items[i].item = v->items[i - skipped].item;
-            items[i].size = v->items[i - skipped].size;
-            items[i].deleted = v->items[i - skipped].deleted;
+            items[i].item = v->items[i].item;
+            items[i].size = v->items[i].size;
         }
     }
 
     safefree(v->items);
 
     v->items = items;
-    v->node_count++;
+    v->node_count--;
 }
 
 int vector_length(vector *v) { return v->node_count; }
@@ -798,7 +761,7 @@ void vector_free(vector *v)
         for (j = 0; j < v->node_count; j++)
         {
             i = &v->items[j];
-            if (!i->deleted)
+            if (i->item != NULL)
             {
                 safefree(i->item);
             }
@@ -825,18 +788,12 @@ void vector_minimize(vector *v)
     }
 
     v->capacity = v->node_count;
-    v->deleted_nodes = 0;
 }
 
 void *vector_get(vector *v, int index)
 {
     if (v == NULL || v->items == NULL)
         return NULL;
-
-    while (v->items[index].deleted)
-    {
-        index++;
-    }
 
     if (index >= v->capacity)
         return NULL;
@@ -1150,7 +1107,7 @@ void graph_destroy(graph *g)
 {
     graph **g_null_checker;
     vector *visited = create_vector();
-    queue *to_visit = create_queue();
+    vector *to_visit = create_vector();
     int i;
 
     if (g == NULL)
@@ -1158,21 +1115,29 @@ void graph_destroy(graph *g)
         return;
     }
 
-    enqueue(to_visit, &g, sizeof(graph **));
-    while (to_visit->node_count == 0)
+    vector_add(to_visit, &g, sizeof(graph **));
+    while (vector_length(to_visit) != 0)
     {
         for (i = 0; i < vector_length(visited); i++)
         {
             if (*(graph **)vector_get(visited, i) == g)
             {
                 vector_delete(visited, 0);
+                if (to_visit->node_count > 0)
+                {
+                    g = *(graph **)vector_get(to_visit, 0);
+                }
+                else
+                {
+                    break;
+                }
                 continue;
             }
         }
 
         for (i = 0; i < g->child_count_from; i++)
         {
-            enqueue(to_visit, &g->edges_from[i]->child, sizeof(graph **));
+            vector_add(to_visit, &g->edges_from[i]->child, sizeof(graph **));
         }
 
         if (g->data)
@@ -1199,9 +1164,20 @@ void graph_destroy(graph *g)
         }
 
         vector_add(visited, &g, sizeof(graph **));
-        dequeue(to_visit);
-        safefree(g);
-        g_null_checker = (graph **)queue_front(to_visit);
+        if (to_visit->node_count > 0)
+        {
+            vector_delete(to_visit, 0);
+        }
+
+        if (to_visit->node_count > 0)
+        {
+            g_null_checker = (graph **)vector_get(to_visit, 0);
+        }
+        else
+        {
+            g_null_checker = NULL;
+        }
+
         if (g_null_checker != NULL)
         {
             g = *g_null_checker;
@@ -1213,5 +1189,5 @@ void graph_destroy(graph *g)
     }
 
     vector_free(visited);
-    queue_free(to_visit);
+    vector_free(to_visit);
 }
