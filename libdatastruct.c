@@ -697,15 +697,19 @@ void vector_delete(vector *v, int index)
 
     items = malloc(sizeof(vectoritem) * v->capacity);
 
-    for (i = 0; i < v->node_count - 1; i++)
+    for (i = 0; i < v->node_count; i++)
     {
         if (i == index)
         {
             safefree(v->items[i].item);
             skipped++;
         }
-        items[i].item = v->items[i + skipped].item;
-        items[i].size = v->items[i + skipped].size;
+
+        if (i + skipped < v->node_count)
+        {
+            items[i].item = v->items[i + skipped].item;
+            items[i].size = v->items[i + skipped].size;
+        }
     }
 
     safefree(v->items);
@@ -760,17 +764,18 @@ int vector_length(vector *v) { return v->node_count; }
 
 void vector_free(vector *v)
 {
-    vectoritem *i;
     int j;
+
+    if (v == NULL)
+        return;
 
     if (v->items != NULL)
     {
         for (j = 0; j < v->node_count; j++)
         {
-            i = &v->items[j];
-            if (i->item != NULL)
+            if (v->items[j].item != NULL)
             {
-                safefree(i->item);
+                safefree(v->items[j].item);
             }
         }
         safefree(v->items);
@@ -787,7 +792,6 @@ void vector_minimize(vector *v)
     if (v->node_count == 0)
     {
         safefree(v->items);
-        v->items = NULL;
     }
     else
     {
