@@ -701,7 +701,7 @@ void vector_delete(vector *v, int index)
     {
         if (i == index)
         {
-            free(v->items[i].item);
+            safefree(v->items[i].item);
             skipped++;
         }
         items[i].item = v->items[i + skipped].item;
@@ -1175,6 +1175,8 @@ void graph_destroy(graph *g)
         {
             vector_delete(to_visit, 0);
         }
+
+        safefree(g);
 
         if (to_visit->node_count > 0)
         {
