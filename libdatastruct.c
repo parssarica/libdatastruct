@@ -1114,6 +1114,26 @@ size_t graph_size(graph *g) { return g->datasize; }
 
 int graph_child_count(graph *g) { return g->child_count_from; }
 
+void graph_link(graph *g1, graph *g2)
+{
+    if (g1 == NULL || g2 == NULL)
+        return;
+    g1->child_count_from++;
+    g1->edges_from =
+        realloc(g1->edges_from, sizeof(graphedge *) * g1->child_count_from);
+    g1->edges_from[g1->child_count_from - 1] = malloc(sizeof(graphedge));
+    g1->edges_from[g1->child_count_from - 1]->parent = g1;
+    g1->edges_from[g1->child_count_from - 1]->child = g2;
+    g1->edges_from[g1->child_count_from - 1]->weight = 0;
+    g2->child_count_to++;
+    g2->edges_to =
+        realloc(g2->edges_to, sizeof(graphedge *) * g2->child_count_to);
+    g2->edges_to[g2->child_count_to - 1] = malloc(sizeof(graphedge));
+    g2->edges_to[g2->child_count_to - 1]->parent = g1;
+    g2->edges_to[g2->child_count_to - 1]->child = g2;
+    g2->edges_to[g2->child_count_to - 1]->weight = 0;
+}
+
 void graph_destroy(graph *g)
 {
     graph **g_null_checker;
@@ -1133,7 +1153,7 @@ void graph_destroy(graph *g)
         {
             if (*(graph **)vector_get(visited, i) == g)
             {
-                vector_delete(visited, 0);
+                vector_delete(to_visit, 0);
                 if (to_visit->node_count > 0)
                 {
                     g = *(graph **)vector_get(to_visit, 0);

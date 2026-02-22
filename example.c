@@ -440,6 +440,9 @@ int main()
     /* Getting child count */
     printf("Child count of root: %d\n", graph_child_count(g));
 
+    /* Linking root and root's grand child */
+    graph_link(g, graph_child(g_n1, 1));
+
     /* Cleaning up */
     graph_destroy(g);
 }
