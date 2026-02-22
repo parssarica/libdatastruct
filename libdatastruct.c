@@ -978,23 +978,54 @@ tree *tree_parent(tree *t)
 
 void tree_dfs(tree *t, void (*visit)(tree *))
 {
+    tree **t_null_checker;
+    vector *to_visit = create_vector();
     int i;
 
     if (t == NULL)
-        return;
-
-    visit(t);
-
-    for (i = 0; i < t->child_count; i++)
     {
-        tree_dfs(t->children[i], visit);
+        return;
     }
+
+    vector_add(to_visit, &t, sizeof(tree **));
+    while (vector_length(to_visit) != 0)
+    {
+        for (i = 0; i < t->child_count; i++)
+        {
+            vector_add(to_visit, &t->children[i], sizeof(tree **));
+        }
+
+        visit(t);
+
+        if (to_visit->node_count > 0)
+        {
+            vector_delete(to_visit, 0);
+        }
+
+        if (to_visit->node_count > 0)
+        {
+            t_null_checker = (tree **)vector_get(to_visit, 0);
+        }
+        else
+        {
+            t_null_checker = NULL;
+        }
+
+        if (t_null_checker != NULL)
+        {
+            t = *t_null_checker;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    vector_free(to_visit);
 }
 
-void tree_destroy(tree *t)
+static void tree_node_destroy(tree *t)
 {
-    int i;
-
     if (t == NULL)
         return;
 
@@ -1003,14 +1034,15 @@ void tree_destroy(tree *t)
         safefree(t->data);
     }
 
-    for (i = 0; i < t->child_count; i++)
+    if (t->children != NULL)
     {
-        tree_destroy(t->children[i]);
+        safefree(t->children);
     }
 
-    safefree(t->children);
     safefree(t);
 }
+
+void tree_destroy(tree *t) { tree_dfs(t, tree_node_destroy); }
 
 graph *create_graph(void)
 {
