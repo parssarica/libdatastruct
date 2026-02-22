@@ -883,14 +883,55 @@ int trie_search(trie *t, char *word)
 
 void trie_free(trie *t)
 {
+    trie **t_null_checker;
+    vector *to_visit = create_vector();
     int i;
-    for (i = 0; i < t->child_count; i++)
+
+    if (t == NULL)
     {
-        trie_free(t->children[i]);
+        return;
     }
 
-    safefree(t->children);
-    safefree(t);
+    vector_add(to_visit, &t, sizeof(trie **));
+    while (vector_length(to_visit) != 0)
+    {
+        for (i = 0; i < t->child_count; i++)
+        {
+            vector_add(to_visit, &t->children[i], sizeof(trie **));
+        }
+
+        if (t->children != NULL)
+        {
+            safefree(t->children);
+        }
+
+        safefree(t);
+
+        if (to_visit->node_count > 0)
+        {
+            vector_delete(to_visit, 0);
+        }
+
+        if (to_visit->node_count > 0)
+        {
+            t_null_checker = (trie **)vector_get(to_visit, 0);
+        }
+        else
+        {
+            t_null_checker = NULL;
+        }
+
+        if (t_null_checker != NULL)
+        {
+            t = *t_null_checker;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    vector_free(to_visit);
 }
 
 tree *create_tree(void)
