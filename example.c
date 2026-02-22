@@ -443,6 +443,9 @@ int main()
     /* Linking root and root's grand child */
     graph_link(g, graph_child(g_n1, 1));
 
+    /* Linking root and root's another grand child with weight */
+    graph_link_weighted(g, graph_child(g_n2, 0), 314);
+
     /* Cleaning up */
     graph_destroy(g);
 }

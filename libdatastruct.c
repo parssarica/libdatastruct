@@ -1134,6 +1134,16 @@ void graph_link(graph *g1, graph *g2)
     g2->edges_to[g2->child_count_to - 1]->weight = 0;
 }
 
+void graph_link_weighted(graph *g1, graph *g2, int weight)
+{
+    if (g1 == NULL || g2 == NULL)
+        return;
+
+    graph_link(g1, g2);
+    g1->edges_from[g1->child_count_from - 1]->weight = weight;
+    g2->edges_to[g2->child_count_to - 1]->weight = weight;
+}
+
 void graph_destroy(graph *g)
 {
     graph **g_null_checker;
