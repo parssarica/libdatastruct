@@ -158,6 +158,7 @@ bintree *create_bintree(void);
 void bintree_set_nodes(bintree *);
 void bintree_set(bintree *, void *, size_t);
 void *bintree_get(bintree *);
+bintree *bintree_left(bintree *);
 void bintree_destroy(bintree *);
 vector *create_vector(void);
 void vector_add(vector *, void *, int);

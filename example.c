@@ -247,7 +247,8 @@ int main()
 
     /* Accessing values */
 
-    printf("Value of tree's left node: %d\n", *(int *)bintree_get(b->left));
+    printf("Value of tree's left node: %d\n",
+           *(int *)bintree_get(bintree_left(b)));
     printf("Value of tree's left node's right node: %d\n",
            *(int *)bintree_get(b->left->right));
     printf("Value of tree's right node's left node: %d\n",

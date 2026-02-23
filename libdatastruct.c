@@ -629,6 +629,8 @@ void bintree_set(bintree *b, void *data, size_t datasize)
 
 void *bintree_get(bintree *b) { return b->data; }
 
+bintree *bintree_left(bintree *b) { return b->left; }
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);
