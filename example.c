@@ -222,12 +222,6 @@ int main()
 
     bintree *b = create_bintree();
 
-    /* Initializing some nodes */
-
-    bintree_set_nodes(b);
-    bintree_set_nodes(b->left);
-    bintree_set_nodes(b->right);
-
     /* Setting values */
     int bintree_val1 = 1;
     int bintree_val2 = 2;
@@ -237,13 +231,16 @@ int main()
     int bintree_val6 = 6;
     int bintree_val7 = 7;
 
+    /* Putting values */
+    bintree_insert_left(b, &bintree_val2, sizeof(int));
+    bintree_insert_right(b, &bintree_val3, sizeof(int));
+    bintree_insert_left(bintree_left(b), &bintree_val4, sizeof(int));
+    bintree_insert_right(bintree_left(b), &bintree_val5, sizeof(int));
+    bintree_insert_left(bintree_right(b), &bintree_val6, sizeof(int));
+    bintree_insert_right(bintree_right(b), &bintree_val7, sizeof(int));
+
+    /* Changing values */
     bintree_set(b, &bintree_val1, sizeof(int));
-    bintree_set(b->left, &bintree_val2, sizeof(int));
-    bintree_set(b->right, &bintree_val3, sizeof(int));
-    bintree_set(b->left->left, &bintree_val4, sizeof(int));
-    bintree_set(b->left->right, &bintree_val5, sizeof(int));
-    bintree_set(b->right->left, &bintree_val6, sizeof(int));
-    bintree_set(b->right->right, &bintree_val7, sizeof(int));
 
     /* Accessing values */
 

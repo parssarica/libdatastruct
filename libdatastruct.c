@@ -633,6 +633,34 @@ bintree *bintree_left(bintree *b) { return b->left; }
 
 bintree *bintree_right(bintree *b) { return b->right; }
 
+bintree *bintree_insert_left(bintree *b, void *data, size_t datasize)
+{
+    if (b == NULL || b->left != NULL)
+        return NULL;
+
+    b->left = create_bintree();
+    b->left->data = malloc(datasize);
+    b->left->size = datasize;
+
+    memcpy(b->left->data, data, datasize);
+
+    return b->left;
+}
+
+bintree *bintree_insert_right(bintree *b, void *data, size_t datasize)
+{
+    if (b == NULL || b->right != NULL)
+        return NULL;
+
+    b->right = create_bintree();
+    b->right->data = malloc(datasize);
+    b->right->size = datasize;
+
+    memcpy(b->right->data, data, datasize);
+
+    return b->right;
+}
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);
