@@ -631,6 +631,8 @@ void *bintree_get(bintree *b) { return b->data; }
 
 bintree *bintree_left(bintree *b) { return b->left; }
 
+bintree *bintree_right(bintree *b) { return b->right; }
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);

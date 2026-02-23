@@ -250,9 +250,9 @@ int main()
     printf("Value of tree's left node: %d\n",
            *(int *)bintree_get(bintree_left(b)));
     printf("Value of tree's left node's right node: %d\n",
-           *(int *)bintree_get(b->left->right));
+           *(int *)bintree_get(bintree_right(bintree_left(b))));
     printf("Value of tree's right node's left node: %d\n",
-           *(int *)bintree_get(b->right->left));
+           *(int *)bintree_get(bintree_left(bintree_right(b))));
 
     /* Cleaning up */
     bintree_destroy(b);
