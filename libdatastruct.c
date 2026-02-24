@@ -730,6 +730,13 @@ static void bintree_node_destroy(bintree *b)
 
 void bintree_destroy(bintree *b) { bintree_bfs(b, bintree_node_destroy); }
 
+void bintree_remove_left(bintree *b)
+{
+    bintree_destroy(b->left);
+
+    b->left = NULL;
+}
+
 vector *create_vector(void)
 {
     vector *v = malloc(sizeof(vector));

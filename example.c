@@ -281,6 +281,12 @@ int main()
     /* Getting size of nodes */
     printf("Size of root node: %d\n", bintree_size(b));
 
+    /* Deleting the left child */
+    bintree_remove_left(b);
+    bintree_insert_left(
+        b, &bintree_val1,
+        sizeof(int)); // Putting a dummy value so destroy function doesn't fail
+
     /* Looping through binary tree using BFS algorithm */
     bintree_bfs(b, print_bintree_bfs);
     printf("\n");
