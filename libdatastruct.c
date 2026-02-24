@@ -663,6 +663,8 @@ bintree *bintree_insert_right(bintree *b, void *data, size_t datasize)
 
 int bintree_has_left(bintree *b) { return b->left != NULL; }
 
+int bintree_has_right(bintree *b) { return b->right != NULL; }
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);

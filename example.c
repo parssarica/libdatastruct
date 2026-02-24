@@ -264,6 +264,19 @@ int main()
     printf("Does tree's left child's left child have a left child: %s\n",
            bintree_has_left(bintree_left(bintree_left(b))) ? "Yes" : "No");
 
+    /* Checking nodes have right children */
+
+    printf("Does tree have a right child: %s\n",
+           bintree_has_right(b) ? "Yes" : "No");
+    printf("Does tree's left child have a right child: %s\n",
+           bintree_has_right(bintree_left(b)) ? "Yes" : "No");
+    printf("Does tree's right child have a right child: %s\n",
+           bintree_has_right(bintree_right(b)) ? "Yes" : "No");
+    printf("Does tree's right child's left child have a right child: %s\n",
+           bintree_has_right(bintree_left(bintree_right(b))) ? "Yes" : "No");
+    printf("Does tree's left child's left child have a right child: %s\n",
+           bintree_has_right(bintree_left(bintree_left(b))) ? "Yes" : "No");
+
     /* Cleaning up */
     bintree_destroy(b);
 

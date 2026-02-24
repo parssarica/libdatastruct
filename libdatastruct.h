@@ -163,6 +163,7 @@ bintree *bintree_right(bintree *);
 bintree *bintree_insert_left(bintree *, void *, size_t);
 bintree *bintree_insert_right(bintree *, void *, size_t);
 int bintree_has_left(bintree *);
+int bintree_has_right(bintree *);
 void bintree_destroy(bintree *);
 vector *create_vector(void);
 void vector_add(vector *, void *, int);
