@@ -715,21 +715,20 @@ void bintree_bfs(bintree *b, void (*visit)(bintree *))
     vector_free(to_visit);
 }
 
-void bintree_destroy(bintree *b)
+static void bintree_node_destroy(bintree *b)
 {
-    safefree(b->data);
-    if (b->left != NULL)
-    {
-        bintree_destroy(b->left);
-    }
+    if (b == NULL)
+        return;
 
-    if (b->right != NULL)
+    if (b->data != NULL)
     {
-        bintree_destroy(b->right);
+        safefree(b->data);
     }
 
     safefree(b);
 }
+
+void bintree_destroy(bintree *b) { bintree_bfs(b, bintree_node_destroy); }
 
 vector *create_vector(void)
 {
