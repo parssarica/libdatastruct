@@ -3,6 +3,7 @@
 #include <string.h>
 
 void print_tree_dfs(tree *);
+void print_bintree_bfs(bintree *);
 
 int main()
 {
@@ -280,6 +281,10 @@ int main()
     /* Getting size of nodes */
     printf("Size of root node: %d\n", bintree_size(b));
 
+    /* Looping through binary tree using BFS algorithm */
+    bintree_bfs(b, print_bintree_bfs);
+    printf("\n");
+
     /* Cleaning up */
     bintree_destroy(b);
 
@@ -481,4 +486,10 @@ void print_tree_dfs(tree *t)
 {
     /* Print function for tree_dfs function */
     printf("%d ", *(int *)tree_get(t));
+}
+
+void print_bintree_bfs(bintree *b)
+{
+    /* Print function for bintree_bfs function */
+    printf("%d ", *(int *)bintree_get(b));
 }

@@ -667,6 +667,54 @@ int bintree_has_right(bintree *b) { return b->right != NULL; }
 
 int bintree_size(bintree *b) { return b->size; }
 
+void bintree_bfs(bintree *b, void (*visit)(bintree *))
+{
+    bintree **b_null_checker;
+    vector *to_visit = create_vector();
+
+    if (b == NULL)
+    {
+        return;
+    }
+
+    vector_add(to_visit, &b, sizeof(bintree **));
+    while (vector_length(to_visit) != 0)
+    {
+        if (b->left != NULL)
+            vector_add(to_visit, &b->left, sizeof(bintree **));
+
+        if (b->right != NULL)
+            vector_add(to_visit, &b->right, sizeof(bintree **));
+
+        visit(b);
+
+        if (to_visit->node_count > 0)
+        {
+            vector_delete(to_visit, 0);
+        }
+
+        if (to_visit->node_count > 0)
+        {
+            b_null_checker = (bintree **)vector_get(to_visit, 0);
+        }
+        else
+        {
+            b_null_checker = NULL;
+        }
+
+        if (b_null_checker != NULL)
+        {
+            b = *b_null_checker;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    vector_free(to_visit);
+}
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);
