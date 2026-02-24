@@ -1103,7 +1103,7 @@ tree *tree_parent(tree *t)
     return t->parent;
 }
 
-void tree_dfs(tree *t, void (*visit)(tree *))
+void tree_bfs(tree *t, void (*visit)(tree *))
 {
     tree **t_null_checker;
     vector *to_visit = create_vector();
@@ -1169,7 +1169,7 @@ static void tree_node_destroy(tree *t)
     safefree(t);
 }
 
-void tree_destroy(tree *t) { tree_dfs(t, tree_node_destroy); }
+void tree_destroy(tree *t) { tree_bfs(t, tree_node_destroy); }
 
 graph *create_graph(void)
 {

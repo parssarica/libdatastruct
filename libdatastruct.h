@@ -187,7 +187,7 @@ size_t tree_size(tree *);
 int tree_child_count(tree *);
 tree *tree_child(tree *, int);
 tree *tree_parent(tree *);
-void tree_dfs(tree *, void (*)(tree *));
+void tree_bfs(tree *, void (*)(tree *));
 void tree_destroy(tree *);
 graph *create_graph(void);
 graph *graph_add(graph *, void *, size_t);

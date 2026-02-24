@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void print_tree_dfs(tree *);
+void print_tree_bfs(tree *);
 void print_bintree_bfs(bintree *);
 
 int main()
@@ -418,7 +418,7 @@ int main()
     printf("Value of the previous node's parent: %d\n", *(int *)tree_get(n4));
 
     /* Looping through the tree */
-    tree_dfs(t, print_tree_dfs);
+    tree_bfs(t, print_tree_bfs);
     printf("\n");
 
     /* Cleaning up */
@@ -482,7 +482,7 @@ int main()
     graph_destroy(g);
 }
 
-void print_tree_dfs(tree *t)
+void print_tree_bfs(tree *t)
 {
     /* Print function for tree_dfs function */
     printf("%d ", *(int *)tree_get(t));
