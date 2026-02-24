@@ -665,6 +665,8 @@ int bintree_has_left(bintree *b) { return b->left != NULL; }
 
 int bintree_has_right(bintree *b) { return b->right != NULL; }
 
+int bintree_size(bintree *b) { return b->size; }
+
 void bintree_destroy(bintree *b)
 {
     safefree(b->data);

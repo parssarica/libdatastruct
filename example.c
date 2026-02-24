@@ -277,6 +277,9 @@ int main()
     printf("Does tree's left child's left child have a right child: %s\n",
            bintree_has_right(bintree_left(bintree_left(b))) ? "Yes" : "No");
 
+    /* Getting size of nodes */
+    printf("Size of root node: %d\n", bintree_size(b));
+
     /* Cleaning up */
     bintree_destroy(b);
 

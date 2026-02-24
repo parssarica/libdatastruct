@@ -157,6 +157,7 @@ void *queue_front(queue *);
 bintree *create_bintree(void);
 void bintree_set_nodes(bintree *);
 void bintree_set(bintree *, void *, size_t);
+int bintree_size(bintree *);
 void *bintree_get(bintree *);
 bintree *bintree_left(bintree *);
 bintree *bintree_right(bintree *);
