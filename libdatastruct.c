@@ -737,6 +737,13 @@ void bintree_remove_left(bintree *b)
     b->left = NULL;
 }
 
+void bintree_remove_right(bintree *b)
+{
+    bintree_destroy(b->right);
+
+    b->right = NULL;
+}
+
 vector *create_vector(void)
 {
     vector *v = malloc(sizeof(vector));

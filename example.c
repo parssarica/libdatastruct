@@ -287,6 +287,12 @@ int main()
         b, &bintree_val1,
         sizeof(int)); // Putting a dummy value so destroy function doesn't fail
 
+    /* Deleting the right child */
+    bintree_remove_right(b);
+    bintree_insert_right(
+        b, &bintree_val1,
+        sizeof(int)); // Putting a dummy value so destroy function doesn't fail
+
     /* Looping through binary tree using BFS algorithm */
     bintree_bfs(b, print_bintree_bfs);
     printf("\n");
