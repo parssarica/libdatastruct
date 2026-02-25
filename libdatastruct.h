@@ -143,7 +143,7 @@ void map_free(map *);
 void map_minimize(map *);
 stack *create_stack(void);
 void stack_push(stack *, void *, size_t);
-void *stack_pop(stack *);
+void stack_pop(stack *, void *);
 void *stack_peek(stack *);
 void stack_free(stack *);
 void stack_minimize(stack *);

@@ -169,16 +169,28 @@ int main()
     printf("Is stack empty: %d\n", stack_empty(s));
 
     /* Popping some values from stack */
-    printf("Popped: %d\n", *(int *)stack_pop(s));
-    printf("Popped: %d\n", *(int *)stack_pop(s));
-    printf("Popped: %d\n", *(int *)stack_pop(s));
-    printf("Popped: %d\n", *(int *)stack_pop(s));
+    int popped_val1;
+    int popped_val2;
+    int popped_val3;
+    int popped_val4;
+
+    stack_pop(s, &popped_val1);
+    stack_pop(s, &popped_val2);
+    stack_pop(s, &popped_val3);
+    stack_pop(s, &popped_val4);
+    printf("Popped: %d\n", popped_val1);
+    printf("Popped: %d\n", popped_val2);
+    printf("Popped: %d\n", popped_val3);
+    printf("Popped: %d\n", popped_val4);
 
     /* Peeking a value from stack */
 
+    int popped_val5;
     stack_push(s, &stack_val1, sizeof(int));
     printf("Peeked: %d\n", *(int *)stack_peek(s));
-    printf("Popped: %d\n", *(int *)stack_pop(s));
+
+    stack_pop(s, &popped_val5);
+    printf("Popped: %d\n", popped_val5);
 
     /* Minimizing stack */
     stack_minimize(s);

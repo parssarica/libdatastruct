@@ -8,8 +8,6 @@ Pars SARICA <pars@parssarica.com>
 #include <stdlib.h>
 #include <string.h>
 
-void **to_free_list_stack;
-int to_free_list_stack_length;
 void **to_free_list_queue;
 int to_free_list_queue_length;
 
@@ -405,22 +403,14 @@ void stack_push(stack *s, void *value, size_t valuesize)
     s->node_count++;
 }
 
-void *stack_pop(stack *s)
+void stack_pop(stack *s, void *out)
 {
     if (s->items == NULL)
-        return NULL;
-
-    void *val;
+        return;
 
     s->node_count--;
-    val = malloc(s->items[s->node_count].size);
-    memcpy(val, s->items[s->node_count].item, s->items[s->node_count].size);
+    memcpy(out, s->items[s->node_count].item, s->items[s->node_count].size);
     safefree(s->items[s->node_count].item);
-
-    to_free_list_stack = realloc(to_free_list_stack,
-                                 sizeof(void *) * ++to_free_list_stack_length);
-    to_free_list_stack[to_free_list_stack_length - 1] = val;
-    return val;
 }
 
 void *stack_peek(stack *s)
@@ -443,13 +433,6 @@ void stack_free(stack *s)
 
         safefree(s->items);
     }
-
-    for (i = 0; i < to_free_list_stack_length; i++)
-    {
-        safefree(to_free_list_stack[i]);
-    }
-    safefree(to_free_list_stack);
-    to_free_list_stack_length = 0;
 
     safefree(s);
 }
