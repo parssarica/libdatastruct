@@ -536,6 +536,8 @@ void queue_minimize(queue *q)
     q->capacity = q->node_count;
 }
 
+int queue_is_empty(queue *q) { return q->node_count == 0; }
+
 void *queue_front(queue *q)
 {
     if (q->items == NULL || q->node_count <= 0)

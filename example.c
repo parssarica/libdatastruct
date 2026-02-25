@@ -229,6 +229,9 @@ int main()
     dequeue(q, &dequeued_val3);
     dequeue(q, &dequeued_val4);
 
+    /* Checking is queue empty */
+    printf("Is queue empty: %s\n", queue_is_empty(q) ? "Yes" : "No");
+
     printf("Value dequeued: %d\n", dequeued_val1);
     printf("Value dequeued: %d\n", dequeued_val2);
     printf("Value dequeued: %d\n", dequeued_val3);
@@ -236,6 +239,9 @@ int main()
     printf("Value to be dequeued: %d\n", *(int *)queue_front(q));
     dequeue(q, &dequeued_val5);
     printf("Value dequeued: %d\n", dequeued_val5);
+
+    /* Checking is queue empty */
+    printf("Is queue empty: %s\n", queue_is_empty(q) ? "Yes" : "No");
 
     /* Minimizing queue */
     queue_minimize(q);

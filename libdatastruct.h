@@ -153,6 +153,7 @@ void enqueue(queue *, void *, size_t);
 void dequeue(queue *, void *);
 void queue_free(queue *);
 void queue_minimize(queue *);
+int queue_is_empty(queue *);
 void *queue_front(queue *);
 bintree *create_bintree(void);
 void bintree_set_nodes(bintree *);
