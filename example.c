@@ -218,12 +218,24 @@ int main()
 
     /* Dequeueing them to access them again */
 
-    printf("Value dequeued: %d\n", *(int *)dequeue(q));
-    printf("Value dequeued: %d\n", *(int *)dequeue(q));
-    printf("Value dequeued: %d\n", *(int *)dequeue(q));
-    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    int dequeued_val1;
+    int dequeued_val2;
+    int dequeued_val3;
+    int dequeued_val4;
+    int dequeued_val5;
+
+    dequeue(q, &dequeued_val1);
+    dequeue(q, &dequeued_val2);
+    dequeue(q, &dequeued_val3);
+    dequeue(q, &dequeued_val4);
+
+    printf("Value dequeued: %d\n", dequeued_val1);
+    printf("Value dequeued: %d\n", dequeued_val2);
+    printf("Value dequeued: %d\n", dequeued_val3);
+    printf("Value dequeued: %d\n", dequeued_val4);
     printf("Value to be dequeued: %d\n", *(int *)queue_front(q));
-    printf("Value dequeued: %d\n", *(int *)dequeue(q));
+    dequeue(q, &dequeued_val5);
+    printf("Value dequeued: %d\n", dequeued_val5);
 
     /* Minimizing queue */
     queue_minimize(q);

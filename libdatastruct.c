@@ -8,9 +8,6 @@ Pars SARICA <pars@parssarica.com>
 #include <stdlib.h>
 #include <string.h>
 
-void **to_free_list_queue;
-int to_free_list_queue_length;
-
 linkedlist *create_linkedlist(void)
 {
     linkedlist *llist = malloc(sizeof(linkedlist));
@@ -490,40 +487,19 @@ void enqueue(queue *q, void *data, size_t datasize)
     q->node_count++;
 }
 
-void *dequeue(queue *q)
+void dequeue(queue *q, void *out)
 {
-    if (q->items == NULL)
-        return NULL;
-
-    void *val;
-    int i;
-    queueitem *items;
+    if (q->items == NULL || q->node_count <= 0)
+        return;
 
     q->node_count--;
-    val = malloc(q->items[0].size);
-    memcpy(val, q->items[0].item, q->items[0].size);
+    memcpy(out, q->items[0].item, q->items[0].size);
+    safefree(q->items[0].item);
 
-    items = malloc(sizeof(queueitem) * q->capacity);
-    for (i = 0; i < q->node_count; i++)
+    if (q->node_count > 0)
     {
-        items[i].item = malloc(q->items[i + 1].size);
-        items[i].size = q->items[i + 1].size;
-        memcpy(items[i].item, q->items[i + 1].item, q->items[i + 1].size);
+        memmove(&q->items[0], &q->items[1], sizeof(queueitem) * q->node_count);
     }
-
-    for (i = 0; i <= q->node_count; i++)
-    {
-        safefree(q->items[i].item);
-    }
-
-    safefree(q->items);
-
-    q->items = items;
-
-    to_free_list_queue = realloc(to_free_list_queue,
-                                 sizeof(void *) * ++to_free_list_queue_length);
-    to_free_list_queue[to_free_list_queue_length - 1] = val;
-    return val;
 }
 
 void queue_free(queue *q)
@@ -538,13 +514,6 @@ void queue_free(queue *q)
 
         safefree(q->items);
     }
-
-    for (i = 0; i < to_free_list_queue_length; i++)
-    {
-        safefree(to_free_list_queue[i]);
-    }
-    safefree(to_free_list_queue);
-    to_free_list_queue_length = 0;
 
     safefree(q);
 }
@@ -569,7 +538,7 @@ void queue_minimize(queue *q)
 
 void *queue_front(queue *q)
 {
-    if (q->items == NULL)
+    if (q->items == NULL || q->node_count <= 0)
         return NULL;
 
     return q->items[q->node_count - 1].item;

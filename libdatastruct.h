@@ -150,7 +150,7 @@ void stack_minimize(stack *);
 int stack_empty(stack *);
 queue *create_queue(void);
 void enqueue(queue *, void *, size_t);
-void *dequeue(queue *);
+void dequeue(queue *, void *);
 void queue_free(queue *);
 void queue_minimize(queue *);
 void *queue_front(queue *);
