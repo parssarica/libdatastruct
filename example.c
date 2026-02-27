@@ -539,8 +539,10 @@ int main()
     lds_string_append(str, "world!");
 
     /* Getting value */
-
     printf("Value of string: %s\n", lds_string_cstr(str));
+
+    /* Getting the length */
+    printf("Length of the string: %ld\n", lds_string_len(str));
 }
 
 void print_tree_bfs(tree *t)

@@ -2142,3 +2142,5 @@ int lds_string_append(lds_string *s, char *newstr)
 }
 
 const char *lds_string_cstr(lds_string *s) { return s->data; }
+
+size_t lds_string_len(lds_string *s) { return s->len; }
