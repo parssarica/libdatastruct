@@ -1,5 +1,6 @@
 #include "libdatastruct.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void print_tree_bfs(tree *);
@@ -238,6 +239,13 @@ int main()
     printf("Value dequeued: %d\n", dequeued_val4);
     printf("Value to be dequeued: %d\n", *(int *)queue_front(q));
     dequeue(q, &dequeued_val5);
+
+    /* Dequeue returns an error code, so you can detect failures */
+    if (!dequeue(q, &dequeued_val5))
+    {
+        printf("Dequeue failed (expected)\n");
+    }
+
     printf("Value dequeued: %d\n", dequeued_val5);
 
     /* Checking is queue empty */
