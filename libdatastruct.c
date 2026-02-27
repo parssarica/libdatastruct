@@ -2144,3 +2144,20 @@ int lds_string_append(lds_string *s, char *newstr)
 const char *lds_string_cstr(lds_string *s) { return s->data; }
 
 size_t lds_string_len(lds_string *s) { return s->len; }
+
+lds_string *lds_string_from(char *new_str)
+{
+    lds_string *s = lds_create_string();
+
+    if (s == NULL)
+    {
+        return NULL;
+    }
+
+    if (!lds_string_append(s, new_str))
+    {
+        return NULL;
+    }
+
+    return s;
+}

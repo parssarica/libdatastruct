@@ -543,6 +543,9 @@ int main()
 
     /* Getting the length */
     printf("Length of the string: %ld\n", lds_string_len(str));
+
+    /* Creating another string from a char* string */
+    lds_string *str2 = lds_string_from("C is awesome!");
 }
 
 void print_tree_bfs(tree *t)
