@@ -317,7 +317,7 @@ int main()
            bintree_has_right(bintree_left(bintree_left(b))) ? "Yes" : "No");
 
     /* Getting size of nodes */
-    printf("Size of root node: %d\n", bintree_size(b));
+    printf("Size of root node: %ld\n", bintree_size(b));
 
     /* Deleting the left child */
     bintree_remove_left(b);
@@ -385,7 +385,7 @@ int main()
 
     /* Getting the length */
 
-    printf("Vector length: %d\n", vector_length(v));
+    printf("Vector length: %ld\n", vector_length(v));
 
     /* Accessing by index */
     printf("Vector's third item: %d\n", *(int *)vector_get(v, 2));

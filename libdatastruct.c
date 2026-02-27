@@ -282,7 +282,7 @@ int map_add(map *table, void *key, size_t keysize, void *value,
         return 0;
     }
 
-    int i = 0;
+    size_t i = 0;
     int found = 0;
     for (i = 0; i < table->node_count; i++)
     {
@@ -367,7 +367,7 @@ static int map_get_index(map *table, void *key, size_t keysize)
     if (table->items == NULL)
         return -1;
 
-    int i;
+    size_t i;
 
     for (i = 0; i < table->node_count; i++)
     {
@@ -461,9 +461,9 @@ int map_update_value(map *table, void *key, size_t keysize, void *newvalue,
 
 int map_free(map *table)
 {
-    int i = 0;
+    size_t i = 0;
 
-    if (table == NULL || table->node_count < 0)
+    if (table == NULL)
     {
         return 0;
     }
@@ -522,7 +522,7 @@ stack *create_stack(void)
 
 int stack_push(stack *s, void *value, size_t valuesize)
 {
-    if (s == NULL || s->node_count < 0)
+    if (s == NULL)
     {
         return 0;
     }
@@ -583,12 +583,12 @@ void *stack_peek(stack *s)
 
 int stack_free(stack *s)
 {
-    if (s == NULL || s->node_count < 0)
+    if (s == NULL)
     {
         return 0;
     }
 
-    int i = 0;
+    size_t i = 0;
     if (s->items != NULL)
     {
         for (i = 0; i < s->node_count; i++)
@@ -660,7 +660,7 @@ queue *create_queue(void)
 
 int enqueue(queue *q, void *data, size_t datasize)
 {
-    if (q == NULL || q->node_count < 0)
+    if (q == NULL)
     {
         return 0;
     }
@@ -716,9 +716,9 @@ int dequeue(queue *q, void *out)
 
 int queue_free(queue *q)
 {
-    int i = 0;
+    size_t i = 0;
 
-    if (q == NULL || q->node_count < 0)
+    if (q == NULL)
     {
         return 0;
     }
@@ -933,7 +933,7 @@ int bintree_has_right(bintree *b)
     return b->right != NULL;
 }
 
-int bintree_size(bintree *b)
+size_t bintree_size(bintree *b)
 {
     if (b == NULL)
     {
@@ -1074,7 +1074,7 @@ vector *create_vector(void)
 
 int vector_add(vector *v, void *data, int datasize)
 {
-    int i;
+    size_t i;
 
     if (v == NULL)
     {
@@ -1118,10 +1118,10 @@ int vector_add(vector *v, void *data, int datasize)
     return 1;
 }
 
-int vector_delete(vector *v, int index)
+int vector_delete(vector *v, size_t index)
 {
     vectoritem *items;
-    int i;
+    size_t i;
     int skipped = 0;
 
     if (v == NULL || v->items == NULL)
@@ -1163,10 +1163,10 @@ int vector_delete(vector *v, int index)
     return 1;
 }
 
-int vector_insert(vector *v, int index, void *data, int datasize)
+int vector_insert(vector *v, size_t index, void *data, size_t datasize)
 {
     vectoritem *items;
-    int i;
+    size_t i;
     int skipped = 0;
 
     if (v == NULL || v->items == NULL)
@@ -1216,7 +1216,7 @@ int vector_insert(vector *v, int index, void *data, int datasize)
     return 1;
 }
 
-int vector_length(vector *v)
+size_t vector_length(vector *v)
 {
     if (v == NULL)
     {
@@ -1228,7 +1228,7 @@ int vector_length(vector *v)
 
 int vector_free(vector *v)
 {
-    int j;
+    size_t j;
 
     if (v == NULL)
     {
@@ -1282,7 +1282,7 @@ int vector_minimize(vector *v)
     return 1;
 }
 
-void *vector_get(vector *v, int index)
+void *vector_get(vector *v, size_t index)
 {
     if (v == NULL || v->items == NULL || index >= v->capacity)
         return NULL;
@@ -1309,7 +1309,7 @@ trie *trie_create(void)
 static int trie_find(trie *t, char character)
 {
     int found = -1;
-    int i;
+    size_t i;
 
     if (t == NULL || t->children == NULL)
     {
@@ -1395,7 +1395,7 @@ int trie_free(trie *t)
 {
     trie **t_null_checker;
     vector *to_visit = create_vector();
-    int i;
+    size_t i;
 
     if (t == NULL || t->children == NULL || to_visit == NULL)
     {
@@ -1501,7 +1501,7 @@ int tree_set(tree *t, void *data, size_t datasize)
 
 tree *tree_add(tree *t, void *data, size_t datasize)
 {
-    if (t == NULL || t->child_count < 0)
+    if (t == NULL)
     {
         return NULL;
     }
@@ -1561,7 +1561,7 @@ int tree_child_count(tree *t)
     return t->child_count;
 }
 
-tree *tree_child(tree *t, int child)
+tree *tree_child(tree *t, size_t child)
 {
     if (t == NULL || child >= t->child_count || t->children == NULL)
         return NULL;
@@ -1581,7 +1581,7 @@ int tree_bfs(tree *t, void (*visit)(tree *))
 {
     tree **t_null_checker;
     vector *to_visit = create_vector();
-    int i;
+    size_t i;
 
     if (t == NULL || to_visit == NULL)
     {
@@ -1838,7 +1838,7 @@ int graph_set(graph *g, void *data, size_t datasize)
     return 1;
 }
 
-int graph_set_weight(graph *g, int edge_num, int new_weight)
+int graph_set_weight(graph *g, size_t edge_num, int new_weight)
 {
     if (g == NULL || g->edges_from == NULL || g->child_count_from <= edge_num ||
         g->edges_from[edge_num] == NULL)
@@ -1850,7 +1850,7 @@ int graph_set_weight(graph *g, int edge_num, int new_weight)
     return 1;
 }
 
-graph *graph_child(graph *g, int child)
+graph *graph_child(graph *g, size_t child)
 {
     if (g == NULL || child >= g->child_count_from || g->edges_from == NULL ||
         g->edges_from[child] == NULL)
@@ -1871,7 +1871,7 @@ void *graph_get(graph *g)
     return g->data;
 }
 
-int graph_get_weight(graph *g, int edge_number)
+int graph_get_weight(graph *g, size_t edge_number)
 {
     if (g == NULL || g->edges_from == NULL ||
         edge_number >= g->child_count_from ||
@@ -1968,7 +1968,7 @@ int graph_destroy(graph *g)
     graph **g_null_checker;
     vector *visited = create_vector();
     vector *to_visit = create_vector();
-    int i;
+    size_t i;
 
     if (g == NULL || visited == NULL || to_visit == NULL)
     {

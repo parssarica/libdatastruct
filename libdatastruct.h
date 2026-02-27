@@ -26,41 +26,41 @@ typedef struct
 
 typedef struct
 {
-    int node_count;
-    int capacity;
+    size_t node_count;
+    size_t capacity;
     mapitem *items;
 } map;
 
 typedef struct
 {
     void *item;
-    int size;
+    size_t size;
 } stackitem;
 
 typedef struct
 {
-    int node_count;
-    int capacity;
+    size_t node_count;
+    size_t capacity;
     stackitem *items;
 } stack;
 
 typedef struct
 {
     void *item;
-    int size;
+    size_t size;
 } queueitem;
 
 typedef struct
 {
-    int node_count;
-    int capacity;
+    size_t node_count;
+    size_t capacity;
     queueitem *items;
 } queue;
 
 typedef struct _bintree
 {
     void *data;
-    int size;
+    size_t size;
     struct _bintree *left;
     struct _bintree *right;
 } bintree;
@@ -68,20 +68,20 @@ typedef struct _bintree
 typedef struct
 {
     void *item;
-    int size;
+    size_t size;
 } vectoritem;
 
 typedef struct
 {
-    int node_count;
-    int capacity;
+    size_t node_count;
+    size_t capacity;
     vectoritem *items;
 } vector;
 
 typedef struct _trie
 {
     char character;
-    int child_count;
+    size_t child_count;
     struct _trie **children;
 } trie;
 
@@ -89,7 +89,7 @@ typedef struct _tree
 {
     void *data;
     size_t datasize;
-    int child_count;
+    size_t child_count;
     struct _tree **children;
     struct _tree *parent;
 } tree;
@@ -107,22 +107,23 @@ struct _graph
 {
     void *data;
     size_t datasize;
-    int child_count_from;
-    int child_count_to;
+    size_t child_count_from;
+    size_t child_count_to;
     graphedge **edges_from;
     graphedge **edges_to;
 };
 
 #define loopMap(m, key, value)                                                 \
-    for (int i = 0; i < m->node_count &&                                       \
-                    (key = m->items[i].key, value = m->items[i].value, 1);     \
+    for (size_t i = 0; i < m->node_count &&                                    \
+                       (key = m->items[i].key, value = m->items[i].value, 1);  \
          i++)                                                                  \
         if (m->items[i].deleted)                                               \
             continue;                                                          \
         else
 
 #define loopVector(v, out)                                                     \
-    for (int _i = 0; _i < (v->node_count) && (out = v->items[_i].item, 1); _i++)
+    for (size_t _i = 0; _i < (v->node_count) && (out = v->items[_i].item, 1);  \
+         _i++)
 
 linkedlist *create_linkedlist(void);
 int linkedlist_add(linkedlist *, void *, size_t);
@@ -158,7 +159,7 @@ void *queue_front(queue *);
 bintree *create_bintree(void);
 int bintree_set_nodes(bintree *);
 int bintree_set(bintree *, void *, size_t);
-int bintree_size(bintree *);
+size_t bintree_size(bintree *);
 void *bintree_get(bintree *);
 bintree *bintree_left(bintree *);
 bintree *bintree_right(bintree *);
@@ -172,12 +173,12 @@ int bintree_remove_left(bintree *);
 int bintree_remove_right(bintree *);
 vector *create_vector(void);
 int vector_add(vector *, void *, int);
-int vector_delete(vector *, int);
-int vector_insert(vector *, int, void *, int);
-int vector_length(vector *);
+int vector_delete(vector *, size_t);
+int vector_insert(vector *, size_t, void *, size_t);
+size_t vector_length(vector *);
 int vector_free(vector *);
 int vector_minimize(vector *);
-void *vector_get(vector *, int);
+void *vector_get(vector *, size_t);
 trie *trie_create(void);
 int trie_insert(trie *, char *);
 int trie_search(trie *, char *);
@@ -188,7 +189,7 @@ tree *tree_add(tree *, void *, size_t);
 void *tree_get(tree *);
 size_t tree_size(tree *);
 int tree_child_count(tree *);
-tree *tree_child(tree *, int);
+tree *tree_child(tree *, size_t);
 tree *tree_parent(tree *);
 int tree_bfs(tree *, void (*)(tree *));
 int tree_destroy(tree *);
@@ -196,10 +197,10 @@ graph *create_graph(void);
 graph *graph_add(graph *, void *, size_t);
 graph *graph_add_weighted(graph *, void *, size_t, int);
 int graph_set(graph *, void *, size_t);
-int graph_set_weight(graph *, int, int);
-graph *graph_child(graph *, int);
+int graph_set_weight(graph *, size_t, int);
+graph *graph_child(graph *, size_t);
 void *graph_get(graph *);
-int graph_get_weight(graph *, int);
+int graph_get_weight(graph *, size_t);
 size_t graph_size(graph *);
 int graph_child_count(graph *);
 int graph_link(graph *, graph *);
