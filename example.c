@@ -530,6 +530,13 @@ int main()
 
     /* Cleaning up */
     graph_destroy(g);
+
+    /* Creating a string */
+    lds_string *str = lds_create_string();
+
+    /* Pushing some values to string */
+    lds_string_append(str, "Hello, ");
+    lds_string_append(str, "world!");
 }
 
 void print_tree_bfs(tree *t)

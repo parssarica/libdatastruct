@@ -2089,3 +2089,54 @@ int graph_destroy(graph *g)
 
     return 1;
 }
+
+lds_string *lds_create_string(void)
+{
+    lds_string *s = malloc(sizeof(lds_string));
+
+    if (s == NULL)
+    {
+        return NULL;
+    }
+
+    s->data = NULL;
+    s->len = 0;
+    s->capacity = 0;
+
+    return s;
+}
+
+int lds_string_append(lds_string *s, char *newstr)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    if (s->len + strlen(newstr) + 1 >= s->capacity)
+    {
+        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        {
+            if (s->capacity == 0)
+            {
+                s->capacity = 1;
+            }
+            else
+            {
+                s->capacity *= 2;
+            }
+        }
+
+        s->data = realloc(s->data, s->capacity);
+        if (s->data == NULL)
+        {
+            return 0;
+        }
+    }
+
+    memcpy(s->data + s->len, newstr, strlen(newstr) + 1);
+
+    s->len += strlen(newstr);
+
+    return 1;
+}

@@ -113,6 +113,13 @@ struct _graph
     graphedge **edges_to;
 };
 
+typedef struct
+{
+    char *data;
+    size_t len;
+    size_t capacity;
+} lds_string;
+
 #define loopMap(m, key, value)                                                 \
     for (size_t i = 0; i < m->node_count &&                                    \
                        (key = m->items[i].key, value = m->items[i].value, 1);  \
@@ -206,3 +213,5 @@ int graph_child_count(graph *);
 int graph_link(graph *, graph *);
 int graph_link_weighted(graph *, graph *, int);
 int graph_destroy(graph *);
+lds_string *lds_create_string(void);
+int lds_string_append(lds_string *, char *);
