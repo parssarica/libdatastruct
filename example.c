@@ -537,6 +537,10 @@ int main()
     /* Pushing some values to string */
     lds_string_append(str, "Hello, ");
     lds_string_append(str, "world!");
+
+    /* Getting value */
+
+    printf("Value of string: %s\n", lds_string_cstr(str));
 }
 
 void print_tree_bfs(tree *t)

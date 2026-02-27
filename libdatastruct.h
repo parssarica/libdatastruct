@@ -215,3 +215,4 @@ int graph_link_weighted(graph *, graph *, int);
 int graph_destroy(graph *);
 lds_string *lds_create_string(void);
 int lds_string_append(lds_string *, char *);
+const char *lds_string_cstr(lds_string *);

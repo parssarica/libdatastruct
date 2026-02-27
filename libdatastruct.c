@@ -2140,3 +2140,5 @@ int lds_string_append(lds_string *s, char *newstr)
 
     return 1;
 }
+
+const char *lds_string_cstr(lds_string *s) { return s->data; }
