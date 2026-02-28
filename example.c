@@ -569,6 +569,10 @@ int main()
     lds_string_copy_len(str, "3.14 - This part shouldn't be in the string -",
                         4);
     printf("Value of str after copying: %s\n", lds_string_cstr(str));
+
+    /* Cleaning up */
+    lds_string_free(str);
+    lds_string_free(str2);
 }
 
 void print_tree_bfs(tree *t)

@@ -2262,3 +2262,16 @@ int lds_string_copy(lds_string *s, char *newstr)
 
     return lds_string_copy_len(s, newstr, strlen(newstr));
 }
+
+int lds_string_free(lds_string *s)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    free(s->data);
+    free(s);
+
+    return 1;
+}
