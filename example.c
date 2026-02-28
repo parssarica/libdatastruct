@@ -557,6 +557,11 @@ int main()
         " What a nice day! -SomeRandomDataThatIsNotSupposedToBeInTheString-",
         17);
     printf("Value of first string: %s\n", lds_string_cstr(str));
+
+    /* Copying a string to lds_string */
+    printf("Value of str2 before copying: %s\n", lds_string_cstr(str2));
+    lds_string_copy(str2, "A string");
+    printf("Value of str2 after copying: %s\n", lds_string_cstr(str2));
 }
 
 void print_tree_bfs(tree *t)

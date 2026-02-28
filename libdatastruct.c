@@ -2221,3 +2221,33 @@ int lds_string_push_back(lds_string *s, char *newstr)
 
     return lds_string_push_back_len(s, newstr, strlen(newstr));
 }
+
+int lds_string_copy(lds_string *s, char *newstr)
+{
+    if (strlen(newstr) + 1 >= s->capacity)
+    {
+        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        {
+            if (s->capacity == 0)
+            {
+                s->capacity = 1;
+            }
+            else
+            {
+                s->capacity *= 2;
+            }
+        }
+
+        s->data = realloc(s->data, s->capacity);
+        if (s->data == NULL)
+        {
+            return 0;
+        }
+    }
+
+    memcpy(s->data, newstr, strlen(newstr) + 1);
+
+    s->len = strlen(newstr);
+
+    return 1;
+}
