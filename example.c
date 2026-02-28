@@ -598,6 +598,11 @@ int main()
     printf("Is the string same with string \"A different string\": %s\n",
            lds_string_compare(str, str4) ? "Yes" : "No");
 
+    /* Cleaning the string */
+    printf("String before cleaning: <%s>\n", lds_string_cstr(str));
+    lds_string_clear(str);
+    printf("String after cleaning: <%s>\n", lds_string_cstr(str));
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership

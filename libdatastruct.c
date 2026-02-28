@@ -2394,3 +2394,16 @@ int lds_string_compare(lds_string *s1, lds_string *s2)
         return 0;
     }
 }
+
+int lds_string_clear(lds_string *s)
+{
+    if (s == NULL && s->data != NULL)
+    {
+        return 0;
+    }
+
+    s->len = 0;
+    s->data[0] = 0;
+
+    return 1;
+}

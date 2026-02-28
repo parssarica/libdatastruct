@@ -230,3 +230,4 @@ int lds_string_insert_len(lds_string *, size_t, char *, size_t);
 int lds_string_insert(lds_string *, size_t, char *);
 int lds_string_erase(lds_string *, size_t, size_t);
 int lds_string_compare(lds_string *, lds_string *);
+int lds_string_clear(lds_string *);
