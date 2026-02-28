@@ -2174,16 +2174,16 @@ lds_string *lds_string_from(char *new_str)
     return s;
 }
 
-int lds_string_push_back(lds_string *s, char *newstr)
+int lds_string_push_back_len(lds_string *s, char *newstr, size_t len)
 {
     if (s == NULL)
     {
         return 0;
     }
 
-    if (s->len + strlen(newstr) + 1 >= s->capacity)
+    if (s->len + len + 1 >= s->capacity)
     {
-        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        while (s->len + len + 1 >= s->capacity)
         {
             if (s->capacity == 0)
             {
@@ -2202,12 +2202,22 @@ int lds_string_push_back(lds_string *s, char *newstr)
         }
     }
 
-    memmove(s->data + strlen(data), s->data, strlen(s->data));
-    memcpy(s->data, newstr, strlen(newstr));
+    memmove(s->data + len, s->data, s->len);
+    memcpy(s->data, newstr, len);
 
-    s->len += strlen(newstr);
+    s->len += len;
 
     s->data[s->len] = 0;
 
     return 1;
+}
+
+int lds_string_push_back(lds_string *s, char *newstr)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    return lds_string_push_back_len(s, newstr, strlen(newstr));
 }
