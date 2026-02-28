@@ -2372,6 +2372,25 @@ int lds_string_erase(lds_string *s, size_t pos, size_t len)
 
     memmove(s->data + pos, s->data + pos + len, len);
     s->data[pos + len] = 0;
+    s->len -= len;
 
     return 1;
+}
+
+int lds_string_compare(lds_string *s1, lds_string *s2)
+{
+    if (s1 == NULL || s2 == NULL || s1->data == NULL || s2->data == NULL ||
+        s1->len != s2->len)
+    {
+        return 0;
+    }
+
+    if (memcmp(s1->data, s2->data, s1->len) == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

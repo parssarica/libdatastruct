@@ -589,10 +589,21 @@ int main()
 
     printf("Value of string after deletions: %s\n", lds_string_cstr(str));
 
+    /* Compaing lds_strings */
+    lds_string *str3 = lds_string_from("A string");
+    lds_string *str4 = lds_string_from("A different string");
+
+    printf("Is the string same with string \"A string\": %s\n",
+           lds_string_compare(str, str3) ? "Yes" : "No");
+    printf("Is the string same with string \"A different string\": %s\n",
+           lds_string_compare(str, str4) ? "Yes" : "No");
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership
                               is transfered */
+    lds_string_free(str3);
+    lds_string_free(str4);
 }
 
 void print_tree_bfs(tree *t)
