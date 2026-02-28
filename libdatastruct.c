@@ -2161,3 +2161,39 @@ lds_string *lds_string_from(char *new_str)
 
     return s;
 }
+
+int lds_string_push_back(lds_string *s, char *newstr)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    if (s->len + strlen(newstr) + 1 >= s->capacity)
+    {
+        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        {
+            if (s->capacity == 0)
+            {
+                s->capacity = 1;
+            }
+            else
+            {
+                s->capacity *= 2;
+            }
+        }
+
+        s->data = realloc(s->data, s->capacity);
+        if (s->data == NULL)
+        {
+            return 0;
+        }
+    }
+
+    memmove(s->data + strlen(newstr), s->data, strlen(s->data) + 1);
+    memcpy(s->data, newstr, strlen(newstr));
+
+    s->len += strlen(newstr);
+
+    return 1;
+}

@@ -546,6 +546,10 @@ int main()
 
     /* Creating another string from a char* string */
     lds_string *str2 = lds_string_from("C is awesome!");
+
+    /* Pushing values to back of string */
+    lds_string_push_back(str2, "Simon says: ");
+    printf("Value of string after pushing back: %s\n", lds_string_cstr(str2));
 }
 
 void print_tree_bfs(tree *t)
