@@ -2270,8 +2270,35 @@ int lds_string_free(lds_string *s)
         return 0;
     }
 
-    free(s->data);
-    free(s);
+    if (s->data != NULL)
+    {
+        safefree(s->data);
+    }
+
+    safefree(s);
+
+    return 1;
+}
+
+int lds_string_move(lds_string *s1, lds_string *s2)
+{
+    if (s1 == NULL || s2 == NULL || s1 == s2)
+    {
+        return 0;
+    }
+
+    if (s1->data != NULL)
+    {
+        safefree(s1->data);
+    }
+
+    s1->data = s2->data;
+    s1->len = s2->len;
+    s1->capacity = s2->capacity;
+
+    s2->data = NULL;
+    s2->len = 0;
+    s2->capacity = 0;
 
     return 1;
 }

@@ -570,9 +570,13 @@ int main()
                         4);
     printf("Value of str after copying: %s\n", lds_string_cstr(str));
 
+    /* Transfering ownership between strings */
+    lds_string_move(str, str2);
+
     /* Cleaning up */
     lds_string_free(str);
-    lds_string_free(str2);
+    lds_string_free(str2); /* You should still clean up str2, even its ownership
+                              is transfered */
 }
 
 void print_tree_bfs(tree *t)
