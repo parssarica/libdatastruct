@@ -2315,3 +2315,37 @@ int lds_string_reserve(lds_string *s1, size_t newcap)
 
     return 1;
 }
+
+int lds_string_insert(lds_string *s, size_t pos, char *newstr)
+{
+    if (s == NULL || pos > s->len || newstr == NULL)
+    {
+        return 0;
+    }
+
+    if (s->len + strlen(newstr) + 1 >= s->capacity)
+    {
+        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        {
+            if (s->capacity == 0)
+            {
+                s->capacity = 1;
+            }
+            else
+            {
+                s->capacity *= 2;
+            }
+        }
+
+        s->data = realloc(s->data, s->capacity);
+        if (s->data == NULL)
+        {
+            return 0;
+        }
+    }
+
+    memmove(s->data + pos + strlen(newstr), s->data + pos, strlen(newstr));
+    memcpy(s->data + pos, newstr, strlen(newstr));
+
+    return 1;
+}

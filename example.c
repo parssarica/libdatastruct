@@ -576,6 +576,9 @@ int main()
     /* Reserving some space for performance */
     lds_string_reserve(str, 1000);
 
+    /* Inserting data */
+    lds_string_insert(str, 1, "n amazing");
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership

@@ -226,3 +226,4 @@ int lds_string_copy(lds_string *, char *);
 int lds_string_free(lds_string *);
 int lds_string_move(lds_string *, lds_string *);
 int lds_string_reserve(lds_string *, size_t);
+int lds_string_insert(lds_string *, size_t, char *);
