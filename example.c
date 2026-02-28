@@ -584,6 +584,11 @@ int main()
 
     printf("Value of string after insertions: %s\n", lds_string_cstr(str));
 
+    /* Erasing some data */
+    lds_string_erase(str, 1, 22);
+
+    printf("Value of string after deletions: %s\n", lds_string_cstr(str));
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership

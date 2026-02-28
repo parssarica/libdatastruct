@@ -2362,3 +2362,16 @@ int lds_string_insert(lds_string *s, size_t pos, char *newstr)
 
     return lds_string_insert_len(s, pos, newstr, strlen(newstr));
 }
+
+int lds_string_erase(lds_string *s, size_t pos, size_t len)
+{
+    if (s == NULL || pos > s->len || pos + len > s->len)
+    {
+        return 0;
+    }
+
+    memmove(s->data + pos, s->data + pos + len, len);
+    s->data[pos + len] = 0;
+
+    return 1;
+}
