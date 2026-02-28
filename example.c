@@ -579,6 +579,11 @@ int main()
     /* Inserting data */
     lds_string_insert(str, 1, "n amazing");
 
+    /* Inserting data with specific length */
+    lds_string_insert_len(str, 10, " and powerful -randomdata-", 13);
+
+    printf("Value of string after insertions: %s\n", lds_string_cstr(str));
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership
