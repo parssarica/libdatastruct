@@ -2222,9 +2222,9 @@ int lds_string_push_back(lds_string *s, char *newstr)
     return lds_string_push_back_len(s, newstr, strlen(newstr));
 }
 
-int lds_string_copy(lds_string *s, char *newstr)
+int lds_string_copy_len(lds_string *s, char *newstr, size_t length)
 {
-    if (strlen(newstr) + 1 >= s->capacity)
+    if (length + 1 >= s->capacity)
     {
         while (s->len + strlen(newstr) + 1 >= s->capacity)
         {
@@ -2245,9 +2245,20 @@ int lds_string_copy(lds_string *s, char *newstr)
         }
     }
 
-    memcpy(s->data, newstr, strlen(newstr) + 1);
+    memcpy(s->data, newstr, length);
 
-    s->len = strlen(newstr);
+    s->len = length;
+    s->data[length] = 0;
 
     return 1;
+}
+
+int lds_string_copy(lds_string *s, char *newstr)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    return lds_string_copy_len(s, newstr, strlen(newstr));
 }

@@ -221,4 +221,5 @@ size_t lds_string_len(lds_string *);
 lds_string *lds_string_from(char *);
 int lds_string_push_back(lds_string *, char *);
 int lds_string_push_back_len(lds_string *, char *, size_t);
+int lds_string_copy_len(lds_string *, char *, size_t);
 int lds_string_copy(lds_string *, char *);

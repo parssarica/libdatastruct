@@ -562,6 +562,13 @@ int main()
     printf("Value of str2 before copying: %s\n", lds_string_cstr(str2));
     lds_string_copy(str2, "A string");
     printf("Value of str2 after copying: %s\n", lds_string_cstr(str2));
+
+    /* Copying a string to lds_string with specified length */
+
+    printf("Value of str before copying: %s\n", lds_string_cstr(str));
+    lds_string_copy_len(str, "3.14 - This part shouldn't be in the string -",
+                        4);
+    printf("Value of str after copying: %s\n", lds_string_cstr(str));
 }
 
 void print_tree_bfs(tree *t)
