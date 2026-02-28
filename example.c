@@ -573,6 +573,9 @@ int main()
     /* Transfering ownership between strings */
     lds_string_move(str, str2);
 
+    /* Reserving some space for performance */
+    lds_string_reserve(str, 1000);
+
     /* Cleaning up */
     lds_string_free(str);
     lds_string_free(str2); /* You should still clean up str2, even its ownership

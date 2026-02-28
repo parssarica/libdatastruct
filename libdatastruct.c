@@ -2302,3 +2302,16 @@ int lds_string_move(lds_string *s1, lds_string *s2)
 
     return 1;
 }
+
+int lds_string_reserve(lds_string *s1, size_t newcap)
+{
+    if (s1 == NULL || s1->capacity >= newcap)
+    {
+        return 0;
+    }
+
+    s1->capacity = newcap;
+    s1->data = realloc(s1->data, newcap);
+
+    return 1;
+}
