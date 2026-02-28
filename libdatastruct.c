@@ -2113,9 +2113,19 @@ int lds_string_append(lds_string *s, char *newstr)
         return 0;
     }
 
-    if (s->len + strlen(newstr) + 1 >= s->capacity)
+    return lds_string_append_len(s, newstr, strlen(newstr));
+}
+
+int lds_string_append_len(lds_string *s, char *newstr, size_t len)
+{
+    if (s == NULL)
     {
-        while (s->len + strlen(newstr) + 1 >= s->capacity)
+        return 0;
+    }
+
+    if (s->len + len + 1 >= s->capacity)
+    {
+        while (s->len + len + 1 >= s->capacity)
         {
             if (s->capacity == 0)
             {
@@ -2134,9 +2144,11 @@ int lds_string_append(lds_string *s, char *newstr)
         }
     }
 
-    memcpy(s->data + s->len, newstr, strlen(newstr) + 1);
+    memcpy(s->data + s->len, newstr, len);
 
-    s->len += strlen(newstr);
+    s->len += len;
+
+    s->data[s->len] = 0;
 
     return 1;
 }
@@ -2190,10 +2202,12 @@ int lds_string_push_back(lds_string *s, char *newstr)
         }
     }
 
-    memmove(s->data + strlen(newstr), s->data, strlen(s->data) + 1);
+    memmove(s->data + strlen(data), s->data, strlen(s->data));
     memcpy(s->data, newstr, strlen(newstr));
 
     s->len += strlen(newstr);
+
+    s->data[s->len] = 0;
 
     return 1;
 }

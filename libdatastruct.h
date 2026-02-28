@@ -215,6 +215,7 @@ int graph_link_weighted(graph *, graph *, int);
 int graph_destroy(graph *);
 lds_string *lds_create_string(void);
 int lds_string_append(lds_string *, char *);
+int lds_string_append_len(lds_string *, char *, size_t);
 const char *lds_string_cstr(lds_string *);
 size_t lds_string_len(lds_string *);
 lds_string *lds_string_from(char *);

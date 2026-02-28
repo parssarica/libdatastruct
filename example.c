@@ -550,6 +550,13 @@ int main()
     /* Pushing values to back of string */
     lds_string_push_back(str2, "Simon says: ");
     printf("Value of string after pushing back: %s\n", lds_string_cstr(str2));
+
+    /* Appending values with specific length */
+    lds_string_append_len(
+        str,
+        " What a nice day! -SomeRandomDataThatIsNotSupposedToBeInTheString-",
+        17);
+    printf("Value of first string: %s\n", lds_string_cstr(str));
 }
 
 void print_tree_bfs(tree *t)
