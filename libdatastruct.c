@@ -2174,7 +2174,7 @@ lds_string *lds_string_from(char *new_str)
     return s;
 }
 
-int lds_string_push_back_len(lds_string *s, char *newstr, size_t len)
+int lds_string_push_front_len(lds_string *s, char *newstr, size_t len)
 {
     if (s == NULL)
     {
@@ -2212,14 +2212,14 @@ int lds_string_push_back_len(lds_string *s, char *newstr, size_t len)
     return 1;
 }
 
-int lds_string_push_back(lds_string *s, char *newstr)
+int lds_string_push_front(lds_string *s, char *newstr)
 {
     if (s == NULL)
     {
         return 0;
     }
 
-    return lds_string_push_back_len(s, newstr, strlen(newstr));
+    return lds_string_push_front_len(s, newstr, strlen(newstr));
 }
 
 int lds_string_copy_len(lds_string *s, char *newstr, size_t length)
