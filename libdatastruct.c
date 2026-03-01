@@ -2450,7 +2450,8 @@ int lds_string_reverse(lds_string *s)
     return 1;
 }
 
-ssize_t lds_string_find_len(lds_string *s, char *pattern, size_t size_pattern)
+ssize_t lds_string_find_len(const lds_string *s, char *pattern,
+                            size_t size_pattern)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2484,7 +2485,7 @@ ssize_t lds_string_find_len(lds_string *s, char *pattern, size_t size_pattern)
     return -1;
 }
 
-ssize_t lds_string_find(lds_string *s, char *pattern)
+ssize_t lds_string_find(const lds_string *s, char *pattern)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2494,7 +2495,7 @@ ssize_t lds_string_find(lds_string *s, char *pattern)
     return lds_string_find_len(s, pattern, strlen(pattern));
 }
 
-int lds_string_contains_len(lds_string *s, char *pattern, size_t len)
+int lds_string_contains_len(const lds_string *s, char *pattern, size_t len)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2504,7 +2505,7 @@ int lds_string_contains_len(lds_string *s, char *pattern, size_t len)
     return lds_string_find_len(s, pattern, len) != -1;
 }
 
-int lds_string_contains(lds_string *s, char *pattern)
+int lds_string_contains(const lds_string *s, char *pattern)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2528,6 +2529,26 @@ int lds_string_lower(lds_string *s)
         if (s->data[i] >= 'A' && s->data[i] <= 'Z')
         {
             s->data[i] += 32;
+        }
+    }
+
+    return 1;
+}
+
+int lds_string_upper(lds_string *s)
+{
+    size_t i;
+
+    if (s == NULL || s->data == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < s->len; i++)
+    {
+        if (s->data[i] >= 'a' && s->data[i] <= 'z')
+        {
+            s->data[i] -= 32;
         }
     }
 

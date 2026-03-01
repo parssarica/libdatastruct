@@ -639,6 +639,11 @@ int main()
     lds_string_lower(str);
     printf("String after lower casing: <%s>\n", lds_string_cstr(str));
 
+    /* Upper casing the string variable */
+    printf("String before upper casing: <%s>\n", lds_string_cstr(str));
+    lds_string_upper(str);
+    printf("String after upper casing: <%s>\n", lds_string_cstr(str));
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);
