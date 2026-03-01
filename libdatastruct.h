@@ -121,16 +121,19 @@ typedef struct
 } lds_string;
 
 #define lds_map_for_each(m, key, value)                                        \
-    for (size_t i = 0; i < m->node_count &&                                    \
-                       (key = m->items[i].key, value = m->items[i].value, 1);  \
-         i++)                                                                  \
-        if (m->items[i].deleted)                                               \
+    for (size_t lds__i = 0; lds__i < (m)->node_count; lds__i++)                \
+        if ((m)->items[lds__i].deleted)                                        \
             continue;                                                          \
-        else
+        else                                                                   \
+            for (int lds__once = 1;                                            \
+                 lds__once && ((key) = (m)->items[lds__i].key,                 \
+                              (value) = (m)->items[lds__i].value, 1);          \
+                 lds__once = 0)
 
 #define lds_vector_for_each(v, out)                                            \
-    for (size_t _i = 0; _i < (v->node_count) && (out = v->items[_i].item, 1);  \
-         _i++)
+    for (size_t lds__i = 0;                                                    \
+         lds__i < (v)->node_count && ((out) = (v)->items[lds__i].item, 1);     \
+         lds__i++)
 
 lds_linkedlist *lds_create_linkedlist(void);
 int lds_linkedlist_add(lds_linkedlist *, const void *, size_t);
