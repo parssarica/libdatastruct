@@ -616,6 +616,11 @@ int main()
     printf("Is the string same with string \"A different string\": %s\n",
            lds_string_compare(str, str4) ? "Yes" : "No");
 
+    /* Reversing strings */
+    printf("String before reversing: <%s>\n", lds_string_cstr(str));
+    lds_string_reverse(str);
+    printf("String after reversing: <%s>\n", lds_string_cstr(str));
+
     /* Cleaning the string */
     printf("String before cleaning: <%s>\n", lds_string_cstr(str));
     lds_string_clear(str);

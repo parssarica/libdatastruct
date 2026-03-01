@@ -2421,3 +2421,30 @@ int lds_string_clear(lds_string *s)
 
     return 1;
 }
+
+int lds_string_reverse(lds_string *s)
+{
+    int left;
+    int right;
+    char k;
+
+    if (s == NULL || s->data == NULL)
+    {
+        return 0;
+    }
+
+    left = 0;
+    right = s->len - 1;
+
+    while (left < right)
+    {
+        k = s->data[left];
+        s->data[left] = s->data[right];
+        s->data[right] = k;
+
+        left++;
+        right--;
+    }
+
+    return 1;
+}
