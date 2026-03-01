@@ -634,6 +634,11 @@ int main()
     printf("Does the string contain substring 'dog': %s\n",
            lds_string_contains(str, "dog") ? "Yes" : "No");
 
+    /* Lower casing the string variable */
+    printf("String before lower casing: <%s>\n", lds_string_cstr(str));
+    lds_string_lower(str);
+    printf("String after lower casing: <%s>\n", lds_string_cstr(str));
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);

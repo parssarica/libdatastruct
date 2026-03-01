@@ -240,3 +240,4 @@ ssize_t lds_string_find_len(lds_string *, char *, size_t);
 ssize_t lds_string_find(lds_string *, char *);
 int lds_string_contains_len(lds_string *, char *, size_t);
 int lds_string_contains(lds_string *, char *);
+int lds_string_lower(lds_string *);

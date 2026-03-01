@@ -2513,3 +2513,23 @@ int lds_string_contains(lds_string *s, char *pattern)
 
     return lds_string_contains_len(s, pattern, strlen(pattern));
 }
+
+int lds_string_lower(lds_string *s)
+{
+    size_t i;
+
+    if (s == NULL || s->data == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < s->len; i++)
+    {
+        if (s->data[i] >= 'A' && s->data[i] <= 'Z')
+        {
+            s->data[i] += 32;
+        }
+    }
+
+    return 1;
+}
