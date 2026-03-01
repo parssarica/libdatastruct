@@ -2450,7 +2450,7 @@ int lds_string_reverse(lds_string *s)
     return 1;
 }
 
-ssize_t lds_string_find_len(const lds_string *s, char *pattern,
+ssize_t lds_string_find_len(const lds_string *s, const char *pattern,
                             size_t size_pattern)
 {
     if (s == NULL || s->data == NULL)
@@ -2485,7 +2485,7 @@ ssize_t lds_string_find_len(const lds_string *s, char *pattern,
     return -1;
 }
 
-ssize_t lds_string_find(const lds_string *s, char *pattern)
+ssize_t lds_string_find(const lds_string *s, const char *pattern)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2495,7 +2495,8 @@ ssize_t lds_string_find(const lds_string *s, char *pattern)
     return lds_string_find_len(s, pattern, strlen(pattern));
 }
 
-int lds_string_contains_len(const lds_string *s, char *pattern, size_t len)
+int lds_string_contains_len(const lds_string *s, const char *pattern,
+                            size_t len)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2505,7 +2506,7 @@ int lds_string_contains_len(const lds_string *s, char *pattern, size_t len)
     return lds_string_find_len(s, pattern, len) != -1;
 }
 
-int lds_string_contains(const lds_string *s, char *pattern)
+int lds_string_contains(const lds_string *s, const char *pattern)
 {
     if (s == NULL || s->data == NULL)
     {
@@ -2575,6 +2576,41 @@ int lds_string_toggle_case(lds_string *s)
             s->data[i] -= 32;
         }
     }
+
+    return 1;
+}
+
+int lds_string_replace(lds_string *s, size_t pos, const char *newstr)
+{
+    if (s == NULL || s->data == NULL || newstr == NULL)
+    {
+        return 0;
+    }
+
+    if (pos + strlen(newstr) + 1 >= s->capacity)
+    {
+        while (pos + strlen(newstr) + 1 >= s->capacity)
+        {
+            if (s->capacity == 0)
+            {
+                s->capacity = 1;
+            }
+            else
+            {
+                s->capacity *= 2;
+            }
+        }
+
+        s->data = realloc(s->data, s->capacity);
+        if (s->data == NULL)
+        {
+            return 0;
+        }
+    }
+
+    memcpy(s->data + pos, newstr, strlen(newstr));
+    s->data[pos + strlen(newstr)] = 0;
+    s->len = pos + strlen(newstr);
 
     return 1;
 }
