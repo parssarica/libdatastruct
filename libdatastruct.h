@@ -3,6 +3,7 @@ Pars SARICA <pars@parssarica.com>
 */
 
 #include <stddef.h>
+#include <sys/types.h>
 
 #define lds_safefree(x)                                                        \
     free(x);                                                                   \
@@ -235,4 +236,5 @@ int lds_string_erase(lds_string *, size_t, size_t);
 int lds_string_compare(const lds_string *, const lds_string *);
 int lds_string_clear(lds_string *);
 int lds_string_reverse(lds_string *);
-int lds_string_find(lds_string *, char *);
+ssize_t lds_string_find_len(lds_string *, char *, size_t);
+ssize_t lds_string_find(lds_string *, char *);

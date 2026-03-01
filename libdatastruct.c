@@ -7,6 +7,7 @@ Pars SARICA <pars@parssarica.com>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 
 lds_linkedlist *lds_create_linkedlist(void)
 {
@@ -2449,13 +2450,18 @@ int lds_string_reverse(lds_string *s)
     return 1;
 }
 
-int lds_string_find(lds_string *s, char *pattern)
+ssize_t lds_string_find_len(lds_string *s, char *pattern, size_t size_pattern)
 {
-    int n = s->len;
-    int m = strlen(pattern);
+    if (s == NULL || s->data == NULL)
+    {
+        return -1;
+    }
+
+    size_t n = s->len;
+    size_t m = size_pattern;
     int matched = 0;
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 
     for (i = 0; i < (n - m + 1); i++)
     {
@@ -2471,9 +2477,19 @@ int lds_string_find(lds_string *s, char *pattern)
 
         if (matched)
         {
-            return i;
+            return (ssize_t)i;
         }
     }
 
     return -1;
+}
+
+ssize_t lds_string_find(lds_string *s, char *pattern)
+{
+    if (s == NULL || s->data == NULL)
+    {
+        return -1;
+    }
+
+    return lds_string_find_len(s, pattern, strlen(pattern));
 }
