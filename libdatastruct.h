@@ -243,4 +243,5 @@ int lds_string_contains(const lds_string *, const char *);
 int lds_string_lower(lds_string *);
 int lds_string_upper(lds_string *);
 int lds_string_toggle_case(lds_string *);
+int lds_string_replace_len(lds_string *, size_t, const char *, size_t);
 int lds_string_replace(lds_string *, size_t, const char *);

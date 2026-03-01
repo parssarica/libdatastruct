@@ -2580,16 +2580,17 @@ int lds_string_toggle_case(lds_string *s)
     return 1;
 }
 
-int lds_string_replace(lds_string *s, size_t pos, const char *newstr)
+int lds_string_replace_len(lds_string *s, size_t pos, const char *newstr,
+                           size_t newstr_len)
 {
     if (s == NULL || s->data == NULL || newstr == NULL)
     {
         return 0;
     }
 
-    if (pos + strlen(newstr) + 1 >= s->capacity)
+    if (pos + newstr_len + 1 >= s->capacity)
     {
-        while (pos + strlen(newstr) + 1 >= s->capacity)
+        while (pos + newstr_len + 1 >= s->capacity)
         {
             if (s->capacity == 0)
             {
@@ -2608,9 +2609,19 @@ int lds_string_replace(lds_string *s, size_t pos, const char *newstr)
         }
     }
 
-    memcpy(s->data + pos, newstr, strlen(newstr));
-    s->data[pos + strlen(newstr)] = 0;
-    s->len = pos + strlen(newstr);
+    memcpy(s->data + pos, newstr, newstr_len);
+    s->data[pos + newstr_len] = 0;
+    s->len = pos + newstr_len;
 
     return 1;
+}
+
+int lds_string_replace(lds_string *s, size_t pos, const char *newstr)
+{
+    if (s == NULL || s->data == NULL || newstr == NULL)
+    {
+        return 0;
+    }
+
+    return lds_string_replace_len(s, pos, newstr, strlen(newstr));
 }
