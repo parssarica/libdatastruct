@@ -2493,3 +2493,20 @@ ssize_t lds_string_find(lds_string *s, char *pattern)
 
     return lds_string_find_len(s, pattern, strlen(pattern));
 }
+
+int lds_string_contains(lds_string *s, char *pattern)
+{
+    if (s == NULL || s->data == NULL)
+    {
+        return 0;
+    }
+
+    if (lds_string_find_len(s, pattern, strlen(pattern)) == -1)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}

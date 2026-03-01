@@ -624,6 +624,16 @@ int main()
     printf("From which index does the 'hi' substring start: %ld\n",
            lds_string_find(str, "hi"));
 
+    /* Checking strings containing sub-strings */
+    printf("Does the string contain substring 'str': %s\n",
+           lds_string_contains(str, "str") ? "Yes" : "No");
+    printf("Does the string contain substring 'ing': %s\n",
+           lds_string_contains(str, "ing") ? "Yes" : "No");
+    printf("Does the string contain substring 'cat': %s\n",
+           lds_string_contains(str, "cat") ? "Yes" : "No");
+    printf("Does the string contain substring 'dog': %s\n",
+           lds_string_contains(str, "dog") ? "Yes" : "No");
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);
