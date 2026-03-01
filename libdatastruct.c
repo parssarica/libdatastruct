@@ -2554,3 +2554,27 @@ int lds_string_upper(lds_string *s)
 
     return 1;
 }
+
+int lds_string_toggle_case(lds_string *s)
+{
+    size_t i;
+
+    if (s == NULL || s->data == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < s->len; i++)
+    {
+        if (s->data[i] >= 'A' && s->data[i] <= 'Z')
+        {
+            s->data[i] += 32;
+        }
+        else if (s->data[i] >= 'a' && s->data[i] <= 'z')
+        {
+            s->data[i] -= 32;
+        }
+    }
+
+    return 1;
+}

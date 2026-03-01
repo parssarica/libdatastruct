@@ -634,6 +634,11 @@ int main()
     printf("Does the string contain substring 'dog': %s\n",
            lds_string_contains(str, "dog") ? "Yes" : "No");
 
+    /* Toggling the case of string */
+    printf("String before toggling casing: <%s>\n", lds_string_cstr(str));
+    lds_string_toggle_case(str);
+    printf("String after toggling casing: <%s>\n", lds_string_cstr(str));
+
     /* Lower casing the string variable */
     printf("String before lower casing: <%s>\n", lds_string_cstr(str));
     lds_string_lower(str);

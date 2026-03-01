@@ -242,3 +242,4 @@ int lds_string_contains_len(const lds_string *, char *, size_t);
 int lds_string_contains(const lds_string *, char *);
 int lds_string_lower(lds_string *);
 int lds_string_upper(lds_string *);
+int lds_string_toggle_case(lds_string *);
