@@ -22,7 +22,7 @@ linkedlist *create_linkedlist(void)
     return llist;
 }
 
-int linkedlist_add(linkedlist *ll, void *data, size_t datatype_size)
+int linkedlist_add(linkedlist *ll, const void *data, size_t datatype_size)
 {
     linkedlist *obj = ll;
     while (1)
@@ -78,7 +78,7 @@ int linkedlist_length(linkedlist *ll)
     return length;
 }
 
-void *linkedlist_get(linkedlist *ll, int index)
+const void *linkedlist_get(linkedlist *ll, int index)
 {
     int length = 0;
     linkedlist *x = ll;
@@ -143,7 +143,7 @@ int linkedlist_delete(linkedlist *ll, int index)
     return 1;
 }
 
-int linkedlist_update(linkedlist *ll, int index, void *newvar,
+int linkedlist_update(linkedlist *ll, int index, const void *newvar,
                       size_t datatype_size)
 {
     int length = 0;
@@ -213,7 +213,7 @@ int linkedlist_free(linkedlist *ll)
     return 1;
 }
 
-int linkedlist_insert(linkedlist *ll, void *data, size_t datatype_size,
+int linkedlist_insert(linkedlist *ll, const void *data, size_t datatype_size,
                       int index)
 {
     linkedlist *previous;
@@ -274,7 +274,7 @@ map *create_map(void)
     return table;
 }
 
-int map_add(map *table, void *key, size_t keysize, void *value,
+int map_add(map *table, const void *key, size_t keysize, const void *value,
             size_t valuesize)
 {
     if (table == NULL)
@@ -350,7 +350,7 @@ int map_add(map *table, void *key, size_t keysize, void *value,
     return 1;
 }
 
-int map_length(map *table)
+int map_length(const map *table)
 {
     if (table != NULL)
     {
@@ -362,7 +362,7 @@ int map_length(map *table)
     }
 }
 
-static int map_get_index(map *table, void *key, size_t keysize)
+static int map_get_index(map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return -1;
@@ -382,7 +382,7 @@ static int map_get_index(map *table, void *key, size_t keysize)
     return -1;
 }
 
-void *map_get(map *table, void *key, size_t keysize)
+const void *map_get(map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return NULL;
@@ -396,7 +396,7 @@ void *map_get(map *table, void *key, size_t keysize)
     return NULL;
 }
 
-int map_delete(map *table, void *key, size_t keysize)
+int map_delete(map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return 0;
@@ -412,8 +412,8 @@ int map_delete(map *table, void *key, size_t keysize)
     return 1;
 }
 
-int map_update_key(map *table, void *key_old, size_t old_keysize, void *key_new,
-                   size_t new_keysize)
+int map_update_key(map *table, const void *key_old, size_t old_keysize,
+                   const void *key_new, size_t new_keysize)
 {
     if (table->items == NULL)
         return 0;
@@ -436,8 +436,8 @@ int map_update_key(map *table, void *key_old, size_t old_keysize, void *key_new,
     return 1;
 }
 
-int map_update_value(map *table, void *key, size_t keysize, void *newvalue,
-                     size_t new_valuesize)
+int map_update_value(map *table, const void *key, size_t keysize,
+                     const void *newvalue, size_t new_valuesize)
 {
     if (table->items == NULL)
         return 0;
@@ -520,7 +520,7 @@ stack *create_stack(void)
     return s;
 }
 
-int stack_push(stack *s, void *value, size_t valuesize)
+int stack_push(stack *s, const void *value, size_t valuesize)
 {
     if (s == NULL)
     {
@@ -571,7 +571,7 @@ int stack_pop(stack *s, void *out)
     return 1;
 }
 
-void *stack_peek(stack *s)
+const void *stack_peek(const stack *s)
 {
     if (s == NULL || s->items == NULL || s->node_count <= 0)
     {
@@ -632,7 +632,7 @@ int stack_minimize(stack *s)
     return 1;
 }
 
-int stack_empty(stack *s)
+int stack_empty(const stack *s)
 {
     if (s == NULL)
     {
@@ -658,7 +658,7 @@ queue *create_queue(void)
     return q;
 }
 
-int enqueue(queue *q, void *data, size_t datasize)
+int enqueue(queue *q, const void *data, size_t datasize)
 {
     if (q == NULL)
     {
@@ -763,7 +763,7 @@ int queue_minimize(queue *q)
     return 1;
 }
 
-int queue_is_empty(queue *q)
+int queue_is_empty(const queue *q)
 {
     if (q == NULL)
     {
@@ -773,7 +773,7 @@ int queue_is_empty(queue *q)
     return q->node_count == 0;
 }
 
-void *queue_front(queue *q)
+const void *queue_front(const queue *q)
 {
     if (q->items == NULL || q->node_count <= 0)
         return NULL;
@@ -820,7 +820,7 @@ int bintree_set_nodes(bintree *b)
     return 1;
 }
 
-int bintree_set(bintree *b, void *data, size_t datasize)
+int bintree_set(bintree *b, const void *data, size_t datasize)
 {
     b->data = malloc(datasize);
     b->size = datasize;
@@ -835,7 +835,7 @@ int bintree_set(bintree *b, void *data, size_t datasize)
     return 1;
 }
 
-void *bintree_get(bintree *b)
+void *bintree_get(const bintree *b)
 {
     if (b == NULL)
     {
@@ -845,7 +845,7 @@ void *bintree_get(bintree *b)
     return b->data;
 }
 
-bintree *bintree_left(bintree *b)
+bintree *bintree_left(const bintree *b)
 {
     if (b == NULL)
     {
@@ -855,7 +855,7 @@ bintree *bintree_left(bintree *b)
     return b->left;
 }
 
-bintree *bintree_right(bintree *b)
+bintree *bintree_right(const bintree *b)
 {
     if (b == NULL)
     {
@@ -865,7 +865,7 @@ bintree *bintree_right(bintree *b)
     return b->right;
 }
 
-bintree *bintree_insert_left(bintree *b, void *data, size_t datasize)
+bintree *bintree_insert_left(bintree *b, const void *data, size_t datasize)
 {
     if (b == NULL || b->left != NULL)
         return NULL;
@@ -889,7 +889,7 @@ bintree *bintree_insert_left(bintree *b, void *data, size_t datasize)
     return b->left;
 }
 
-bintree *bintree_insert_right(bintree *b, void *data, size_t datasize)
+bintree *bintree_insert_right(bintree *b, const void *data, size_t datasize)
 {
     if (b == NULL || b->right != NULL)
         return NULL;
@@ -913,7 +913,7 @@ bintree *bintree_insert_right(bintree *b, void *data, size_t datasize)
     return b->right;
 }
 
-int bintree_has_left(bintree *b)
+int bintree_has_left(const bintree *b)
 {
     if (b == NULL)
     {
@@ -923,7 +923,7 @@ int bintree_has_left(bintree *b)
     return b->left != NULL;
 }
 
-int bintree_has_right(bintree *b)
+int bintree_has_right(const bintree *b)
 {
     if (b == NULL)
     {
@@ -933,7 +933,7 @@ int bintree_has_right(bintree *b)
     return b->right != NULL;
 }
 
-size_t bintree_size(bintree *b)
+size_t bintree_size(const bintree *b)
 {
     if (b == NULL)
     {
@@ -1072,7 +1072,7 @@ vector *create_vector(void)
     return v;
 }
 
-int vector_add(vector *v, void *data, int datasize)
+int vector_add(vector *v, const void *data, int datasize)
 {
     size_t i;
 
@@ -1163,7 +1163,7 @@ int vector_delete(vector *v, size_t index)
     return 1;
 }
 
-int vector_insert(vector *v, size_t index, void *data, size_t datasize)
+int vector_insert(vector *v, size_t index, const void *data, size_t datasize)
 {
     vectoritem *items;
     size_t i;
@@ -1216,7 +1216,7 @@ int vector_insert(vector *v, size_t index, void *data, size_t datasize)
     return 1;
 }
 
-size_t vector_length(vector *v)
+size_t vector_length(const vector *v)
 {
     if (v == NULL)
     {
@@ -1282,7 +1282,7 @@ int vector_minimize(vector *v)
     return 1;
 }
 
-void *vector_get(vector *v, size_t index)
+const void *vector_get(const vector *v, size_t index)
 {
     if (v == NULL || v->items == NULL || index >= v->capacity)
         return NULL;
@@ -1306,7 +1306,7 @@ trie *trie_create(void)
     return t;
 }
 
-static int trie_find(trie *t, char character)
+static int trie_find(const trie *t, char character)
 {
     int found = -1;
     size_t i;
@@ -1328,7 +1328,7 @@ static int trie_find(trie *t, char character)
     return found;
 }
 
-int trie_insert(trie *t, char *word)
+int trie_insert(trie *t, const char *word)
 {
     int i = 0;
     int j = 0;
@@ -1370,7 +1370,7 @@ int trie_insert(trie *t, char *word)
     return 1;
 }
 
-int trie_search(trie *t, char *word)
+int trie_search(const trie *t, const char *word)
 {
     int i = 0;
     size_t j = 0;
@@ -1474,7 +1474,7 @@ tree *create_tree(void)
     return t;
 }
 
-int tree_set(tree *t, void *data, size_t datasize)
+int tree_set(tree *t, const void *data, size_t datasize)
 {
     if (t == NULL)
     {
@@ -1499,7 +1499,7 @@ int tree_set(tree *t, void *data, size_t datasize)
     return 1;
 }
 
-tree *tree_add(tree *t, void *data, size_t datasize)
+tree *tree_add(tree *t, const void *data, size_t datasize)
 {
     if (t == NULL)
     {
@@ -1537,7 +1537,7 @@ tree *tree_add(tree *t, void *data, size_t datasize)
     return t->children[t->child_count - 1];
 }
 
-void *tree_get(tree *t)
+void *tree_get(const tree *t)
 {
     if (t == NULL)
         return NULL;
@@ -1545,7 +1545,7 @@ void *tree_get(tree *t)
     return t->data;
 }
 
-size_t tree_size(tree *t)
+size_t tree_size(const tree *t)
 {
     if (t == NULL)
         return 0;
@@ -1553,7 +1553,7 @@ size_t tree_size(tree *t)
     return t->datasize;
 }
 
-int tree_child_count(tree *t)
+int tree_child_count(const tree *t)
 {
     if (t == NULL)
         return 0;
@@ -1561,7 +1561,7 @@ int tree_child_count(tree *t)
     return t->child_count;
 }
 
-tree *tree_child(tree *t, size_t child)
+tree *tree_child(const tree *t, size_t child)
 {
     if (t == NULL || child >= t->child_count || t->children == NULL)
         return NULL;
@@ -1569,7 +1569,7 @@ tree *tree_child(tree *t, size_t child)
     return t->children[child];
 }
 
-tree *tree_parent(tree *t)
+tree *tree_parent(const tree *t)
 {
     if (t == NULL)
         return NULL;
@@ -1679,7 +1679,7 @@ graph *create_graph(void)
     return g;
 }
 
-graph *graph_add(graph *g, void *data, size_t datasize)
+graph *graph_add(graph *g, const void *data, size_t datasize)
 {
     g->child_count_from++;
     g->edges_from =
@@ -1749,7 +1749,8 @@ graph *graph_add(graph *g, void *data, size_t datasize)
     return g->edges_from[g->child_count_from - 1]->child;
 }
 
-graph *graph_add_weighted(graph *g, void *data, size_t datasize, int weight)
+graph *graph_add_weighted(graph *g, const void *data, size_t datasize,
+                          int weight)
 {
     g->child_count_from++;
     g->edges_from =
@@ -1838,7 +1839,7 @@ int graph_set(graph *g, void *data, size_t datasize)
     return 1;
 }
 
-int graph_set_weight(graph *g, size_t edge_num, int new_weight)
+int graph_set_weight(const graph *g, size_t edge_num, int new_weight)
 {
     if (g == NULL || g->edges_from == NULL || g->child_count_from <= edge_num ||
         g->edges_from[edge_num] == NULL)
@@ -1861,7 +1862,7 @@ graph *graph_child(graph *g, size_t child)
     return g->edges_from[child]->child;
 }
 
-void *graph_get(graph *g)
+const void *graph_get(const graph *g)
 {
     if (g == NULL)
     {
@@ -1883,7 +1884,7 @@ int graph_get_weight(graph *g, size_t edge_number)
     return g->edges_from[edge_number]->weight;
 }
 
-size_t graph_size(graph *g)
+size_t graph_size(const graph *g)
 {
     if (g == NULL)
     {
@@ -1893,7 +1894,7 @@ size_t graph_size(graph *g)
     return g->datasize;
 }
 
-int graph_child_count(graph *g)
+int graph_child_count(const graph *g)
 {
     if (g == NULL)
     {
@@ -2106,7 +2107,7 @@ lds_string *lds_create_string(void)
     return s;
 }
 
-int lds_string_append(lds_string *s, char *newstr)
+int lds_string_append(lds_string *s, const char *newstr)
 {
     if (s == NULL)
     {
@@ -2116,7 +2117,7 @@ int lds_string_append(lds_string *s, char *newstr)
     return lds_string_append_len(s, newstr, strlen(newstr));
 }
 
-int lds_string_append_len(lds_string *s, char *newstr, size_t len)
+int lds_string_append_len(lds_string *s, const char *newstr, size_t len)
 {
     if (s == NULL)
     {
@@ -2153,11 +2154,11 @@ int lds_string_append_len(lds_string *s, char *newstr, size_t len)
     return 1;
 }
 
-const char *lds_string_cstr(lds_string *s) { return s->data; }
+const char *lds_string_cstr(const lds_string *s) { return s->data; }
 
-size_t lds_string_len(lds_string *s) { return s->len; }
+size_t lds_string_len(const lds_string *s) { return s->len; }
 
-lds_string *lds_string_from(char *new_str)
+lds_string *lds_string_from(const char *new_str)
 {
     lds_string *s = lds_create_string();
 
@@ -2174,7 +2175,7 @@ lds_string *lds_string_from(char *new_str)
     return s;
 }
 
-int lds_string_push_front_len(lds_string *s, char *newstr, size_t len)
+int lds_string_push_front_len(lds_string *s, const char *newstr, size_t len)
 {
     if (s == NULL)
     {
@@ -2212,7 +2213,7 @@ int lds_string_push_front_len(lds_string *s, char *newstr, size_t len)
     return 1;
 }
 
-int lds_string_push_front(lds_string *s, char *newstr)
+int lds_string_push_front(lds_string *s, const char *newstr)
 {
     if (s == NULL)
     {
@@ -2222,7 +2223,7 @@ int lds_string_push_front(lds_string *s, char *newstr)
     return lds_string_push_front_len(s, newstr, strlen(newstr));
 }
 
-int lds_string_copy_len(lds_string *s, char *newstr, size_t length)
+int lds_string_copy_len(lds_string *s, const char *newstr, size_t length)
 {
     if (length + 1 >= s->capacity)
     {
@@ -2253,7 +2254,7 @@ int lds_string_copy_len(lds_string *s, char *newstr, size_t length)
     return 1;
 }
 
-int lds_string_copy(lds_string *s, char *newstr)
+int lds_string_copy(lds_string *s, const char *newstr)
 {
     if (s == NULL)
     {
@@ -2316,7 +2317,7 @@ int lds_string_reserve(lds_string *s1, size_t newcap)
     return 1;
 }
 
-int lds_string_insert_len(lds_string *s, size_t pos, char *newstr,
+int lds_string_insert_len(lds_string *s, size_t pos, const char *newstr,
                           size_t newstrlen)
 {
     if (s == NULL || pos > s->len || newstr == NULL)
@@ -2353,7 +2354,7 @@ int lds_string_insert_len(lds_string *s, size_t pos, char *newstr,
     return 1;
 }
 
-int lds_string_insert(lds_string *s, size_t pos, char *newstr)
+int lds_string_insert(lds_string *s, size_t pos, const char *newstr)
 {
     if (s == NULL || pos > s->len || newstr == NULL)
     {
@@ -2377,7 +2378,7 @@ int lds_string_erase(lds_string *s, size_t pos, size_t len)
     return 1;
 }
 
-int lds_string_compare(lds_string *s1, lds_string *s2)
+int lds_string_compare(const lds_string *s1, const lds_string *s2)
 {
     if (s1 == NULL || s2 == NULL || s1->data == NULL || s2->data == NULL ||
         s1->len != s2->len)
@@ -2397,7 +2398,7 @@ int lds_string_compare(lds_string *s1, lds_string *s2)
 
 int lds_string_clear(lds_string *s)
 {
-    if (s == NULL && s->data != NULL)
+    if (s == NULL || s->data == NULL)
     {
         return 0;
     }
