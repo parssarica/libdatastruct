@@ -616,6 +616,14 @@ int main()
     printf("Is the string same with string \"A different string\": %s\n",
            lds_string_compare(str, str4) ? "Yes" : "No");
 
+    /* Using find function */
+    printf("From which index does the 'str' substring start: %d\n",
+           lds_string_find(str, "str"));
+    printf("From which index does the 'ing' substring start: %d\n",
+           lds_string_find(str, "ing"));
+    printf("From which index does the 'hi' substring start: %d\n",
+           lds_string_find(str, "hi"));
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);

@@ -2448,3 +2448,32 @@ int lds_string_reverse(lds_string *s)
 
     return 1;
 }
+
+int lds_string_find(lds_string *s, char *pattern)
+{
+    int n = s->len;
+    int m = strlen(pattern);
+    int matched = 0;
+    int i;
+    int j;
+
+    for (i = 0; i < (n - m + 1); i++)
+    {
+        matched = 1;
+        for (j = 0; j < m; j++)
+        {
+            if (s->data[i + j] != pattern[j])
+            {
+                matched = 0;
+                break;
+            }
+        }
+
+        if (matched)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}

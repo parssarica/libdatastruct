@@ -235,3 +235,4 @@ int lds_string_erase(lds_string *, size_t, size_t);
 int lds_string_compare(const lds_string *, const lds_string *);
 int lds_string_clear(lds_string *);
 int lds_string_reverse(lds_string *);
+int lds_string_find(lds_string *, char *);
