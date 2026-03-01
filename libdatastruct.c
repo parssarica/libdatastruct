@@ -8,9 +8,9 @@ Pars SARICA <pars@parssarica.com>
 #include <stdlib.h>
 #include <string.h>
 
-linkedlist *create_linkedlist(void)
+lds_linkedlist *lds_create_linkedlist(void)
 {
-    linkedlist *llist = malloc(sizeof(linkedlist));
+    lds_linkedlist *llist = malloc(sizeof(lds_linkedlist));
     if (llist == NULL)
     {
         return NULL;
@@ -22,9 +22,10 @@ linkedlist *create_linkedlist(void)
     return llist;
 }
 
-int linkedlist_add(linkedlist *ll, const void *data, size_t datatype_size)
+int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
+                       size_t datatype_size)
 {
-    linkedlist *obj = ll;
+    lds_linkedlist *obj = ll;
     while (1)
     {
         if (obj->next != NULL)
@@ -37,7 +38,7 @@ int linkedlist_add(linkedlist *ll, const void *data, size_t datatype_size)
         }
     }
 
-    obj->next = malloc(sizeof(linkedlist));
+    obj->next = malloc(sizeof(lds_linkedlist));
     if (obj->next == NULL)
     {
         return 0;
@@ -52,10 +53,10 @@ int linkedlist_add(linkedlist *ll, const void *data, size_t datatype_size)
     return 1;
 }
 
-int linkedlist_length(linkedlist *ll)
+int lds_linkedlist_length(lds_linkedlist *ll)
 {
     int length = 0;
-    linkedlist *x = ll;
+    lds_linkedlist *x = ll;
 
     if (ll == NULL)
     {
@@ -78,10 +79,10 @@ int linkedlist_length(linkedlist *ll)
     return length;
 }
 
-const void *linkedlist_get(linkedlist *ll, int index)
+const void *lds_linkedlist_get(lds_linkedlist *ll, int index)
 {
     int length = 0;
-    linkedlist *x = ll;
+    lds_linkedlist *x = ll;
 
     if (ll == NULL)
     {
@@ -106,10 +107,10 @@ const void *linkedlist_get(linkedlist *ll, int index)
     return x->data;
 }
 
-int linkedlist_delete(linkedlist *ll, int index)
+int lds_linkedlist_delete(lds_linkedlist *ll, int index)
 {
     int length = 0;
-    linkedlist *x = ll;
+    lds_linkedlist *x = ll;
 
     if (ll == NULL)
     {
@@ -131,23 +132,23 @@ int linkedlist_delete(linkedlist *ll, int index)
         length++;
     }
 
-    safefree(x->data);
+    lds_safefree(x->data);
     if (x->next != NULL && x->prev != NULL)
     {
         x->prev->next = x->next;
         x->next->prev = x->prev;
     }
 
-    safefree(x);
+    lds_safefree(x);
 
     return 1;
 }
 
-int linkedlist_update(linkedlist *ll, int index, const void *newvar,
-                      size_t datatype_size)
+int lds_linkedlist_update(lds_linkedlist *ll, int index, const void *newvar,
+                          size_t datatype_size)
 {
     int length = 0;
-    linkedlist *x = ll;
+    lds_linkedlist *x = ll;
 
     index++;
 
@@ -169,7 +170,7 @@ int linkedlist_update(linkedlist *ll, int index, const void *newvar,
         length++;
     }
 
-    safefree(x->data);
+    lds_safefree(x->data);
     x->data = malloc(datatype_size);
 
     memcpy(x->data, newvar, datatype_size);
@@ -177,9 +178,9 @@ int linkedlist_update(linkedlist *ll, int index, const void *newvar,
     return 1;
 }
 
-int linkedlist_free(linkedlist *ll)
+int lds_linkedlist_free(lds_linkedlist *ll)
 {
-    linkedlist *tmp;
+    lds_linkedlist *tmp;
     int to_break = 0;
 
     if (ll == NULL)
@@ -192,7 +193,7 @@ int linkedlist_free(linkedlist *ll)
         tmp = ll;
         if (tmp->data != NULL)
         {
-            safefree(tmp->data);
+            lds_safefree(tmp->data);
         }
         if (ll->next == NULL)
         {
@@ -203,7 +204,7 @@ int linkedlist_free(linkedlist *ll)
             ll = ll->next;
         }
 
-        safefree(tmp);
+        lds_safefree(tmp);
         if (to_break)
         {
             break;
@@ -213,10 +214,10 @@ int linkedlist_free(linkedlist *ll)
     return 1;
 }
 
-int linkedlist_insert(linkedlist *ll, const void *data, size_t datatype_size,
-                      int index)
+int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
+                          size_t datatype_size, int index)
 {
-    linkedlist *previous;
+    lds_linkedlist *previous;
     int length = 0;
 
     if (ll == NULL)
@@ -238,7 +239,7 @@ int linkedlist_insert(linkedlist *ll, const void *data, size_t datatype_size,
         length++;
     }
     previous = ll->prev;
-    previous->next = malloc(sizeof(linkedlist));
+    previous->next = malloc(sizeof(lds_linkedlist));
     if (previous->next == NULL)
     {
         return 0;
@@ -247,7 +248,7 @@ int linkedlist_insert(linkedlist *ll, const void *data, size_t datatype_size,
     previous->next->data = malloc(datatype_size);
     if (previous->next->data == NULL)
     {
-        free(previous->next);
+        lds_safefree(previous->next);
         return 0;
     }
 
@@ -258,9 +259,9 @@ int linkedlist_insert(linkedlist *ll, const void *data, size_t datatype_size,
     return 1;
 }
 
-map *create_map(void)
+lds_map *lds_create_map(void)
 {
-    map *table = malloc(sizeof(map));
+    lds_map *table = malloc(sizeof(lds_map));
 
     if (table == NULL)
     {
@@ -274,8 +275,8 @@ map *create_map(void)
     return table;
 }
 
-int map_add(map *table, const void *key, size_t keysize, const void *value,
-            size_t valuesize)
+int lds_map_add(lds_map *table, const void *key, size_t keysize,
+                const void *value, size_t valuesize)
 {
     if (table == NULL)
     {
@@ -295,8 +296,8 @@ int map_add(map *table, const void *key, size_t keysize, const void *value,
 
     if (found)
     {
-        safefree(table->items[i].key);
-        safefree(table->items[i].value);
+        lds_safefree(table->items[i].key);
+        lds_safefree(table->items[i].value);
         table->items[i].key = malloc(keysize);
         table->items[i].value = malloc(valuesize);
 
@@ -324,7 +325,7 @@ int map_add(map *table, const void *key, size_t keysize, const void *value,
                 table->capacity *= 2;
             }
             table->items =
-                realloc(table->items, sizeof(mapitem) * table->capacity);
+                realloc(table->items, sizeof(lds_mapitem) * table->capacity);
             if (table->items == NULL)
             {
                 return 0;
@@ -350,7 +351,7 @@ int map_add(map *table, const void *key, size_t keysize, const void *value,
     return 1;
 }
 
-int map_length(const map *table)
+int lds_map_length(const lds_map *table)
 {
     if (table != NULL)
     {
@@ -362,7 +363,7 @@ int map_length(const map *table)
     }
 }
 
-static int map_get_index(map *table, const void *key, size_t keysize)
+static int lds_map_get_index(lds_map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return -1;
@@ -382,12 +383,12 @@ static int map_get_index(map *table, const void *key, size_t keysize)
     return -1;
 }
 
-const void *map_get(map *table, const void *key, size_t keysize)
+const void *lds_map_get(lds_map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return NULL;
 
-    int i = map_get_index(table, key, keysize);
+    int i = lds_map_get_index(table, key, keysize);
     if (i != -1)
     {
         return table->items[i].value;
@@ -396,12 +397,12 @@ const void *map_get(map *table, const void *key, size_t keysize)
     return NULL;
 }
 
-int map_delete(map *table, const void *key, size_t keysize)
+int lds_map_delete(lds_map *table, const void *key, size_t keysize)
 {
     if (table->items == NULL)
         return 0;
 
-    int i = map_get_index(table, key, keysize);
+    int i = lds_map_get_index(table, key, keysize);
     if (i == -1)
     {
         return 0;
@@ -412,19 +413,19 @@ int map_delete(map *table, const void *key, size_t keysize)
     return 1;
 }
 
-int map_update_key(map *table, const void *key_old, size_t old_keysize,
-                   const void *key_new, size_t new_keysize)
+int lds_map_update_key(lds_map *table, const void *key_old, size_t old_keysize,
+                       const void *key_new, size_t new_keysize)
 {
     if (table->items == NULL)
         return 0;
 
-    int i = map_get_index(table, key_old, old_keysize);
+    int i = lds_map_get_index(table, key_old, old_keysize);
     if (i == -1)
     {
         return 0;
     }
 
-    safefree(table->items[i].key);
+    lds_safefree(table->items[i].key);
     table->items[i].key = malloc(new_keysize);
     if (table->items[i].key == NULL)
     {
@@ -436,18 +437,18 @@ int map_update_key(map *table, const void *key_old, size_t old_keysize,
     return 1;
 }
 
-int map_update_value(map *table, const void *key, size_t keysize,
-                     const void *newvalue, size_t new_valuesize)
+int lds_map_update_value(lds_map *table, const void *key, size_t keysize,
+                         const void *newvalue, size_t new_valuesize)
 {
     if (table->items == NULL)
         return 0;
 
-    int i = map_get_index(table, key, keysize);
+    int i = lds_map_get_index(table, key, keysize);
     if (i == -1)
     {
         return 0;
     }
-    safefree(table->items[i].value);
+    lds_safefree(table->items[i].value);
     table->items[i].value = malloc(new_valuesize);
     if (table->items[i].value == NULL)
     {
@@ -459,7 +460,7 @@ int map_update_value(map *table, const void *key, size_t keysize,
     return 1;
 }
 
-int map_free(map *table)
+int lds_map_free(lds_map *table)
 {
     size_t i = 0;
 
@@ -472,29 +473,30 @@ int map_free(map *table)
     {
         for (i = 0; i < table->node_count; i++)
         {
-            safefree(table->items[i].key);
-            safefree(table->items[i].value);
+            lds_safefree(table->items[i].key);
+            lds_safefree(table->items[i].value);
         }
-        safefree(table->items);
+        lds_safefree(table->items);
     }
     else
     {
-        safefree(table);
+        lds_safefree(table);
         return 0;
     }
 
-    safefree(table);
+    lds_safefree(table);
     return 1;
 }
 
-int map_minimize(map *table)
+int lds_map_minimize(lds_map *table)
 {
     if (table == NULL || table->items == NULL || table->node_count <= 0)
     {
         return 0;
     }
 
-    table->items = realloc(table->items, sizeof(mapitem) * table->node_count);
+    table->items =
+        realloc(table->items, sizeof(lds_mapitem) * table->node_count);
     if (table->items == NULL)
     {
         return 0;
@@ -504,9 +506,9 @@ int map_minimize(map *table)
     return 1;
 }
 
-stack *create_stack(void)
+lds_stack *lds_create_stack(void)
 {
-    stack *s = malloc(sizeof(stack));
+    lds_stack *s = malloc(sizeof(lds_stack));
 
     if (s == NULL)
     {
@@ -520,7 +522,7 @@ stack *create_stack(void)
     return s;
 }
 
-int stack_push(stack *s, const void *value, size_t valuesize)
+int lds_stack_push(lds_stack *s, const void *value, size_t valuesize)
 {
     if (s == NULL)
     {
@@ -538,7 +540,7 @@ int stack_push(stack *s, const void *value, size_t valuesize)
             s->capacity *= 2;
         }
 
-        s->items = realloc(s->items, s->capacity * (sizeof(stackitem)));
+        s->items = realloc(s->items, s->capacity * (sizeof(lds_stackitem)));
         if (s->items == NULL)
         {
             return 0;
@@ -559,19 +561,19 @@ int stack_push(stack *s, const void *value, size_t valuesize)
     return 1;
 }
 
-int stack_pop(stack *s, void *out)
+int lds_stack_pop(lds_stack *s, void *out)
 {
     if (s->items == NULL || s->node_count < 1)
         return 0;
 
     s->node_count--;
     memcpy(out, s->items[s->node_count].item, s->items[s->node_count].size);
-    safefree(s->items[s->node_count].item);
+    lds_safefree(s->items[s->node_count].item);
 
     return 1;
 }
 
-const void *stack_peek(const stack *s)
+const void *lds_stack_peek(const lds_stack *s)
 {
     if (s == NULL || s->items == NULL || s->node_count <= 0)
     {
@@ -581,7 +583,7 @@ const void *stack_peek(const stack *s)
     return s->items[s->node_count - 1].item;
 }
 
-int stack_free(stack *s)
+int lds_stack_free(lds_stack *s)
 {
     if (s == NULL)
     {
@@ -593,22 +595,22 @@ int stack_free(stack *s)
     {
         for (i = 0; i < s->node_count; i++)
         {
-            safefree(s->items[i].item);
+            lds_safefree(s->items[i].item);
         }
 
-        safefree(s->items);
+        lds_safefree(s->items);
     }
     else
     {
-        safefree(s);
+        lds_safefree(s);
     }
 
-    safefree(s);
+    lds_safefree(s);
 
     return 1;
 }
 
-int stack_minimize(stack *s)
+int lds_stack_minimize(lds_stack *s)
 {
     if (s->items == NULL || s->node_count <= 0)
     {
@@ -617,11 +619,11 @@ int stack_minimize(stack *s)
 
     if (s->node_count == 0)
     {
-        safefree(s->items);
+        lds_safefree(s->items);
     }
     else
     {
-        s->items = realloc(s->items, sizeof(stackitem) * s->node_count);
+        s->items = realloc(s->items, sizeof(lds_stackitem) * s->node_count);
         if (s->items == NULL)
         {
             return 0;
@@ -632,7 +634,7 @@ int stack_minimize(stack *s)
     return 1;
 }
 
-int stack_empty(const stack *s)
+int lds_stack_empty(const lds_stack *s)
 {
     if (s == NULL)
     {
@@ -642,9 +644,9 @@ int stack_empty(const stack *s)
     return s->node_count == 0;
 }
 
-queue *create_queue(void)
+lds_queue *lds_create_queue(void)
 {
-    queue *q = malloc(sizeof(queue));
+    lds_queue *q = malloc(sizeof(lds_queue));
 
     if (q == NULL)
     {
@@ -658,7 +660,7 @@ queue *create_queue(void)
     return q;
 }
 
-int enqueue(queue *q, const void *data, size_t datasize)
+int lds_queue_enqueue(lds_queue *q, const void *data, size_t datasize)
 {
     if (q == NULL)
     {
@@ -676,7 +678,7 @@ int enqueue(queue *q, const void *data, size_t datasize)
             q->capacity *= 2;
         }
 
-        q->items = realloc(q->items, sizeof(queueitem) * q->capacity);
+        q->items = realloc(q->items, sizeof(lds_queueitem) * q->capacity);
         if (q->items == NULL)
         {
             return 0;
@@ -697,24 +699,25 @@ int enqueue(queue *q, const void *data, size_t datasize)
     return 1;
 }
 
-int dequeue(queue *q, void *out)
+int lds_queue_dequeue(lds_queue *q, void *out)
 {
     if (q->items == NULL || q->node_count <= 0)
         return 0;
 
     q->node_count--;
     memcpy(out, q->items[0].item, q->items[0].size);
-    safefree(q->items[0].item);
+    lds_safefree(q->items[0].item);
 
     if (q->node_count > 0)
     {
-        memmove(&q->items[0], &q->items[1], sizeof(queueitem) * q->node_count);
+        memmove(&q->items[0], &q->items[1],
+                sizeof(lds_queueitem) * q->node_count);
     }
 
     return 1;
 }
 
-int queue_free(queue *q)
+int lds_queue_free(lds_queue *q)
 {
     size_t i = 0;
 
@@ -727,35 +730,35 @@ int queue_free(queue *q)
     {
         for (i = 0; i < q->node_count; i++)
         {
-            safefree(q->items[i].item);
+            lds_safefree(q->items[i].item);
         }
 
-        safefree(q->items);
+        lds_safefree(q->items);
     }
     else
     {
-        safefree(q);
+        lds_safefree(q);
         return 0;
     }
 
-    safefree(q);
+    lds_safefree(q);
 
     return 1;
 }
 
-int queue_minimize(queue *q)
+int lds_queue_minimize(lds_queue *q)
 {
     if (q->items == NULL)
         return 0;
 
     if (q->node_count == 0)
     {
-        safefree(q->items);
+        lds_safefree(q->items);
         q->items = NULL;
     }
     else
     {
-        q->items = realloc(q->items, sizeof(stackitem) * q->node_count);
+        q->items = realloc(q->items, sizeof(lds_queueitem) * q->node_count);
     }
 
     q->capacity = q->node_count;
@@ -763,7 +766,7 @@ int queue_minimize(queue *q)
     return 1;
 }
 
-int queue_is_empty(const queue *q)
+int lds_queue_is_empty(const lds_queue *q)
 {
     if (q == NULL)
     {
@@ -773,7 +776,7 @@ int queue_is_empty(const queue *q)
     return q->node_count == 0;
 }
 
-const void *queue_front(const queue *q)
+const void *lds_queue_front(const lds_queue *q)
 {
     if (q->items == NULL || q->node_count <= 0)
         return NULL;
@@ -781,9 +784,9 @@ const void *queue_front(const queue *q)
     return q->items[q->node_count - 1].item;
 }
 
-bintree *create_bintree(void)
+lds_bintree *lds_create_bintree(void)
 {
-    bintree *b = malloc(sizeof(bintree));
+    lds_bintree *b = malloc(sizeof(lds_bintree));
 
     if (b == NULL)
     {
@@ -798,10 +801,10 @@ bintree *create_bintree(void)
     return b;
 }
 
-int bintree_set_nodes(bintree *b)
+int lds_bintree_set_nodes(lds_bintree *b)
 {
-    b->left = malloc(sizeof(bintree));
-    b->right = malloc(sizeof(bintree));
+    b->left = malloc(sizeof(lds_bintree));
+    b->right = malloc(sizeof(lds_bintree));
 
     if (b->left == NULL || b->right == NULL)
     {
@@ -820,7 +823,7 @@ int bintree_set_nodes(bintree *b)
     return 1;
 }
 
-int bintree_set(bintree *b, const void *data, size_t datasize)
+int lds_bintree_set(lds_bintree *b, const void *data, size_t datasize)
 {
     b->data = malloc(datasize);
     b->size = datasize;
@@ -835,7 +838,7 @@ int bintree_set(bintree *b, const void *data, size_t datasize)
     return 1;
 }
 
-void *bintree_get(const bintree *b)
+void *lds_bintree_get(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -845,7 +848,7 @@ void *bintree_get(const bintree *b)
     return b->data;
 }
 
-bintree *bintree_left(const bintree *b)
+lds_bintree *lds_bintree_left(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -855,7 +858,7 @@ bintree *bintree_left(const bintree *b)
     return b->left;
 }
 
-bintree *bintree_right(const bintree *b)
+lds_bintree *lds_bintree_right(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -865,12 +868,13 @@ bintree *bintree_right(const bintree *b)
     return b->right;
 }
 
-bintree *bintree_insert_left(bintree *b, const void *data, size_t datasize)
+lds_bintree *lds_bintree_insert_left(lds_bintree *b, const void *data,
+                                     size_t datasize)
 {
     if (b == NULL || b->left != NULL)
         return NULL;
 
-    b->left = create_bintree();
+    b->left = lds_create_bintree();
     if (b->left == NULL)
     {
         return NULL;
@@ -889,12 +893,13 @@ bintree *bintree_insert_left(bintree *b, const void *data, size_t datasize)
     return b->left;
 }
 
-bintree *bintree_insert_right(bintree *b, const void *data, size_t datasize)
+lds_bintree *lds_bintree_insert_right(lds_bintree *b, const void *data,
+                                      size_t datasize)
 {
     if (b == NULL || b->right != NULL)
         return NULL;
 
-    b->right = create_bintree();
+    b->right = lds_create_bintree();
     if (b->right == NULL)
     {
         return NULL;
@@ -913,7 +918,7 @@ bintree *bintree_insert_right(bintree *b, const void *data, size_t datasize)
     return b->right;
 }
 
-int bintree_has_left(const bintree *b)
+int lds_bintree_has_left(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -923,7 +928,7 @@ int bintree_has_left(const bintree *b)
     return b->left != NULL;
 }
 
-int bintree_has_right(const bintree *b)
+int lds_bintree_has_right(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -933,7 +938,7 @@ int bintree_has_right(const bintree *b)
     return b->right != NULL;
 }
 
-size_t bintree_size(const bintree *b)
+size_t lds_bintree_size(const lds_bintree *b)
 {
     if (b == NULL)
     {
@@ -943,38 +948,38 @@ size_t bintree_size(const bintree *b)
     return b->size;
 }
 
-int bintree_bfs(bintree *b, void (*visit)(bintree *))
+int lds_bintree_bfs(lds_bintree *b, void (*visit)(lds_bintree *))
 {
-    bintree **b_null_checker;
-    vector *to_visit = create_vector();
+    lds_bintree **b_null_checker;
+    lds_vector *to_visit = lds_create_vector();
 
     if (b == NULL || to_visit == NULL)
     {
         return 0;
     }
 
-    if (!vector_add(to_visit, &b, sizeof(bintree **)))
+    if (!lds_vector_add(to_visit, &b, sizeof(lds_bintree **)))
     {
-        vector_free(to_visit);
+        lds_vector_free(to_visit);
         return 0;
     }
 
-    while (vector_length(to_visit) != 0)
+    while (lds_vector_length(to_visit) != 0)
     {
         if (b->left != NULL)
         {
-            if (!vector_add(to_visit, &b->left, sizeof(bintree **)))
+            if (!lds_vector_add(to_visit, &b->left, sizeof(lds_bintree **)))
             {
-                vector_free(to_visit);
+                lds_vector_free(to_visit);
                 return 0;
             }
         }
 
         if (b->right != NULL)
         {
-            if (!vector_add(to_visit, &b->right, sizeof(bintree **)))
+            if (!lds_vector_add(to_visit, &b->right, sizeof(lds_bintree **)))
             {
-                vector_free(to_visit);
+                lds_vector_free(to_visit);
                 return 0;
             }
         }
@@ -982,16 +987,16 @@ int bintree_bfs(bintree *b, void (*visit)(bintree *))
 
         if (to_visit->node_count > 0)
         {
-            if (!vector_delete(to_visit, 0))
+            if (!lds_vector_delete(to_visit, 0))
             {
-                vector_free(to_visit);
+                lds_vector_free(to_visit);
                 return 0;
             }
         }
 
         if (to_visit->node_count > 0)
         {
-            b_null_checker = (bintree **)vector_get(to_visit, 0);
+            b_null_checker = (lds_bintree **)lds_vector_get(to_visit, 0);
         }
         else
         {
@@ -1008,29 +1013,32 @@ int bintree_bfs(bintree *b, void (*visit)(bintree *))
         }
     }
 
-    vector_free(to_visit);
+    lds_vector_free(to_visit);
 
     return 1;
 }
 
-static void bintree_node_destroy(bintree *b)
+static void lds_bintree_node_destroy(lds_bintree *b)
 {
     if (b == NULL)
         return;
 
     if (b->data != NULL)
     {
-        safefree(b->data);
+        lds_safefree(b->data);
     }
 
-    safefree(b);
+    lds_safefree(b);
 }
 
-int bintree_destroy(bintree *b) { return bintree_bfs(b, bintree_node_destroy); }
-
-int bintree_remove_left(bintree *b)
+int lds_bintree_destroy(lds_bintree *b)
 {
-    int i = bintree_destroy(b->left);
+    return lds_bintree_bfs(b, lds_bintree_node_destroy);
+}
+
+int lds_bintree_remove_left(lds_bintree *b)
+{
+    int i = lds_bintree_destroy(b->left);
 
     if (i != 1)
     {
@@ -1042,9 +1050,9 @@ int bintree_remove_left(bintree *b)
     return 1;
 }
 
-int bintree_remove_right(bintree *b)
+int lds_bintree_remove_right(lds_bintree *b)
 {
-    int i = bintree_destroy(b->right);
+    int i = lds_bintree_destroy(b->right);
 
     if (i != 1)
     {
@@ -1056,9 +1064,9 @@ int bintree_remove_right(bintree *b)
     return 1;
 }
 
-vector *create_vector(void)
+lds_vector *lds_create_vector(void)
 {
-    vector *v = malloc(sizeof(vector));
+    lds_vector *v = malloc(sizeof(lds_vector));
 
     if (v == NULL)
     {
@@ -1072,7 +1080,7 @@ vector *create_vector(void)
     return v;
 }
 
-int vector_add(vector *v, const void *data, int datasize)
+int lds_vector_add(lds_vector *v, const void *data, int datasize)
 {
     size_t i;
 
@@ -1096,7 +1104,7 @@ int vector_add(vector *v, const void *data, int datasize)
                 v->capacity *= 2;
             }
         }
-        v->items = realloc(v->items, sizeof(vectoritem) * v->capacity);
+        v->items = realloc(v->items, sizeof(lds_vectoritem) * v->capacity);
         if (v->items == NULL)
         {
             return 0;
@@ -1118,9 +1126,9 @@ int vector_add(vector *v, const void *data, int datasize)
     return 1;
 }
 
-int vector_delete(vector *v, size_t index)
+int lds_vector_delete(lds_vector *v, size_t index)
 {
-    vectoritem *items;
+    lds_vectoritem *items;
     size_t i;
     int skipped = 0;
 
@@ -1134,7 +1142,7 @@ int vector_delete(vector *v, size_t index)
         return 0;
     }
 
-    items = malloc(sizeof(vectoritem) * v->capacity);
+    items = malloc(sizeof(lds_vectoritem) * v->capacity);
     if (items == NULL)
     {
         return 0;
@@ -1144,7 +1152,7 @@ int vector_delete(vector *v, size_t index)
     {
         if (i == index)
         {
-            safefree(v->items[i].item);
+            lds_safefree(v->items[i].item);
             skipped++;
         }
 
@@ -1155,7 +1163,7 @@ int vector_delete(vector *v, size_t index)
         }
     }
 
-    safefree(v->items);
+    lds_safefree(v->items);
 
     v->items = items;
     v->node_count--;
@@ -1163,9 +1171,10 @@ int vector_delete(vector *v, size_t index)
     return 1;
 }
 
-int vector_insert(vector *v, size_t index, const void *data, size_t datasize)
+int lds_vector_insert(lds_vector *v, size_t index, const void *data,
+                      size_t datasize)
 {
-    vectoritem *items;
+    lds_vectoritem *items;
     size_t i;
     int skipped = 0;
 
@@ -1185,7 +1194,7 @@ int vector_insert(vector *v, size_t index, const void *data, size_t datasize)
             v->capacity *= 2;
         }
     }
-    items = malloc(sizeof(vectoritem) * v->capacity);
+    items = malloc(sizeof(lds_vectoritem) * v->capacity);
     if (items == NULL)
     {
         return 0;
@@ -1209,14 +1218,14 @@ int vector_insert(vector *v, size_t index, const void *data, size_t datasize)
         }
     }
 
-    safefree(v->items);
+    lds_safefree(v->items);
 
     v->items = items;
 
     return 1;
 }
 
-size_t vector_length(const vector *v)
+size_t lds_vector_length(const lds_vector *v)
 {
     if (v == NULL)
     {
@@ -1226,7 +1235,7 @@ size_t vector_length(const vector *v)
     return v->node_count;
 }
 
-int vector_free(vector *v)
+int lds_vector_free(lds_vector *v)
 {
     size_t j;
 
@@ -1241,23 +1250,23 @@ int vector_free(vector *v)
         {
             if (v->items[j].item != NULL)
             {
-                safefree(v->items[j].item);
+                lds_safefree(v->items[j].item);
             }
         }
-        safefree(v->items);
+        lds_safefree(v->items);
     }
     else
     {
-        safefree(v);
+        lds_safefree(v);
         return 0;
     }
 
-    safefree(v);
+    lds_safefree(v);
 
     return 1;
 }
 
-int vector_minimize(vector *v)
+int lds_vector_minimize(lds_vector *v)
 {
     if (v->items == NULL)
     {
@@ -1266,11 +1275,11 @@ int vector_minimize(vector *v)
 
     if (v->node_count == 0)
     {
-        safefree(v->items);
+        lds_safefree(v->items);
     }
     else
     {
-        v->items = realloc(v->items, sizeof(vectoritem) * v->node_count);
+        v->items = realloc(v->items, sizeof(lds_vectoritem) * v->node_count);
         if (v->items == NULL)
         {
             return 0;
@@ -1282,7 +1291,7 @@ int vector_minimize(vector *v)
     return 1;
 }
 
-const void *vector_get(const vector *v, size_t index)
+const void *lds_vector_get(const lds_vector *v, size_t index)
 {
     if (v == NULL || v->items == NULL || index >= v->capacity)
         return NULL;
@@ -1290,9 +1299,9 @@ const void *vector_get(const vector *v, size_t index)
     return v->items[index].item;
 }
 
-trie *trie_create(void)
+lds_trie *lds_trie_create(void)
 {
-    trie *t = malloc(sizeof(trie));
+    lds_trie *t = malloc(sizeof(lds_trie));
 
     if (t == NULL)
     {
@@ -1306,7 +1315,7 @@ trie *trie_create(void)
     return t;
 }
 
-static int trie_find(const trie *t, char character)
+static int lds_trie_find(const lds_trie *t, char character)
 {
     int found = -1;
     size_t i;
@@ -1328,7 +1337,7 @@ static int trie_find(const trie *t, char character)
     return found;
 }
 
-int trie_insert(trie *t, const char *word)
+int lds_trie_insert(lds_trie *t, const char *word)
 {
     int i = 0;
     int j = 0;
@@ -1340,7 +1349,7 @@ int trie_insert(trie *t, const char *word)
 
     while (1)
     {
-        i = trie_find(t, word[j++]);
+        i = lds_trie_find(t, word[j++]);
         if (i == -1)
             break;
         t = t->children[i];
@@ -1349,13 +1358,14 @@ int trie_insert(trie *t, const char *word)
     j--;
     while (1)
     {
-        t->children = realloc(t->children, sizeof(trie *) * ++(t->child_count));
+        t->children =
+            realloc(t->children, sizeof(lds_trie *) * ++(t->child_count));
         if (t->children == NULL)
         {
             return 0;
         }
 
-        t->children[t->child_count - 1] = trie_create();
+        t->children[t->child_count - 1] = lds_trie_create();
         if (t->children[t->child_count - 1] == NULL)
         {
             return 0;
@@ -1370,7 +1380,7 @@ int trie_insert(trie *t, const char *word)
     return 1;
 }
 
-int trie_search(const trie *t, const char *word)
+int lds_trie_search(const lds_trie *t, const char *word)
 {
     int i = 0;
     size_t j = 0;
@@ -1382,7 +1392,7 @@ int trie_search(const trie *t, const char *word)
 
     while (1)
     {
-        i = trie_find(t, word[j++]);
+        i = lds_trie_find(t, word[j++]);
         if (i == -1)
             break;
         t = t->children[i];
@@ -1391,10 +1401,10 @@ int trie_search(const trie *t, const char *word)
     return strlen(word) == --j;
 }
 
-int trie_free(trie *t)
+int lds_trie_free(lds_trie *t)
 {
-    trie **t_null_checker;
-    vector *to_visit = create_vector();
+    lds_trie **t_null_checker;
+    lds_vector *to_visit = lds_create_vector();
     size_t i;
 
     if (t == NULL || t->children == NULL || to_visit == NULL)
@@ -1402,16 +1412,16 @@ int trie_free(trie *t)
         return 0;
     }
 
-    if (!vector_add(to_visit, &t, sizeof(trie **)))
+    if (!lds_vector_add(to_visit, &t, sizeof(lds_trie **)))
     {
         return 0;
     }
 
-    while (vector_length(to_visit) != 0)
+    while (lds_vector_length(to_visit) != 0)
     {
         for (i = 0; i < t->child_count; i++)
         {
-            if (!vector_add(to_visit, &t->children[i], sizeof(trie **)))
+            if (!lds_vector_add(to_visit, &t->children[i], sizeof(lds_trie **)))
             {
                 return 0;
             }
@@ -1419,14 +1429,14 @@ int trie_free(trie *t)
 
         if (t->children != NULL)
         {
-            safefree(t->children);
+            lds_safefree(t->children);
         }
 
-        safefree(t);
+        lds_safefree(t);
 
         if (to_visit->node_count > 0)
         {
-            if (!vector_delete(to_visit, 0))
+            if (!lds_vector_delete(to_visit, 0))
             {
                 return 0;
             }
@@ -1434,7 +1444,7 @@ int trie_free(trie *t)
 
         if (to_visit->node_count > 0)
         {
-            t_null_checker = (trie **)vector_get(to_visit, 0);
+            t_null_checker = (lds_trie **)lds_vector_get(to_visit, 0);
         }
         else
         {
@@ -1451,14 +1461,14 @@ int trie_free(trie *t)
         }
     }
 
-    vector_free(to_visit);
+    lds_vector_free(to_visit);
 
     return 1;
 }
 
-tree *create_tree(void)
+lds_tree *lds_create_tree(void)
 {
-    tree *t = malloc(sizeof(tree));
+    lds_tree *t = malloc(sizeof(lds_tree));
 
     if (t == NULL)
     {
@@ -1474,7 +1484,7 @@ tree *create_tree(void)
     return t;
 }
 
-int tree_set(tree *t, const void *data, size_t datasize)
+int lds_tree_set(lds_tree *t, const void *data, size_t datasize)
 {
     if (t == NULL)
     {
@@ -1483,7 +1493,7 @@ int tree_set(tree *t, const void *data, size_t datasize)
 
     if (t->data != NULL)
     {
-        safefree(t->data);
+        lds_safefree(t->data);
     }
 
     t->data = malloc(datasize);
@@ -1499,7 +1509,7 @@ int tree_set(tree *t, const void *data, size_t datasize)
     return 1;
 }
 
-tree *tree_add(tree *t, const void *data, size_t datasize)
+lds_tree *lds_tree_add(lds_tree *t, const void *data, size_t datasize)
 {
     if (t == NULL)
     {
@@ -1507,24 +1517,24 @@ tree *tree_add(tree *t, const void *data, size_t datasize)
     }
 
     t->child_count++;
-    t->children = realloc(t->children, sizeof(tree *) * t->child_count);
+    t->children = realloc(t->children, sizeof(lds_tree *) * t->child_count);
     if (t->children == NULL)
     {
         return NULL;
     }
 
-    t->children[t->child_count - 1] = malloc(sizeof(tree));
+    t->children[t->child_count - 1] = malloc(sizeof(lds_tree));
     if (t->children[t->child_count - 1] == NULL)
     {
-        free(t->children);
+        lds_safefree(t->children);
         return NULL;
     }
 
     t->children[t->child_count - 1]->data = malloc(datasize);
     if (t->children[t->child_count - 1]->data == NULL)
     {
-        free(t->children);
-        free(t->children[t->child_count - 1]);
+        lds_safefree(t->children);
+        lds_safefree(t->children[t->child_count - 1]);
         return NULL;
     }
     t->children[t->child_count - 1]->datasize = datasize;
@@ -1537,7 +1547,7 @@ tree *tree_add(tree *t, const void *data, size_t datasize)
     return t->children[t->child_count - 1];
 }
 
-void *tree_get(const tree *t)
+void *lds_tree_get(const lds_tree *t)
 {
     if (t == NULL)
         return NULL;
@@ -1545,7 +1555,7 @@ void *tree_get(const tree *t)
     return t->data;
 }
 
-size_t tree_size(const tree *t)
+size_t lds_tree_size(const lds_tree *t)
 {
     if (t == NULL)
         return 0;
@@ -1553,7 +1563,7 @@ size_t tree_size(const tree *t)
     return t->datasize;
 }
 
-int tree_child_count(const tree *t)
+int lds_tree_child_count(const lds_tree *t)
 {
     if (t == NULL)
         return 0;
@@ -1561,7 +1571,7 @@ int tree_child_count(const tree *t)
     return t->child_count;
 }
 
-tree *tree_child(const tree *t, size_t child)
+lds_tree *lds_tree_child(const lds_tree *t, size_t child)
 {
     if (t == NULL || child >= t->child_count || t->children == NULL)
         return NULL;
@@ -1569,7 +1579,7 @@ tree *tree_child(const tree *t, size_t child)
     return t->children[child];
 }
 
-tree *tree_parent(const tree *t)
+lds_tree *lds_tree_parent(const lds_tree *t)
 {
     if (t == NULL)
         return NULL;
@@ -1577,10 +1587,10 @@ tree *tree_parent(const tree *t)
     return t->parent;
 }
 
-int tree_bfs(tree *t, void (*visit)(tree *))
+int lds_tree_bfs(lds_tree *t, void (*visit)(lds_tree *))
 {
-    tree **t_null_checker;
-    vector *to_visit = create_vector();
+    lds_tree **t_null_checker;
+    lds_vector *to_visit = lds_create_vector();
     size_t i;
 
     if (t == NULL || to_visit == NULL)
@@ -1588,19 +1598,19 @@ int tree_bfs(tree *t, void (*visit)(tree *))
         return 0;
     }
 
-    if (!vector_add(to_visit, &t, sizeof(tree **)))
+    if (!lds_vector_add(to_visit, &t, sizeof(lds_tree **)))
     {
-        vector_free(to_visit);
+        lds_vector_free(to_visit);
         return 0;
     }
 
-    while (vector_length(to_visit) != 0)
+    while (lds_vector_length(to_visit) != 0)
     {
         for (i = 0; i < t->child_count; i++)
         {
-            if (!vector_add(to_visit, &t->children[i], sizeof(tree **)))
+            if (!lds_vector_add(to_visit, &t->children[i], sizeof(lds_tree **)))
             {
-                vector_free(to_visit);
+                lds_vector_free(to_visit);
                 return 0;
             }
         }
@@ -1609,16 +1619,16 @@ int tree_bfs(tree *t, void (*visit)(tree *))
 
         if (to_visit->node_count > 0)
         {
-            if (!vector_delete(to_visit, 0))
+            if (!lds_vector_delete(to_visit, 0))
             {
-                vector_free(to_visit);
+                lds_vector_free(to_visit);
                 return 0;
             }
         }
 
         if (to_visit->node_count > 0)
         {
-            t_null_checker = (tree **)vector_get(to_visit, 0);
+            t_null_checker = (lds_tree **)lds_vector_get(to_visit, 0);
         }
         else
         {
@@ -1635,34 +1645,37 @@ int tree_bfs(tree *t, void (*visit)(tree *))
         }
     }
 
-    vector_free(to_visit);
+    lds_vector_free(to_visit);
 
     return 1;
 }
 
-static void tree_node_destroy(tree *t)
+static void lds_tree_node_destroy(lds_tree *t)
 {
     if (t == NULL)
         return;
 
     if (t->data != NULL)
     {
-        safefree(t->data);
+        lds_safefree(t->data);
     }
 
     if (t->children != NULL)
     {
-        safefree(t->children);
+        lds_safefree(t->children);
     }
 
-    safefree(t);
+    lds_safefree(t);
 }
 
-int tree_destroy(tree *t) { return tree_bfs(t, tree_node_destroy); }
-
-graph *create_graph(void)
+int lds_tree_destroy(lds_tree *t)
 {
-    graph *g = malloc(sizeof(graph));
+    return lds_tree_bfs(t, lds_tree_node_destroy);
+}
+
+lds_graph *lds_create_graph(void)
+{
+    lds_graph *g = malloc(sizeof(lds_graph));
 
     if (g == NULL)
     {
@@ -1679,28 +1692,28 @@ graph *create_graph(void)
     return g;
 }
 
-graph *graph_add(graph *g, const void *data, size_t datasize)
+lds_graph *lds_graph_add(lds_graph *g, const void *data, size_t datasize)
 {
     g->child_count_from++;
     g->edges_from =
-        realloc(g->edges_from, sizeof(graphedge) * g->child_count_from);
+        realloc(g->edges_from, sizeof(lds_graphedge) * g->child_count_from);
     if (g->edges_from == NULL)
     {
         return NULL;
     }
 
-    g->edges_from[g->child_count_from - 1] = malloc(sizeof(graphedge));
+    g->edges_from[g->child_count_from - 1] = malloc(sizeof(lds_graphedge));
     if (g->edges_from[g->child_count_from - 1] == NULL)
     {
-        free(g->edges_from);
+        lds_safefree(g->edges_from);
         return NULL;
     }
     g->edges_from[g->child_count_from - 1]->parent = g;
-    g->edges_from[g->child_count_from - 1]->child = create_graph();
+    g->edges_from[g->child_count_from - 1]->child = lds_create_graph();
     if (g->edges_from[g->child_count_from - 1]->child == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
         return NULL;
     }
 
@@ -1709,9 +1722,9 @@ graph *graph_add(graph *g, const void *data, size_t datasize)
     g->edges_from[g->child_count_from - 1]->child->data = malloc(datasize);
     if (g->edges_from[g->child_count_from - 1]->child->data == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
         return NULL;
     }
 
@@ -1720,57 +1733,57 @@ graph *graph_add(graph *g, const void *data, size_t datasize)
     g->edges_from[g->child_count_from - 1]->child->child_count_to = 1;
     g->edges_from[g->child_count_from - 1]->child->edges_from = NULL;
     g->edges_from[g->child_count_from - 1]->child->edges_to =
-        malloc(sizeof(graphedge *));
+        malloc(sizeof(lds_graphedge *));
     if (g->edges_from[g->child_count_from - 1]->child->edges_to == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
-        free(g->edges_from[g->child_count_from - 1]->child->data);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->data);
         return NULL;
     }
 
     g->edges_from[g->child_count_from - 1]->child->edges_to[0] =
-        malloc(sizeof(graphedge));
+        malloc(sizeof(lds_graphedge));
 
     if (g->edges_from[g->child_count_from - 1]->child->edges_to[0] == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
-        free(g->edges_from[g->child_count_from - 1]->child->data);
-        free(g->edges_from[g->child_count_from - 1]->child->edges_to);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->data);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->edges_to);
         return NULL;
     }
 
     memcpy(g->edges_from[g->child_count_from - 1]->child->data, data, datasize);
     memcpy(g->edges_from[g->child_count_from - 1]->child->edges_to[0],
-           g->edges_from[g->child_count_from - 1], sizeof(graphedge));
+           g->edges_from[g->child_count_from - 1], sizeof(lds_graphedge));
     return g->edges_from[g->child_count_from - 1]->child;
 }
 
-graph *graph_add_weighted(graph *g, const void *data, size_t datasize,
-                          int weight)
+lds_graph *lds_graph_add_weighted(lds_graph *g, const void *data,
+                                  size_t datasize, int weight)
 {
     g->child_count_from++;
     g->edges_from =
-        realloc(g->edges_from, sizeof(graphedge) * g->child_count_from);
+        realloc(g->edges_from, sizeof(lds_graphedge) * g->child_count_from);
     if (g->edges_from == NULL)
     {
         return NULL;
     }
-    g->edges_from[g->child_count_from - 1] = malloc(sizeof(graphedge));
+    g->edges_from[g->child_count_from - 1] = malloc(sizeof(lds_graphedge));
     if (g->edges_from[g->child_count_from - 1] == NULL)
     {
-        free(g->edges_from);
+        lds_safefree(g->edges_from);
         return NULL;
     }
     g->edges_from[g->child_count_from - 1]->parent = g;
-    g->edges_from[g->child_count_from - 1]->child = create_graph();
+    g->edges_from[g->child_count_from - 1]->child = lds_create_graph();
     if (g->edges_from[g->child_count_from - 1]->child == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
         return NULL;
     }
     g->edges_from[g->child_count_from - 1]->weight = weight;
@@ -1778,9 +1791,9 @@ graph *graph_add_weighted(graph *g, const void *data, size_t datasize,
     g->edges_from[g->child_count_from - 1]->child->data = malloc(datasize);
     if (g->edges_from[g->child_count_from - 1]->child->data == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
         return NULL;
     }
     g->edges_from[g->child_count_from - 1]->child->datasize = datasize;
@@ -1788,34 +1801,34 @@ graph *graph_add_weighted(graph *g, const void *data, size_t datasize,
     g->edges_from[g->child_count_from - 1]->child->child_count_to = 1;
     g->edges_from[g->child_count_from - 1]->child->edges_from = NULL;
     g->edges_from[g->child_count_from - 1]->child->edges_to =
-        malloc(sizeof(graphedge *));
+        malloc(sizeof(lds_graphedge *));
     if (g->edges_from[g->child_count_from - 1]->child->edges_to == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
-        free(g->edges_from[g->child_count_from - 1]->child->data);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->data);
         return NULL;
     }
     g->edges_from[g->child_count_from - 1]->child->edges_to[0] =
-        malloc(sizeof(graphedge));
+        malloc(sizeof(lds_graphedge));
     if (g->edges_from[g->child_count_from - 1]->child->edges_to[0] == NULL)
     {
-        free(g->edges_from);
-        free(g->edges_from[g->child_count_from - 1]);
-        free(g->edges_from[g->child_count_from - 1]->child);
-        free(g->edges_from[g->child_count_from - 1]->child->data);
-        free(g->edges_from[g->child_count_from - 1]->child->edges_to);
+        lds_safefree(g->edges_from);
+        lds_safefree(g->edges_from[g->child_count_from - 1]);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->data);
+        lds_safefree(g->edges_from[g->child_count_from - 1]->child->edges_to);
         return NULL;
     }
 
     memcpy(g->edges_from[g->child_count_from - 1]->child->data, data, datasize);
     memcpy(g->edges_from[g->child_count_from - 1]->child->edges_to[0],
-           g->edges_from[g->child_count_from - 1], sizeof(graphedge));
+           g->edges_from[g->child_count_from - 1], sizeof(lds_graphedge));
     return g->edges_from[g->child_count_from - 1]->child;
 }
 
-int graph_set(graph *g, void *data, size_t datasize)
+int lds_graph_set(lds_graph *g, void *data, size_t datasize)
 {
     if (g == NULL)
     {
@@ -1824,7 +1837,7 @@ int graph_set(graph *g, void *data, size_t datasize)
 
     if (g->data != NULL)
     {
-        safefree(g->data);
+        lds_safefree(g->data);
     }
 
     g->data = malloc(datasize);
@@ -1839,7 +1852,7 @@ int graph_set(graph *g, void *data, size_t datasize)
     return 1;
 }
 
-int graph_set_weight(const graph *g, size_t edge_num, int new_weight)
+int lds_graph_set_weight(const lds_graph *g, size_t edge_num, int new_weight)
 {
     if (g == NULL || g->edges_from == NULL || g->child_count_from <= edge_num ||
         g->edges_from[edge_num] == NULL)
@@ -1851,7 +1864,7 @@ int graph_set_weight(const graph *g, size_t edge_num, int new_weight)
     return 1;
 }
 
-graph *graph_child(graph *g, size_t child)
+lds_graph *lds_graph_child(lds_graph *g, size_t child)
 {
     if (g == NULL || child >= g->child_count_from || g->edges_from == NULL ||
         g->edges_from[child] == NULL)
@@ -1862,7 +1875,7 @@ graph *graph_child(graph *g, size_t child)
     return g->edges_from[child]->child;
 }
 
-const void *graph_get(const graph *g)
+const void *lds_graph_get(const lds_graph *g)
 {
     if (g == NULL)
     {
@@ -1872,7 +1885,7 @@ const void *graph_get(const graph *g)
     return g->data;
 }
 
-int graph_get_weight(graph *g, size_t edge_number)
+int lds_graph_get_weight(lds_graph *g, size_t edge_number)
 {
     if (g == NULL || g->edges_from == NULL ||
         edge_number >= g->child_count_from ||
@@ -1884,7 +1897,7 @@ int graph_get_weight(graph *g, size_t edge_number)
     return g->edges_from[edge_number]->weight;
 }
 
-size_t graph_size(const graph *g)
+size_t lds_graph_size(const lds_graph *g)
 {
     if (g == NULL)
     {
@@ -1894,7 +1907,7 @@ size_t graph_size(const graph *g)
     return g->datasize;
 }
 
-int graph_child_count(const graph *g)
+int lds_graph_child_count(const lds_graph *g)
 {
     if (g == NULL)
     {
@@ -1904,7 +1917,7 @@ int graph_child_count(const graph *g)
     return g->child_count_from;
 }
 
-int graph_link(graph *g1, graph *g2)
+int lds_graph_link(lds_graph *g1, lds_graph *g2)
 {
     if (g1 == NULL || g2 == NULL)
     {
@@ -1913,15 +1926,15 @@ int graph_link(graph *g1, graph *g2)
 
     g1->child_count_from++;
     g1->edges_from =
-        realloc(g1->edges_from, sizeof(graphedge *) * g1->child_count_from);
+        realloc(g1->edges_from, sizeof(lds_graphedge *) * g1->child_count_from);
     if (g1->edges_from == NULL)
     {
         return 0;
     }
-    g1->edges_from[g1->child_count_from - 1] = malloc(sizeof(graphedge));
+    g1->edges_from[g1->child_count_from - 1] = malloc(sizeof(lds_graphedge));
     if (g1->edges_from[g1->child_count_from - 1] == NULL)
     {
-        free(g1->edges_from);
+        lds_safefree(g1->edges_from);
         return 0;
     }
     g1->edges_from[g1->child_count_from - 1]->parent = g1;
@@ -1929,19 +1942,19 @@ int graph_link(graph *g1, graph *g2)
     g1->edges_from[g1->child_count_from - 1]->weight = 0;
     g2->child_count_to++;
     g2->edges_to =
-        realloc(g2->edges_to, sizeof(graphedge *) * g2->child_count_to);
+        realloc(g2->edges_to, sizeof(lds_graphedge *) * g2->child_count_to);
     if (g2->edges_to == NULL)
     {
-        free(g1->edges_from);
-        free(g2->edges_to);
+        lds_safefree(g1->edges_from);
+        lds_safefree(g2->edges_to);
         return 0;
     }
-    g2->edges_to[g2->child_count_to - 1] = malloc(sizeof(graphedge));
+    g2->edges_to[g2->child_count_to - 1] = malloc(sizeof(lds_graphedge));
     if (g2->edges_to[g2->child_count_to - 1] == NULL)
     {
-        free(g1->edges_from);
-        free(g2->edges_to);
-        free(g2->edges_to);
+        lds_safefree(g1->edges_from);
+        lds_safefree(g2->edges_to);
+        lds_safefree(g2->edges_to);
         return 0;
     }
     g2->edges_to[g2->child_count_to - 1]->parent = g1;
@@ -1951,12 +1964,12 @@ int graph_link(graph *g1, graph *g2)
     return 1;
 }
 
-int graph_link_weighted(graph *g1, graph *g2, int weight)
+int lds_graph_link_weighted(lds_graph *g1, lds_graph *g2, int weight)
 {
     if (g1 == NULL || g2 == NULL)
         return 0;
 
-    graph_link(g1, g2);
+    lds_graph_link(g1, g2);
 
     g1->edges_from[g1->child_count_from - 1]->weight = weight;
     g2->edges_to[g2->child_count_to - 1]->weight = weight;
@@ -1964,11 +1977,11 @@ int graph_link_weighted(graph *g1, graph *g2, int weight)
     return 1;
 }
 
-int graph_destroy(graph *g)
+int lds_graph_destroy(lds_graph *g)
 {
-    graph **g_null_checker;
-    vector *visited = create_vector();
-    vector *to_visit = create_vector();
+    lds_graph **g_null_checker;
+    lds_vector *visited = lds_create_vector();
+    lds_vector *to_visit = lds_create_vector();
     size_t i;
 
     if (g == NULL || visited == NULL || to_visit == NULL)
@@ -1976,32 +1989,32 @@ int graph_destroy(graph *g)
         return 0;
     }
 
-    if (!vector_add(to_visit, &g, sizeof(graph **)))
+    if (!lds_vector_add(to_visit, &g, sizeof(lds_graph **)))
     {
-        vector_free(to_visit);
-        vector_free(visited);
+        lds_vector_free(to_visit);
+        lds_vector_free(visited);
         return 0;
     }
 
-    while (vector_length(to_visit) != 0)
+    while (lds_vector_length(to_visit) != 0)
     {
-        for (i = 0; i < vector_length(visited); i++)
+        for (i = 0; i < lds_vector_length(visited); i++)
         {
-            if (*(graph **)vector_get(visited, i) == g)
+            if (*(lds_graph **)lds_vector_get(visited, i) == g)
             {
-                if (!vector_delete(to_visit, 0))
+                if (!lds_vector_delete(to_visit, 0))
                 {
-                    vector_free(to_visit);
-                    vector_free(visited);
+                    lds_vector_free(to_visit);
+                    lds_vector_free(visited);
                     return 0;
                 }
                 if (to_visit->node_count > 0)
                 {
-                    g = *(graph **)vector_get(to_visit, 0);
+                    g = *(lds_graph **)lds_vector_get(to_visit, 0);
                     if (g == NULL)
                     {
-                        vector_free(to_visit);
-                        vector_free(visited);
+                        lds_vector_free(to_visit);
+                        lds_vector_free(visited);
                         return 0;
                     }
                 }
@@ -2015,60 +2028,60 @@ int graph_destroy(graph *g)
 
         for (i = 0; i < g->child_count_from; i++)
         {
-            if (!vector_add(to_visit, &g->edges_from[i]->child,
-                            sizeof(graph **)))
+            if (!lds_vector_add(to_visit, &g->edges_from[i]->child,
+                                sizeof(lds_graph **)))
             {
-                vector_free(to_visit);
-                vector_free(visited);
+                lds_vector_free(to_visit);
+                lds_vector_free(visited);
                 return 0;
             }
         }
 
         if (g->data)
         {
-            safefree(g->data);
+            lds_safefree(g->data);
         }
 
         if (g->edges_from)
         {
             for (i = 0; i < g->child_count_from; i++)
             {
-                safefree(g->edges_from[i]);
+                lds_safefree(g->edges_from[i]);
             }
-            safefree(g->edges_from);
+            lds_safefree(g->edges_from);
         }
 
         if (g->edges_to)
         {
             for (i = 0; i < g->child_count_to; i++)
             {
-                safefree(g->edges_to[i]);
+                lds_safefree(g->edges_to[i]);
             }
-            safefree(g->edges_to);
+            lds_safefree(g->edges_to);
         }
 
-        if (!vector_add(visited, &g, sizeof(graph **)))
+        if (!lds_vector_add(visited, &g, sizeof(lds_graph **)))
         {
-            vector_free(to_visit);
-            vector_free(visited);
+            lds_vector_free(to_visit);
+            lds_vector_free(visited);
             return 0;
         }
 
         if (to_visit->node_count > 0)
         {
-            if (!vector_delete(to_visit, 0))
+            if (!lds_vector_delete(to_visit, 0))
             {
-                vector_free(to_visit);
-                vector_free(visited);
+                lds_vector_free(to_visit);
+                lds_vector_free(visited);
                 return 0;
             }
         }
 
-        safefree(g);
+        lds_safefree(g);
 
         if (to_visit->node_count > 0)
         {
-            g_null_checker = (graph **)vector_get(to_visit, 0);
+            g_null_checker = (lds_graph **)lds_vector_get(to_visit, 0);
         }
         else
         {
@@ -2085,8 +2098,8 @@ int graph_destroy(graph *g)
         }
     }
 
-    vector_free(visited);
-    vector_free(to_visit);
+    lds_vector_free(visited);
+    lds_vector_free(to_visit);
 
     return 1;
 }
@@ -2273,10 +2286,10 @@ int lds_string_free(lds_string *s)
 
     if (s->data != NULL)
     {
-        safefree(s->data);
+        lds_safefree(s->data);
     }
 
-    safefree(s);
+    lds_safefree(s);
 
     return 1;
 }
@@ -2290,7 +2303,7 @@ int lds_string_move(lds_string *s1, lds_string *s2)
 
     if (s1->data != NULL)
     {
-        safefree(s1->data);
+        lds_safefree(s1->data);
     }
 
     s1->data = s2->data;

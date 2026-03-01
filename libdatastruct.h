@@ -4,7 +4,7 @@ Pars SARICA <pars@parssarica.com>
 
 #include <stddef.h>
 
-#define safefree(x)                                                            \
+#define lds_safefree(x)                                                        \
     free(x);                                                                   \
     x = NULL
 
@@ -13,7 +13,7 @@ typedef struct _linkedlist
     void *data;
     struct _linkedlist *prev;
     struct _linkedlist *next;
-} linkedlist;
+} lds_linkedlist;
 
 typedef struct
 {
@@ -22,40 +22,40 @@ typedef struct
     size_t keysize;
     size_t valuesize;
     int deleted;
-} mapitem;
+} lds_mapitem;
 
 typedef struct
 {
     size_t node_count;
     size_t capacity;
-    mapitem *items;
-} map;
+    lds_mapitem *items;
+} lds_map;
 
 typedef struct
 {
     void *item;
     size_t size;
-} stackitem;
+} lds_stackitem;
 
 typedef struct
 {
     size_t node_count;
     size_t capacity;
-    stackitem *items;
-} stack;
+    lds_stackitem *items;
+} lds_stack;
 
 typedef struct
 {
     void *item;
     size_t size;
-} queueitem;
+} lds_queueitem;
 
 typedef struct
 {
     size_t node_count;
     size_t capacity;
-    queueitem *items;
-} queue;
+    lds_queueitem *items;
+} lds_queue;
 
 typedef struct _bintree
 {
@@ -63,27 +63,27 @@ typedef struct _bintree
     size_t size;
     struct _bintree *left;
     struct _bintree *right;
-} bintree;
+} lds_bintree;
 
 typedef struct
 {
     void *item;
     size_t size;
-} vectoritem;
+} lds_vectoritem;
 
 typedef struct
 {
     size_t node_count;
     size_t capacity;
-    vectoritem *items;
-} vector;
+    lds_vectoritem *items;
+} lds_vector;
 
 typedef struct _trie
 {
     char character;
     size_t child_count;
     struct _trie **children;
-} trie;
+} lds_trie;
 
 typedef struct _tree
 {
@@ -92,16 +92,16 @@ typedef struct _tree
     size_t child_count;
     struct _tree **children;
     struct _tree *parent;
-} tree;
+} lds_tree;
 
-typedef struct _graph graph;
+typedef struct _graph lds_graph;
 
 typedef struct
 {
-    graph *parent;
-    graph *child;
+    lds_graph *parent;
+    lds_graph *child;
     int weight;
-} graphedge;
+} lds_graphedge;
 
 struct _graph
 {
@@ -109,8 +109,8 @@ struct _graph
     size_t datasize;
     size_t child_count_from;
     size_t child_count_to;
-    graphedge **edges_from;
-    graphedge **edges_to;
+    lds_graphedge **edges_from;
+    lds_graphedge **edges_to;
 };
 
 typedef struct
@@ -120,7 +120,7 @@ typedef struct
     size_t capacity;
 } lds_string;
 
-#define loopMap(m, key, value)                                                 \
+#define lds_map_for_each(m, key, value)                                        \
     for (size_t i = 0; i < m->node_count &&                                    \
                        (key = m->items[i].key, value = m->items[i].value, 1);  \
          i++)                                                                  \
@@ -128,91 +128,91 @@ typedef struct
             continue;                                                          \
         else
 
-#define loopVector(v, out)                                                     \
+#define lds_vector_for_each(v, out)                                            \
     for (size_t _i = 0; _i < (v->node_count) && (out = v->items[_i].item, 1);  \
          _i++)
 
-linkedlist *create_linkedlist(void);
-int linkedlist_add(linkedlist *, const void *, size_t);
-int linkedlist_length(linkedlist *);
-const void *linkedlist_get(linkedlist *, int);
-int linkedlist_delete(linkedlist *, int);
-int linkedlist_update(linkedlist *, int, const void *, size_t);
-int linkedlist_insert(linkedlist *, const void *, size_t, int);
-int linkedlist_free(linkedlist *);
-map *create_map(void);
-int map_add(map *, const void *, size_t, const void *, size_t);
-int map_length(const map *);
-const void *map_get(map *, const void *, size_t);
-int map_delete(map *, const void *, size_t);
-int map_update_key(map *, const void *, size_t, const void *, size_t);
-int map_update_value(map *, const void *, size_t, const void *, size_t);
-int map_free(map *);
-int map_minimize(map *);
-stack *create_stack(void);
-int stack_push(stack *, const void *, size_t);
-int stack_pop(stack *, void *);
-const void *stack_peek(const stack *);
-int stack_free(stack *);
-int stack_minimize(stack *);
-int stack_empty(const stack *);
-queue *create_queue(void);
-int enqueue(queue *, const void *, size_t);
-int dequeue(queue *, void *);
-int queue_free(queue *);
-int queue_minimize(queue *);
-int queue_is_empty(const queue *);
-const void *queue_front(const queue *);
-bintree *create_bintree(void);
-int bintree_set_nodes(bintree *);
-int bintree_set(bintree *, const void *, size_t);
-size_t bintree_size(const bintree *);
-void *bintree_get(const bintree *);
-bintree *bintree_left(const bintree *);
-bintree *bintree_right(const bintree *);
-bintree *bintree_insert_left(bintree *, const void *, size_t);
-bintree *bintree_insert_right(bintree *, const void *, size_t);
-int bintree_has_left(const bintree *);
-int bintree_has_right(const bintree *);
-int bintree_bfs(bintree *, void (*)(bintree *));
-int bintree_destroy(bintree *);
-int bintree_remove_left(bintree *);
-int bintree_remove_right(bintree *);
-vector *create_vector(void);
-int vector_add(vector *, const void *, int);
-int vector_delete(vector *, size_t);
-int vector_insert(vector *, size_t, const void *, size_t);
-size_t vector_length(const vector *);
-int vector_free(vector *);
-int vector_minimize(vector *);
-const void *vector_get(const vector *, size_t);
-trie *trie_create(void);
-int trie_insert(trie *, const char *);
-int trie_search(const trie *, const char *);
-int trie_free(trie *);
-tree *create_tree(void);
-int tree_set(tree *, const void *, size_t);
-tree *tree_add(tree *, const void *, size_t);
-void *tree_get(const tree *);
-size_t tree_size(const tree *);
-int tree_child_count(const tree *);
-tree *tree_child(const tree *, size_t);
-tree *tree_parent(const tree *);
-int tree_bfs(tree *, void (*)(tree *));
-int tree_destroy(tree *);
-graph *create_graph(void);
-graph *graph_add(graph *, const void *, size_t);
-graph *graph_add_weighted(graph *, const void *, size_t, int);
-int graph_set(graph *, void *, size_t);
-int graph_set_weight(const graph *, size_t, int);
-graph *graph_child(graph *, size_t);
-const void *graph_get(const graph *);
-int graph_get_weight(graph *, size_t);
-size_t graph_size(const graph *);
-int graph_child_count(const graph *);
-int graph_link(graph *, graph *);
-int graph_link_weighted(graph *, graph *, int);
-int graph_destroy(graph *);
+lds_linkedlist *lds_create_linkedlist(void);
+int lds_linkedlist_add(lds_linkedlist *, const void *, size_t);
+int lds_linkedlist_length(lds_linkedlist *);
+const void *lds_linkedlist_get(lds_linkedlist *, int);
+int lds_linkedlist_delete(lds_linkedlist *, int);
+int lds_linkedlist_update(lds_linkedlist *, int, const void *, size_t);
+int lds_linkedlist_insert(lds_linkedlist *, const void *, size_t, int);
+int lds_linkedlist_free(lds_linkedlist *);
+lds_map *lds_create_map(void);
+int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
+int lds_map_length(const lds_map *);
+const void *lds_map_get(lds_map *, const void *, size_t);
+int lds_map_delete(lds_map *, const void *, size_t);
+int lds_map_update_key(lds_map *, const void *, size_t, const void *, size_t);
+int lds_map_update_value(lds_map *, const void *, size_t, const void *, size_t);
+int lds_map_free(lds_map *);
+int lds_map_minimize(lds_map *);
+lds_stack *lds_create_stack(void);
+int lds_stack_push(lds_stack *, const void *, size_t);
+int lds_stack_pop(lds_stack *, void *);
+const void *lds_stack_peek(const lds_stack *);
+int lds_stack_free(lds_stack *);
+int lds_stack_minimize(lds_stack *);
+int lds_stack_empty(const lds_stack *);
+lds_queue *lds_create_queue(void);
+int lds_queue_enqueue(lds_queue *, const void *, size_t);
+int lds_queue_dequeue(lds_queue *, void *);
+int lds_queue_free(lds_queue *);
+int lds_queue_minimize(lds_queue *);
+int lds_queue_is_empty(const lds_queue *);
+const void *lds_queue_front(const lds_queue *);
+lds_bintree *lds_create_bintree(void);
+int lds_bintree_set_nodes(lds_bintree *);
+int lds_bintree_set(lds_bintree *, const void *, size_t);
+size_t lds_bintree_size(const lds_bintree *);
+void *lds_bintree_get(const lds_bintree *);
+lds_bintree *lds_bintree_left(const lds_bintree *);
+lds_bintree *lds_bintree_right(const lds_bintree *);
+lds_bintree *lds_bintree_insert_left(lds_bintree *, const void *, size_t);
+lds_bintree *lds_bintree_insert_right(lds_bintree *, const void *, size_t);
+int lds_bintree_has_left(const lds_bintree *);
+int lds_bintree_has_right(const lds_bintree *);
+int lds_bintree_bfs(lds_bintree *, void (*)(lds_bintree *));
+int lds_bintree_destroy(lds_bintree *);
+int lds_bintree_remove_left(lds_bintree *);
+int lds_bintree_remove_right(lds_bintree *);
+lds_vector *lds_create_vector(void);
+int lds_vector_add(lds_vector *, const void *, int);
+int lds_vector_delete(lds_vector *, size_t);
+int lds_vector_insert(lds_vector *, size_t, const void *, size_t);
+size_t lds_vector_length(const lds_vector *);
+int lds_vector_free(lds_vector *);
+int lds_vector_minimize(lds_vector *);
+const void *lds_vector_get(const lds_vector *, size_t);
+lds_trie *lds_trie_create(void);
+int lds_trie_insert(lds_trie *, const char *);
+int lds_trie_search(const lds_trie *, const char *);
+int lds_trie_free(lds_trie *);
+lds_tree *lds_create_tree(void);
+int lds_tree_set(lds_tree *, const void *, size_t);
+lds_tree *lds_tree_add(lds_tree *, const void *, size_t);
+void *lds_tree_get(const lds_tree *);
+size_t lds_tree_size(const lds_tree *);
+int lds_tree_child_count(const lds_tree *);
+lds_tree *lds_tree_child(const lds_tree *, size_t);
+lds_tree *lds_tree_parent(const lds_tree *);
+int lds_tree_bfs(lds_tree *, void (*)(lds_tree *));
+int lds_tree_destroy(lds_tree *);
+lds_graph *lds_create_graph(void);
+lds_graph *lds_graph_add(lds_graph *, const void *, size_t);
+lds_graph *lds_graph_add_weighted(lds_graph *, const void *, size_t, int);
+int lds_graph_set(lds_graph *, void *, size_t);
+int lds_graph_set_weight(const lds_graph *, size_t, int);
+lds_graph *lds_graph_child(lds_graph *, size_t);
+const void *lds_graph_get(const lds_graph *);
+int lds_graph_get_weight(lds_graph *, size_t);
+size_t lds_graph_size(const lds_graph *);
+int lds_graph_child_count(const lds_graph *);
+int lds_graph_link(lds_graph *, lds_graph *);
+int lds_graph_link_weighted(lds_graph *, lds_graph *, int);
+int lds_graph_destroy(lds_graph *);
 lds_string *lds_create_string(void);
 int lds_string_append(lds_string *, const char *);
 int lds_string_append_len(lds_string *, const char *, size_t);
