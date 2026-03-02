@@ -654,6 +654,16 @@ int main()
     lds_string_replace(str, 2, "structure");
     printf("String after replacing: <%s>\n", lds_string_cstr(str));
 
+    /* Splitting strings */
+    lds_vector *splitted = lds_string_split_len(str, " ", 1);
+    lds_string **spart;
+    j = 0;
+
+    lds_vector_for_each(splitted, spart)
+    {
+        printf("%d. part: %s\n", ++j, lds_string_cstr(*spart));
+    }
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);
@@ -670,6 +680,8 @@ int main()
                               is transfered */
     lds_string_free(str3);
     lds_string_free(str4);
+    lds_string_split_free(splitted); /* You should also clean up the vector
+                                  returned by lds_string_split function */
 }
 
 void print_tree_bfs(lds_tree *t)

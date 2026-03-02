@@ -2625,3 +2625,105 @@ int lds_string_replace(lds_string *s, size_t pos, const char *newstr)
 
     return lds_string_replace_len(s, pos, newstr, strlen(newstr));
 }
+
+lds_vector *lds_string_split_len(lds_string *s, const char *delim,
+                                 size_t delimlen)
+{
+    lds_vector *result;
+    lds_string *split_part;
+    int j = 0;
+    int k;
+
+    if (s == NULL || s->data == NULL || delim == NULL || delimlen == 0)
+    {
+        return NULL;
+    }
+
+    result = lds_create_vector();
+    if (result == NULL)
+    {
+        return NULL;
+    }
+
+    do
+    {
+        split_part = lds_create_string();
+        if (split_part == NULL)
+        {
+            lds_vector_free(result);
+            return NULL;
+        }
+
+        k = lds_string_find_len(s, delim, delimlen);
+        if (k != -1)
+        {
+            if (lds_string_append_len(split_part, lds_string_cstr(s), k) == 0)
+            {
+                lds_vector_free(result);
+
+                return NULL;
+            }
+
+            j += k + delimlen;
+            s->data += k + delimlen;
+            s->len -= k + delimlen;
+        }
+        else
+        {
+            if (lds_string_append_len(split_part, lds_string_cstr(s), s->len) ==
+                0)
+            {
+                lds_vector_free(result);
+
+                return NULL;
+            }
+
+            j += s->len;
+            s->data += s->len;
+            s->len -= s->len;
+        }
+
+        if (!lds_vector_add(result, &split_part, sizeof(lds_string **)))
+        {
+            lds_vector_free(result);
+
+            return NULL;
+        }
+    } while (s->len > 0);
+
+    s->data -= j;
+    s->len += j;
+
+    return result;
+}
+
+int lds_string_split_free(lds_vector *v)
+{
+    size_t i;
+
+    if (v == NULL)
+    {
+        return 0;
+    }
+
+    if (v->items != NULL)
+    {
+        for (i = 0; i < v->node_count; i++)
+        {
+            if (v->items[i].item != NULL)
+            {
+                lds_string_free(*(lds_string **)v->items[i].item);
+                lds_safefree(v->items[i].item);
+            }
+        }
+        lds_safefree(v->items);
+    }
+    else
+    {
+        lds_safefree(v);
+        return 0;
+    }
+
+    lds_safefree(v);
+    return 1;
+}
