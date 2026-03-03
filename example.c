@@ -347,6 +347,10 @@ int main()
     /* Creating a vector */
     lds_vector *v = lds_create_vector();
 
+    /* Reserving some space before multiple allocations, which can lead to
+     * performance increase */
+    lds_vector_reserve(v, 7);
+
     /* Adding variables */
     int vector_var1 = 1;
     int vector_var2 = 2;

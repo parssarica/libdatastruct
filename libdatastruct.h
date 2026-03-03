@@ -187,6 +187,7 @@ int lds_vector_add(lds_vector *, const void *, int);
 int lds_vector_delete(lds_vector *, size_t);
 int lds_vector_insert(lds_vector *, size_t, const void *, size_t);
 size_t lds_vector_length(const lds_vector *);
+int lds_vector_reserve(lds_vector *, size_t);
 int lds_vector_free(lds_vector *);
 int lds_vector_minimize(lds_vector *);
 const void *lds_vector_get(const lds_vector *, size_t);

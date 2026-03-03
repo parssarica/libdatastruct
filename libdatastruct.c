@@ -1274,6 +1274,11 @@ int lds_vector_minimize(lds_vector *v)
         return 0;
     }
 
+    if (v->capacity == v->node_count)
+    {
+        return 1;
+    }
+
     if (v->node_count == 0)
     {
         lds_safefree(v->items);
@@ -1298,6 +1303,29 @@ const void *lds_vector_get(const lds_vector *v, size_t index)
         return NULL;
 
     return v->items[index].item;
+}
+
+int lds_vector_reserve(lds_vector *v, size_t newcapacity)
+{
+    if (v == NULL)
+    {
+        return 0;
+    }
+
+    if (newcapacity < v->capacity)
+    {
+        return 1;
+    }
+
+    v->items = realloc(v->items, sizeof(lds_vectoritem) * newcapacity);
+    if (v->items == NULL)
+    {
+        return 0;
+    }
+
+    v->capacity = newcapacity;
+
+    return 1;
 }
 
 lds_trie *lds_trie_create(void)
