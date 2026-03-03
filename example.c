@@ -409,6 +409,11 @@ int main()
     /* Accessing by index */
     printf("Vector's third item: %d\n", *(int *)lds_vector_get(v, 2));
 
+    /* Popping a value */
+    int vector_popped_val;
+    lds_vector_pop(v, &vector_popped_val);
+    printf("Popped value from vector: %d\n", vector_popped_val);
+
     /* Cleaning up */
     lds_vector_free(v);
 

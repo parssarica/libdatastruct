@@ -564,7 +564,7 @@ int lds_stack_push(lds_stack *s, const void *value, size_t valuesize)
 
 int lds_stack_pop(lds_stack *s, void *out)
 {
-    if (s->items == NULL || s->node_count < 1)
+    if (s == NULL || s->items == NULL || s->node_count < 1)
         return 0;
 
     s->node_count--;
@@ -1234,6 +1234,20 @@ size_t lds_vector_length(const lds_vector *v)
     }
 
     return v->node_count;
+}
+
+int lds_vector_pop(lds_vector *v, void *out)
+{
+    if (v == NULL || v->items == NULL || v->node_count == 0)
+    {
+        return 0;
+    }
+
+    v->node_count--;
+    memcpy(out, v->items[v->node_count].item, v->items[v->node_count].size);
+    lds_safefree(v->items[v->node_count].item);
+
+    return 1;
 }
 
 int lds_vector_free(lds_vector *v)
