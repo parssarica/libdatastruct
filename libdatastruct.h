@@ -12,6 +12,7 @@ Pars SARICA <pars@parssarica.com>
 typedef struct _linkedlist
 {
     void *data;
+    size_t datasize;
     struct _linkedlist *prev;
     struct _linkedlist *next;
 } lds_linkedlist;
@@ -144,6 +145,7 @@ int lds_linkedlist_delete(lds_linkedlist *, int);
 int lds_linkedlist_update(lds_linkedlist *, int, const void *, size_t);
 int lds_linkedlist_insert(lds_linkedlist *, const void *, size_t, int);
 int lds_linkedlist_free(lds_linkedlist *);
+int lds_linkedlist_pop(lds_linkedlist *, void *);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
 int lds_map_length(const lds_map *);

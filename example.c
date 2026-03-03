@@ -76,10 +76,17 @@ int main()
         }
     }
 
+    /* Popping an item */
+    char ll_popped_item[16];
+    lds_linkedlist_pop(l, &ll_popped_item);
+    printf("Popped value from linked list: %s\n", ll_popped_item);
+
     /* Getting the length */
 
     printf("This is the final length of the list: %d\n",
            lds_linkedlist_length(l));
+
+    /* Cleaning up */
 
     lds_linkedlist_free(l);
 

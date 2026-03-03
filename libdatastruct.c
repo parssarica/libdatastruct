@@ -20,6 +20,8 @@ lds_linkedlist *lds_create_linkedlist(void)
     llist->data = NULL;
     llist->prev = NULL;
     llist->next = NULL;
+    llist->datasize = 0;
+
     return llist;
 }
 
@@ -44,6 +46,8 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
     {
         return 0;
     }
+
+    obj->datasize = datatype_size;
 
     obj->next->data = malloc(datatype_size);
     obj->next->prev = obj;
@@ -139,6 +143,14 @@ int lds_linkedlist_delete(lds_linkedlist *ll, int index)
         x->prev->next = x->next;
         x->next->prev = x->prev;
     }
+    else if (x->next == NULL)
+    {
+        x->prev->next = NULL;
+    }
+    else if (x->prev == NULL)
+    {
+        x->next->prev = NULL;
+    }
 
     lds_safefree(x);
 
@@ -173,6 +185,11 @@ int lds_linkedlist_update(lds_linkedlist *ll, int index, const void *newvar,
 
     lds_safefree(x->data);
     x->data = malloc(datatype_size);
+    if (x->data == NULL)
+    {
+        return 0;
+    }
+    x->datasize = datatype_size;
 
     memcpy(x->data, newvar, datatype_size);
 
@@ -253,9 +270,42 @@ int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
         return 0;
     }
 
+    previous->next->datasize = datatype_size;
     previous->next->prev = previous;
     previous->next->next = ll;
+    ll->prev = previous->next;
     memcpy(previous->next->data, data, datatype_size);
+
+    return 1;
+}
+
+int lds_linkedlist_pop(lds_linkedlist *ll, void *out)
+{
+    int length = 0;
+    int ll_length = 0;
+    lds_linkedlist *x = ll;
+
+    if (ll == NULL)
+    {
+        return 0;
+    }
+
+    ll_length = lds_linkedlist_length(ll);
+    while (1)
+    {
+        if (x->next == NULL || length == ll_length)
+        {
+            break;
+        }
+        else
+        {
+            x = x->next;
+        }
+        length++;
+    }
+
+    memcpy(out, x->data, x->datasize);
+    lds_linkedlist_delete(ll, lds_linkedlist_length(ll) - 1);
 
     return 1;
 }
