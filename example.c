@@ -655,7 +655,7 @@ int main()
     printf("String after replacing: <%s>\n", lds_string_cstr(str));
 
     /* Splitting strings */
-    lds_vector *splitted = lds_string_split_len(str, " ", 1);
+    lds_vector *splitted = lds_string_split(str, " ");
     lds_string **spart;
     j = 0;
 

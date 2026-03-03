@@ -246,4 +246,5 @@ int lds_string_toggle_case(lds_string *);
 int lds_string_replace_len(lds_string *, size_t, const char *, size_t);
 int lds_string_replace(lds_string *, size_t, const char *);
 lds_vector *lds_string_split_len(lds_string *, const char *, size_t);
+lds_vector *lds_string_split(lds_string *, const char *);
 int lds_string_split_free(lds_vector *);

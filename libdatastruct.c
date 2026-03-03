@@ -2697,6 +2697,11 @@ lds_vector *lds_string_split_len(lds_string *s, const char *delim,
     return result;
 }
 
+lds_vector *lds_string_split(lds_string *s, const char *delim)
+{
+    return lds_string_split_len(s, delim, strlen(delim));
+}
+
 int lds_string_split_free(lds_vector *v)
 {
     size_t i;
