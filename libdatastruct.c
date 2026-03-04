@@ -1276,27 +1276,8 @@ int lds_vector_pop(lds_vector *v, void *out)
 
 int lds_vector_free(lds_vector *v)
 {
-    size_t j;
-
-    if (v == NULL)
+    if (lds_vector_clear(v) == 0)
     {
-        return 0;
-    }
-
-    if (v->items != NULL)
-    {
-        for (j = 0; j < v->node_count; j++)
-        {
-            if (v->items[j].item != NULL)
-            {
-                lds_safefree(v->items[j].item);
-            }
-        }
-        lds_safefree(v->items);
-    }
-    else
-    {
-        lds_safefree(v);
         return 0;
     }
 
@@ -1362,6 +1343,30 @@ int lds_vector_reserve(lds_vector *v, size_t newcapacity)
     }
 
     v->capacity = newcapacity;
+
+    return 1;
+}
+
+int lds_vector_clear(lds_vector *v)
+{
+    size_t i;
+
+    if (v == NULL || v->items == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < v->node_count; i++)
+    {
+        if (v->items[i].item != NULL)
+        {
+            lds_safefree(v->items[i].item);
+        }
+    }
+
+    lds_safefree(v->items);
+
+    v->node_count = 0;
 
     return 1;
 }
