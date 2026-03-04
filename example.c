@@ -83,7 +83,11 @@ int main()
 
     /* Getting the length */
 
-    printf("This is the final length of the list: %d\n",
+    printf("This is the length of the list: %d\n", lds_linkedlist_length(l));
+
+    /* Clearing the items */
+    lds_linkedlist_clear(l);
+    printf("This is the final length of the list after clearing items: %d\n",
            lds_linkedlist_length(l));
 
     /* Cleaning up */

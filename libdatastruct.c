@@ -270,6 +270,20 @@ lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *ll, size_t index)
     return x;
 }
 
+int lds_linkedlist_clear(lds_linkedlist *ll)
+{
+    if (ll == NULL || ll->next == NULL)
+    {
+        return 0;
+    }
+
+    lds_linkedlist_free(ll->next);
+
+    ll->next = NULL;
+
+    return 1;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));
