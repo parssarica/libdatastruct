@@ -164,6 +164,7 @@ const void *lds_stack_peek(const lds_stack *);
 int lds_stack_free(lds_stack *);
 int lds_stack_minimize(lds_stack *);
 int lds_stack_empty(const lds_stack *);
+int lds_stack_clear(lds_stack *);
 lds_queue *lds_create_queue(void);
 int lds_queue_enqueue(lds_queue *, const void *, size_t);
 int lds_queue_dequeue(lds_queue *, void *);

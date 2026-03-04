@@ -610,27 +610,36 @@ const void *lds_stack_peek(const lds_stack *s)
 
 int lds_stack_free(lds_stack *s)
 {
-    if (s == NULL)
+    if (lds_stack_clear(s) == 0)
     {
         return 0;
     }
 
+    lds_safefree(s);
+
+    return 1;
+}
+
+int lds_stack_clear(lds_stack *s)
+{
     size_t i = 0;
-    if (s->items != NULL)
+
+    if (s == NULL || s->items == NULL)
     {
-        for (i = 0; i < s->node_count; i++)
+        return 0;
+    }
+
+    for (i = 0; i < s->node_count; i++)
+    {
+        if (s->items[i].item != NULL)
         {
             lds_safefree(s->items[i].item);
         }
-
-        lds_safefree(s->items);
-    }
-    else
-    {
-        lds_safefree(s);
     }
 
-    lds_safefree(s);
+    lds_safefree(s->items);
+
+    s->node_count = 0;
 
     return 1;
 }
