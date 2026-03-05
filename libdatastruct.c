@@ -610,11 +610,7 @@ const void *lds_stack_peek(const lds_stack *s)
 
 int lds_stack_free(lds_stack *s)
 {
-    if (lds_stack_clear(s) == 0)
-    {
-        return 0;
-    }
-
+    lds_stack_clear(s);
     lds_safefree(s);
 
     return 1;
@@ -753,28 +749,7 @@ int lds_queue_dequeue(lds_queue *q, void *out)
 
 int lds_queue_free(lds_queue *q)
 {
-    size_t i = 0;
-
-    if (q == NULL)
-    {
-        return 0;
-    }
-
-    if (q->items != NULL)
-    {
-        for (i = 0; i < q->node_count; i++)
-        {
-            lds_safefree(q->items[i].item);
-        }
-
-        lds_safefree(q->items);
-    }
-    else
-    {
-        lds_safefree(q);
-        return 0;
-    }
-
+    lds_queue_clear(q);
     lds_safefree(q);
 
     return 1;
@@ -808,6 +783,30 @@ int lds_queue_is_empty(const lds_queue *q)
     }
 
     return q->node_count == 0;
+}
+
+int lds_queue_clear(lds_queue *q)
+{
+    size_t i = 0;
+
+    if (q == NULL || q->items == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < q->node_count; i++)
+    {
+        if (q->items[i].item != NULL)
+        {
+            lds_safefree(q->items[i].item);
+        }
+    }
+
+    lds_safefree(q->items);
+
+    q->node_count = 0;
+
+    return 1;
 }
 
 const void *lds_queue_front(const lds_queue *q)
@@ -1285,11 +1284,7 @@ int lds_vector_pop(lds_vector *v, void *out)
 
 int lds_vector_free(lds_vector *v)
 {
-    if (lds_vector_clear(v) == 0)
-    {
-        return 0;
-    }
-
+    lds_vector_clear(v);
     lds_safefree(v);
 
     return 1;
