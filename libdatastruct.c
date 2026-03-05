@@ -487,29 +487,14 @@ int lds_map_update_value(lds_map *table, const void *key, size_t keysize,
 
 int lds_map_free(lds_map *table)
 {
-    size_t i = 0;
-
     if (table == NULL)
     {
         return 0;
     }
 
-    if (table->items != NULL)
-    {
-        for (i = 0; i < table->node_count; i++)
-        {
-            lds_safefree(table->items[i].key);
-            lds_safefree(table->items[i].value);
-        }
-        lds_safefree(table->items);
-    }
-    else
-    {
-        lds_safefree(table);
-        return 0;
-    }
-
+    lds_map_clear(table);
     lds_safefree(table);
+
     return 1;
 }
 
@@ -527,6 +512,32 @@ int lds_map_minimize(lds_map *table)
         return 0;
     }
     table->capacity = table->node_count;
+
+    return 1;
+}
+
+int lds_map_clear(lds_map *table)
+{
+    size_t i = 0;
+    if (table == NULL || table->items == NULL)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < table->node_count; i++)
+    {
+        if (table->items[i].key != NULL)
+        {
+            lds_safefree(table->items[i].key);
+        }
+
+        if (table->items[i].value != NULL)
+        {
+            lds_safefree(table->items[i].value);
+        }
+    }
+
+    lds_safefree(table->items);
 
     return 1;
 }
