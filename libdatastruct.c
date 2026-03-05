@@ -329,6 +329,31 @@ int lds_linkedlist_extend(lds_linkedlist *ll1, lds_linkedlist *ll2)
     return 1;
 }
 
+ssize_t lds_linkedlist_index(lds_linkedlist *ll, void *data, size_t datasize)
+{
+    lds_linkedlist *x;
+    ssize_t i = 0;
+
+    if (ll == NULL || data == NULL || datasize == 0)
+    {
+        return -1;
+    }
+
+    x = ll;
+    while (x)
+    {
+        if (x->datasize == datasize && memcmp(x->data, data, datasize) == 0)
+        {
+            return --i;
+        }
+
+        x = x->next;
+        i++;
+    }
+
+    return -1;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));

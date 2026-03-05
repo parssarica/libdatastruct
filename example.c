@@ -98,12 +98,7 @@ int main()
     /* Printing list after extending */
     for (j = 0; j < lds_linkedlist_length(l); j++)
     {
-        if (j == 2)
-        {
-            printf("%d. value of linked list: %s\n", j,
-                   (char *)lds_linkedlist_get(l, j));
-        }
-        else if (j == 1)
+        if (j == 1)
         {
             printf("%d. value of linked list: %f\n", j,
                    *(double *)lds_linkedlist_get(l, j));
@@ -114,6 +109,10 @@ int main()
                    *(int *)lds_linkedlist_get(l, j));
         }
     }
+
+    /* Finding the item */
+    printf("Index of the first item that has value 3.14: %ld\n",
+           lds_linkedlist_index(l, &pi, sizeof(double)));
 
     /* Clearing the items */
     lds_linkedlist_clear(l);
