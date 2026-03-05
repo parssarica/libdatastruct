@@ -100,6 +100,10 @@ int lds_linkedlist_delete(lds_linkedlist *ll, size_t index)
     }
 
     x = lds_linkedlist_get_node(ll, index);
+    if (x == NULL)
+    {
+        return 0;
+    }
 
     lds_safefree(x->data);
     if (x->next != NULL && x->prev != NULL)
@@ -132,6 +136,10 @@ int lds_linkedlist_update(lds_linkedlist *ll, int index, const void *newvar,
     }
 
     x = lds_linkedlist_get_node(ll, index);
+    if (x == NULL)
+    {
+        return 0;
+    }
 
     lds_safefree(x->data);
     x->data = malloc(datatype_size);
@@ -193,6 +201,10 @@ int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
     }
 
     ll = lds_linkedlist_get_node(ll, index);
+    if (ll == NULL)
+    {
+        return 0;
+    }
     previous = ll->prev;
     previous->next = malloc(sizeof(lds_linkedlist));
     if (previous->next == NULL)
@@ -291,6 +303,11 @@ int lds_linkedlist_clear(lds_linkedlist *ll)
 
 int lds_linkedlist_extend(lds_linkedlist *ll1, lds_linkedlist *ll2)
 {
+    if (ll1 == NULL || ll2 == NULL)
+    {
+        return 0;
+    }
+
     size_t i = 0;
     lds_linkedlist *x;
     size_t length = lds_linkedlist_length(ll2);
@@ -1410,6 +1427,36 @@ int lds_vector_clear(lds_vector *v)
     lds_safefree(v->items);
 
     v->node_count = 0;
+
+    return 1;
+}
+
+int lds_vector_extend(lds_vector *v1, lds_vector *v2)
+{
+    if (v1 == NULL || v2 == NULL || v1->items == NULL || v2->items == NULL)
+    {
+        return 0;
+    }
+
+    size_t i;
+    size_t j;
+
+    if (lds_vector_reserve(v1, v1->node_count + v2->node_count) == 0)
+    {
+        return 0;
+    }
+
+    j = v1->node_count;
+
+    for (i = 0; i < v2->node_count; i++)
+    {
+        v1->items[j + i].item = malloc(v2->items[i].size);
+        v1->items[j + i].size = v2->items[i].size;
+
+        memcpy(v1->items[j + i].item, v2->items[i].item, v2->items[i].size);
+    }
+
+    v1->node_count += v2->node_count;
 
     return 1;
 }

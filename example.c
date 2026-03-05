@@ -456,8 +456,26 @@ int main()
     lds_vector_pop(v, &vector_popped_val);
     printf("Popped value from vector: %d\n", vector_popped_val);
 
+    /* Extending a vector with another vector */
+    lds_vector *v2 = lds_create_vector();
+
+    lds_vector_add(v2, &vector_var1, sizeof(int));
+    lds_vector_add(v2, &vector_var2, sizeof(int));
+    lds_vector_add(v2, &vector_var3, sizeof(int));
+
+    lds_vector_extend(v, v2);
+
+    /* Printing vector after extending */
+    printf("Vector after extending:\n");
+    j = 1;
+    lds_vector_for_each(v, i)
+    {
+        printf("%d. value of vector: %d\n", j++, *(int *)i);
+    }
+
     /* Cleaning up */
     lds_vector_free(v);
+    lds_vector_free(v2);
 
     /* Initializing a trie */
 
