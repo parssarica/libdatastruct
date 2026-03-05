@@ -148,6 +148,7 @@ int lds_linkedlist_free(lds_linkedlist *);
 int lds_linkedlist_pop(lds_linkedlist *, void *);
 lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *, size_t);
 int lds_linkedlist_clear(lds_linkedlist *);
+int lds_linkedlist_extend(lds_linkedlist *, lds_linkedlist *);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
 int lds_map_length(const lds_map *);

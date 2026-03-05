@@ -35,21 +35,26 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
         return 0;
     }
 
-    obj = lds_linkedlist_get_node(ll, lds_linkedlist_length(ll) - 1);
-
-    obj->next = malloc(sizeof(lds_linkedlist));
-    if (obj->next == NULL)
+    obj = ll;
+    while (obj)
     {
-        return 0;
+        if (obj->next == NULL)
+        {
+            ll = obj;
+        }
+
+        obj = obj->next;
     }
 
+    obj = malloc(sizeof(lds_linkedlist));
     obj->datasize = datatype_size;
+    obj->data = malloc(datatype_size);
+    obj->prev = ll;
+    obj->next = NULL;
 
-    obj->next->data = malloc(datatype_size);
-    obj->next->prev = obj;
-    obj->next->next = NULL;
+    memcpy(obj->data, data, datatype_size);
 
-    memcpy(obj->next->data, data, datatype_size);
+    ll->next = obj;
 
     return 1;
 }
@@ -280,6 +285,29 @@ int lds_linkedlist_clear(lds_linkedlist *ll)
     lds_linkedlist_free(ll->next);
 
     ll->next = NULL;
+
+    return 1;
+}
+
+int lds_linkedlist_extend(lds_linkedlist *ll1, lds_linkedlist *ll2)
+{
+    size_t i = 0;
+    lds_linkedlist *x;
+    size_t length = lds_linkedlist_length(ll2);
+
+    while (i < length)
+    {
+        x = lds_linkedlist_get_node(ll2, i++);
+        if (x == NULL)
+        {
+            return 0;
+        }
+
+        if (lds_linkedlist_add(ll1, x->data, x->datasize) == 0)
+        {
+            return 0;
+        }
+    }
 
     return 1;
 }

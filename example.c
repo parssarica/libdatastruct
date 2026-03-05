@@ -85,6 +85,36 @@ int main()
 
     printf("This is the length of the list: %d\n", lds_linkedlist_length(l));
 
+    /* Extending the linked list with another linkedlist */
+    lds_linkedlist *l2 =
+        lds_create_linkedlist(); /* Creating a second linked list in order to
+                                    extend the first */
+    lds_linkedlist_add(l2, &var1, sizeof(int));
+    lds_linkedlist_add(l2, &var2, sizeof(int));
+    lds_linkedlist_add(l2, &var3, sizeof(int));
+
+    lds_linkedlist_extend(l, l2);
+
+    /* Printing list after extending */
+    for (j = 0; j < lds_linkedlist_length(l); j++)
+    {
+        if (j == 2)
+        {
+            printf("%d. value of linked list: %s\n", j,
+                   (char *)lds_linkedlist_get(l, j));
+        }
+        else if (j == 1)
+        {
+            printf("%d. value of linked list: %f\n", j,
+                   *(double *)lds_linkedlist_get(l, j));
+        }
+        else
+        {
+            printf("%d. value of linked list: %d\n", j,
+                   *(int *)lds_linkedlist_get(l, j));
+        }
+    }
+
     /* Clearing the items */
     lds_linkedlist_clear(l);
     printf("This is the final length of the list after clearing items: %d\n",
@@ -93,6 +123,7 @@ int main()
     /* Cleaning up */
 
     lds_linkedlist_free(l);
+    lds_linkedlist_free(l2);
 
     /* Let's create a map! */
 
