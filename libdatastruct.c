@@ -425,6 +425,16 @@ int lds_linkedlist_reverse(lds_linkedlist *ll)
     return 1;
 }
 
+lds_linkedlist *lds_linkedlist_next(lds_linkedlist *ll)
+{
+    if (ll == NULL)
+    {
+        return NULL;
+    }
+
+    return ll->next;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));

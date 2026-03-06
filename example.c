@@ -141,6 +141,11 @@ int main()
         "Size of the first item that has value 2: %ld\n",
         lds_linkedlist_data_size(lds_linkedlist_find(l, &var2, sizeof(int))));
 
+    /* Getting the next item of a node */
+    printf("The size of the next item of the third item: %ld\n",
+           lds_linkedlist_data_size(
+               lds_linkedlist_next(lds_linkedlist_get_node(l, 2))));
+
     /* Clearing the items */
     lds_linkedlist_clear(l);
     printf("This is the final length of the list after clearing items: %d\n",
