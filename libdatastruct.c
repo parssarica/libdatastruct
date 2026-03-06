@@ -354,6 +354,16 @@ ssize_t lds_linkedlist_index(lds_linkedlist *ll, void *data, size_t datasize)
     return -1;
 }
 
+ssize_t lds_linkedlist_data_size(const lds_linkedlist *ll)
+{
+    if (ll == NULL)
+    {
+        return -1;
+    }
+
+    return ll->datasize;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));
@@ -1052,11 +1062,11 @@ int lds_bintree_has_right(const lds_bintree *b)
     return b->right != NULL;
 }
 
-size_t lds_bintree_size(const lds_bintree *b)
+ssize_t lds_bintree_data_size(const lds_bintree *b)
 {
     if (b == NULL)
     {
-        return 0;
+        return -1;
     }
 
     return b->size;
@@ -1742,10 +1752,10 @@ void *lds_tree_get(const lds_tree *t)
     return t->data;
 }
 
-size_t lds_tree_size(const lds_tree *t)
+ssize_t lds_tree_data_size(const lds_tree *t)
 {
     if (t == NULL)
-        return 0;
+        return -1;
 
     return t->datasize;
 }
@@ -2084,11 +2094,11 @@ int lds_graph_get_weight(lds_graph *g, size_t edge_number)
     return g->edges_from[edge_number]->weight;
 }
 
-size_t lds_graph_size(const lds_graph *g)
+ssize_t lds_graph_data_size(const lds_graph *g)
 {
     if (g == NULL)
     {
-        return 0;
+        return -1;
     }
 
     return g->datasize;

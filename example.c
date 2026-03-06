@@ -114,6 +114,10 @@ int main()
     printf("Index of the first item that has value 3.14: %ld\n",
            lds_linkedlist_index(l, &pi, sizeof(double)));
 
+    /* Getting data size of items */
+    printf("Data size of second element: %ld\n",
+           lds_linkedlist_data_size(lds_linkedlist_get_node(l, 1)));
+
     /* Clearing the items */
     lds_linkedlist_clear(l);
     printf("This is the final length of the list after clearing items: %d\n",
@@ -364,7 +368,7 @@ int main()
                                                                         : "No");
 
     /* Getting size of nodes */
-    printf("Size of root node: %ld\n", lds_bintree_size(b));
+    printf("Size of root node: %ld\n", lds_bintree_data_size(b));
 
     /* Deleting the left child */
     lds_bintree_remove_left(b);
@@ -540,7 +544,7 @@ int main()
 
     /* Accessing values */
     printf("Node value: %d\n", *(int *)lds_tree_get(n1));
-    printf("Node value size: %ld\n", lds_tree_size(n1));
+    printf("Node value size: %ld\n", lds_tree_data_size(n1));
     printf("Node child count: %d\n", lds_tree_child_count(n1));
 
     /* Getting the nth child */
@@ -603,7 +607,7 @@ int main()
 
     /* Accessing node data size */
     printf("Size of root's first child's data size: %ld\n",
-           lds_graph_size(g_n1));
+           lds_graph_data_size(g_n1));
 
     /* Getting child count */
     printf("Child count of root: %d\n", lds_graph_child_count(g));
