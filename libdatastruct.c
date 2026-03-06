@@ -388,6 +388,43 @@ lds_linkedlist *lds_linkedlist_find(lds_linkedlist *ll, void *data,
     return NULL;
 }
 
+int lds_linkedlist_reverse(lds_linkedlist *ll)
+{
+    if (ll == NULL)
+    {
+        return 0;
+    }
+
+    size_t i = 0;
+    size_t j = lds_linkedlist_length(ll) - 1;
+    lds_linkedlist *l1;
+    lds_linkedlist *l2;
+    lds_linkedlist l3;
+
+    while (i < j)
+    {
+        l1 = lds_linkedlist_get_node(ll, i);
+        l2 = lds_linkedlist_get_node(ll, j);
+        if (l1 == NULL || l2 == NULL)
+        {
+            return 0;
+        }
+
+        l3.data = l2->data;
+        l2->data = l1->data;
+        l1->data = l3.data;
+
+        l3.datasize = l2->datasize;
+        l2->datasize = l1->datasize;
+        l1->datasize = l3.datasize;
+
+        i++;
+        j--;
+    }
+
+    return 1;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));
@@ -1520,7 +1557,7 @@ int lds_vector_extend(lds_vector *v1, lds_vector *v2)
     return 1;
 }
 
-size_t lds_vector_index(lds_vector *v, void *data, size_t datasize)
+size_t lds_vector_index(const lds_vector *v, void *data, size_t datasize)
 {
     size_t i;
 
