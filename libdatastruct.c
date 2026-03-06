@@ -1573,6 +1573,35 @@ size_t lds_vector_index(const lds_vector *v, void *data, size_t datasize)
     return -1;
 }
 
+int lds_vector_reverse(lds_vector *v)
+{
+    if (v == NULL || v->items == NULL)
+    {
+        return 0;
+    }
+
+    size_t i = 0;
+    size_t j = v->node_count - 1;
+    void *swap_item;
+    size_t swap_size;
+
+    while (i < j)
+    {
+        swap_item = v->items[i].item;
+        swap_size = v->items[i].size;
+
+        v->items[i].item = v->items[j].item;
+        v->items[i].size = v->items[j].size;
+        v->items[j].item = swap_item;
+        v->items[j].size = swap_size;
+
+        i++;
+        j--;
+    }
+
+    return 1;
+}
+
 lds_trie *lds_trie_create(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));

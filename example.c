@@ -503,6 +503,17 @@ int main()
         printf("%d. value of vector: %d\n", j++, *(int *)i);
     }
 
+    /* Reversing a vector */
+    lds_vector_reverse(v);
+
+    /* Printing it after reversing */
+    printf("Vector after reversing:\n");
+    j = 1;
+    lds_vector_for_each(v, i)
+    {
+        printf("%d. value of vector: %d\n", j++, *(int *)i);
+    }
+
     /* Cleaning up */
     lds_vector_free(v);
     lds_vector_free(v2);
