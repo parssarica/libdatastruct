@@ -435,6 +435,16 @@ lds_linkedlist *lds_linkedlist_next(lds_linkedlist *ll)
     return ll->next;
 }
 
+lds_linkedlist *lds_linkedlist_prev(lds_linkedlist *ll)
+{
+    if (ll == NULL)
+    {
+        return NULL;
+    }
+
+    return ll->prev;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));

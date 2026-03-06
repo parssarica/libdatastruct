@@ -146,6 +146,11 @@ int main()
            lds_linkedlist_data_size(
                lds_linkedlist_next(lds_linkedlist_get_node(l, 2))));
 
+    /* Getting the previous item of a node */
+    printf("The size of the previous item of the fifth item: %ld\n",
+           lds_linkedlist_data_size(
+               lds_linkedlist_prev(lds_linkedlist_get_node(l, 4))));
+
     /* Clearing the items */
     lds_linkedlist_clear(l);
     printf("This is the final length of the list after clearing items: %d\n",
