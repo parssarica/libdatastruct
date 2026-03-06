@@ -151,6 +151,7 @@ int lds_linkedlist_clear(lds_linkedlist *);
 int lds_linkedlist_extend(lds_linkedlist *, lds_linkedlist *);
 ssize_t lds_linkedlist_index(lds_linkedlist *, void *, size_t);
 ssize_t lds_linkedlist_data_size(const lds_linkedlist *);
+lds_linkedlist *lds_linkedlist_find(lds_linkedlist *, void *, size_t);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
 int lds_map_length(const lds_map *);

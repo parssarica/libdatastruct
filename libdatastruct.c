@@ -364,6 +364,30 @@ ssize_t lds_linkedlist_data_size(const lds_linkedlist *ll)
     return ll->datasize;
 }
 
+lds_linkedlist *lds_linkedlist_find(lds_linkedlist *ll, void *data,
+                                    size_t datasize)
+{
+    lds_linkedlist *x;
+
+    if (ll == NULL || data == NULL || datasize == 0)
+    {
+        return NULL;
+    }
+
+    x = ll;
+    while (x)
+    {
+        if (x->datasize == datasize && memcmp(x->data, data, datasize) == 0)
+        {
+            return x;
+        }
+
+        x = x->next;
+    }
+
+    return NULL;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));

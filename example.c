@@ -110,13 +110,18 @@ int main()
         }
     }
 
-    /* Finding the item */
+    /* Finding the index of item */
     printf("Index of the first item that has value 3.14: %ld\n",
            lds_linkedlist_index(l, &pi, sizeof(double)));
 
     /* Getting data size of items */
     printf("Data size of second element: %ld\n",
            lds_linkedlist_data_size(lds_linkedlist_get_node(l, 1)));
+
+    /* Finding the item */
+    printf(
+        "Size of the first item that has value 2: %ld\n",
+        lds_linkedlist_data_size(lds_linkedlist_find(l, &var2, sizeof(int))));
 
     /* Clearing the items */
     lds_linkedlist_clear(l);
