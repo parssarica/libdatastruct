@@ -473,6 +473,10 @@ int main()
 
     lds_vector_extend(v, v2);
 
+    /* Finding indexes of items */
+    printf("Index of the first item that has value 6: %ld\n",
+           lds_vector_index(v, &vector_var6, sizeof(int)));
+
     /* Printing vector after extending */
     printf("Vector after extending:\n");
     j = 1;

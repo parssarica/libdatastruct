@@ -205,6 +205,7 @@ const void *lds_vector_get(const lds_vector *, size_t);
 int lds_vector_pop(lds_vector *, void *);
 int lds_vector_clear(lds_vector *);
 int lds_vector_extend(lds_vector *, lds_vector *);
+size_t lds_vector_index(lds_vector *, void *, size_t);
 lds_trie *lds_trie_create(void);
 int lds_trie_insert(lds_trie *, const char *);
 int lds_trie_search(const lds_trie *, const char *);

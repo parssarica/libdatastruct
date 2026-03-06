@@ -1520,6 +1520,22 @@ int lds_vector_extend(lds_vector *v1, lds_vector *v2)
     return 1;
 }
 
+size_t lds_vector_index(lds_vector *v, void *data, size_t datasize)
+{
+    size_t i;
+
+    for (i = 0; i < v->node_count; i++)
+    {
+        if (v->items[i].size == datasize &&
+            memcmp(v->items[i].item, data, datasize) == 0)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 lds_trie *lds_trie_create(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));
