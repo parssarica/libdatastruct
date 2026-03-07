@@ -156,6 +156,7 @@ lds_linkedlist *lds_linkedlist_next(lds_linkedlist *);
 lds_linkedlist *lds_linkedlist_prev(lds_linkedlist *);
 lds_linkedlist *lds_linkedlist_head(lds_linkedlist *);
 lds_linkedlist *lds_linkedlist_tail(lds_linkedlist *);
+const void *lds_linkedlist_data(const lds_linkedlist *);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
 int lds_map_length(const lds_map *);

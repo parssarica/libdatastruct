@@ -162,6 +162,10 @@ int main()
     printf("Size of tail of the linked list: %ld\n",
            lds_linkedlist_data_size(lds_linkedlist_tail(middle_node)));
 
+    /* Getting the data of an lds_linkedlist* object */
+    printf("The data of the fourth node: %f\n",
+           *(double *)lds_linkedlist_data(middle_node));
+
     /* Cleaning up */
     lds_linkedlist_free(l);
     lds_linkedlist_free(l2);

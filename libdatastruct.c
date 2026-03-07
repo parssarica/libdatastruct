@@ -491,6 +491,16 @@ lds_linkedlist *lds_linkedlist_tail(lds_linkedlist *ll)
     return x;
 }
 
+const void *lds_linkedlist_data(const lds_linkedlist *ll)
+{
+    if (ll == NULL)
+    {
+        return NULL;
+    }
+
+    return ll->data;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));
