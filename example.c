@@ -151,6 +151,13 @@ int main()
            lds_linkedlist_data_size(
                lds_linkedlist_prev(lds_linkedlist_get_node(l, 4))));
 
+    /* Accessing the head node, if only have a node in middle of the linked list
+     */
+    lds_linkedlist *middle_node = lds_linkedlist_get_node(
+        l, 3); /* Simulating the case we only have a middle node */
+    printf("Size of head of linked list: %ld\n",
+           lds_linkedlist_data_size(lds_linkedlist_head(middle_node)));
+
     /* Cleaning up */
     lds_linkedlist_free(l);
     lds_linkedlist_free(l2);
