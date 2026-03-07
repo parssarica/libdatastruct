@@ -151,18 +151,11 @@ int main()
            lds_linkedlist_data_size(
                lds_linkedlist_prev(lds_linkedlist_get_node(l, 4))));
 
-    /* Clearing the items */
-    lds_linkedlist_clear(l);
-    printf("This is the final length of the list after clearing items: %d\n",
-           lds_linkedlist_length(l));
-
     /* Cleaning up */
-
     lds_linkedlist_free(l);
     lds_linkedlist_free(l2);
 
     /* Let's create a map! */
-
     lds_map *m = lds_create_map();
     int key1 = 1;
     int value1 = 2;

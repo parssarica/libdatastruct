@@ -147,7 +147,6 @@ int lds_linkedlist_insert(lds_linkedlist *, const void *, size_t, size_t);
 int lds_linkedlist_free(lds_linkedlist *);
 int lds_linkedlist_pop(lds_linkedlist *, void *);
 lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *, size_t);
-int lds_linkedlist_clear(lds_linkedlist *);
 int lds_linkedlist_extend(lds_linkedlist *, lds_linkedlist *);
 ssize_t lds_linkedlist_index(lds_linkedlist *, void *, size_t);
 ssize_t lds_linkedlist_data_size(const lds_linkedlist *);

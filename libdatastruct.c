@@ -35,6 +35,23 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
         return 0;
     }
 
+    if (ll->data == NULL)
+    {
+        ll->data = malloc(datatype_size);
+        if (ll->data == NULL)
+        {
+            return 0;
+        }
+
+        ll->datasize = datatype_size;
+        ll->prev = NULL;
+        ll->next = NULL;
+
+        memcpy(ll->data, data, datatype_size);
+
+        return 1;
+    }
+
     obj = ll;
     while (obj)
     {
@@ -47,8 +64,17 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
     }
 
     obj = malloc(sizeof(lds_linkedlist));
+    if (obj == NULL)
+    {
+        return 0;
+    }
     obj->datasize = datatype_size;
     obj->data = malloc(datatype_size);
+    if (obj->data == NULL)
+    {
+        free(obj);
+        return 0;
+    }
     obj->prev = ll;
     obj->next = NULL;
 
@@ -61,7 +87,7 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
 
 int lds_linkedlist_length(lds_linkedlist *ll)
 {
-    int length = 0;
+    int length = 1;
     lds_linkedlist *x = ll;
 
     if (ll == NULL)
@@ -239,7 +265,7 @@ int lds_linkedlist_pop(lds_linkedlist *ll, void *out)
         return 0;
     }
 
-    ll_length = lds_linkedlist_length(ll);
+    ll_length = lds_linkedlist_length(ll) - 1;
     while (1)
     {
         if (x->next == NULL || length == ll_length)
@@ -269,7 +295,7 @@ lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *ll, size_t index)
         return NULL;
     }
 
-    index++;
+    // index++;
 
     while (1)
     {
@@ -285,20 +311,6 @@ lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *ll, size_t index)
     }
 
     return x;
-}
-
-int lds_linkedlist_clear(lds_linkedlist *ll)
-{
-    if (ll == NULL || ll->next == NULL)
-    {
-        return 0;
-    }
-
-    lds_linkedlist_free(ll->next);
-
-    ll->next = NULL;
-
-    return 1;
 }
 
 int lds_linkedlist_extend(lds_linkedlist *ll1, lds_linkedlist *ll2)
@@ -344,7 +356,7 @@ ssize_t lds_linkedlist_index(lds_linkedlist *ll, void *data, size_t datasize)
     {
         if (x->datasize == datasize && memcmp(x->data, data, datasize) == 0)
         {
-            return --i;
+            return i;
         }
 
         x = x->next;
