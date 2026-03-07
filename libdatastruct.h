@@ -122,6 +122,10 @@ typedef struct
     size_t capacity;
 } lds_string;
 
+#define lds_linkedlist_for_each(lds_linkedlist_l, lds_node)                    \
+    for (lds_linkedlist *lds_n = lds_linkedlist_head(lds_linkedlist_l);        \
+         lds_n && ((lds_node = lds_n->data) || 1); lds_n = lds_n->next)
+
 #define lds_map_for_each(m, key, value)                                        \
     for (size_t lds__i = 0; lds__i < (m)->node_count; lds__i++)                \
         if ((m)->items[lds__i].deleted)                                        \
@@ -139,7 +143,7 @@ typedef struct
 
 lds_linkedlist *lds_create_linkedlist(void);
 int lds_linkedlist_add(lds_linkedlist *, const void *, size_t);
-int lds_linkedlist_length(lds_linkedlist *);
+size_t lds_linkedlist_length(lds_linkedlist *);
 const void *lds_linkedlist_get(lds_linkedlist *, size_t);
 int lds_linkedlist_delete(lds_linkedlist *, size_t);
 int lds_linkedlist_update(lds_linkedlist *, int, const void *, size_t);
@@ -159,7 +163,7 @@ lds_linkedlist *lds_linkedlist_tail(lds_linkedlist *);
 const void *lds_linkedlist_data(const lds_linkedlist *);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
-int lds_map_length(const lds_map *);
+size_t lds_map_length(const lds_map *);
 const void *lds_map_get(lds_map *, const void *, size_t);
 int lds_map_delete(lds_map *, const void *, size_t);
 int lds_map_update_key(lds_map *, const void *, size_t, const void *, size_t);
@@ -173,7 +177,7 @@ int lds_stack_pop(lds_stack *, void *);
 const void *lds_stack_peek(const lds_stack *);
 int lds_stack_free(lds_stack *);
 int lds_stack_minimize(lds_stack *);
-int lds_stack_empty(const lds_stack *);
+int lds_stack_is_empty(const lds_stack *);
 int lds_stack_clear(lds_stack *);
 lds_queue *lds_create_queue(void);
 int lds_queue_enqueue(lds_queue *, const void *, size_t);
@@ -195,9 +199,9 @@ lds_bintree *lds_bintree_insert_right(lds_bintree *, const void *, size_t);
 int lds_bintree_has_left(const lds_bintree *);
 int lds_bintree_has_right(const lds_bintree *);
 int lds_bintree_bfs(lds_bintree *, void (*)(lds_bintree *));
-int lds_bintree_destroy(lds_bintree *);
-int lds_bintree_remove_left(lds_bintree *);
-int lds_bintree_remove_right(lds_bintree *);
+int lds_bintree_free(lds_bintree *);
+int lds_bintree_delete_left(lds_bintree *);
+int lds_bintree_delete_right(lds_bintree *);
 lds_vector *lds_create_vector(void);
 int lds_vector_add(lds_vector *, const void *, int);
 int lds_vector_delete(lds_vector *, size_t);
@@ -225,7 +229,7 @@ int lds_tree_child_count(const lds_tree *);
 lds_tree *lds_tree_child(const lds_tree *, size_t);
 lds_tree *lds_tree_parent(const lds_tree *);
 int lds_tree_bfs(lds_tree *, void (*)(lds_tree *));
-int lds_tree_destroy(lds_tree *);
+int lds_tree_free(lds_tree *);
 lds_graph *lds_create_graph(void);
 lds_graph *lds_graph_add(lds_graph *, const void *, size_t);
 lds_graph *lds_graph_add_weighted(lds_graph *, const void *, size_t, int);
@@ -238,7 +242,7 @@ ssize_t lds_graph_data_size(const lds_graph *);
 int lds_graph_child_count(const lds_graph *);
 int lds_graph_link(lds_graph *, lds_graph *);
 int lds_graph_link_weighted(lds_graph *, lds_graph *, int);
-int lds_graph_destroy(lds_graph *);
+int lds_graph_free(lds_graph *);
 lds_string *lds_create_string(void);
 int lds_string_append(lds_string *, const char *);
 int lds_string_append_len(lds_string *, const char *, size_t);

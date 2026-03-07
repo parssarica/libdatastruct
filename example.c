@@ -19,37 +19,36 @@ int main()
     lds_linkedlist_add(l, &var3, sizeof(int));
 
     /* Let's list them with a loop! */
-    int j;
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    size_t j = 0;
+    void *ptr;
+    lds_linkedlist_for_each(l, ptr)
     {
-        printf("%d. value of linked list: %d\n", j,
-               *(int *)lds_linkedlist_get(l, j));
+        printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
     }
 
     /* Let's delete an element */
     lds_linkedlist_delete(l, 1);
     printf("After deleting:\n");
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    j = 0;
+    lds_linkedlist_for_each(l, ptr)
     {
-        printf("%d. value of linked list: %d\n", j,
-               *(int *)lds_linkedlist_get(l, j));
+        printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
     }
 
     /* Let's update an element */
     char *newvar = "A new value.";
     lds_linkedlist_update(l, 1, newvar, strlen(newvar) + 1);
     printf("After updating:\n");
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    j = 0;
+    lds_linkedlist_for_each(l, ptr)
     {
         if (j == 1)
         {
-            printf("%d. value of linked list: %s\n", j,
-                   (char *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %s\n", ++j, (char *)ptr);
         }
         else
         {
-            printf("%d. value of linked list: %d\n", j,
-                   *(int *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
         }
     }
 
@@ -57,22 +56,20 @@ int main()
     double pi = 3.14;
     lds_linkedlist_insert(l, &pi, sizeof(double), 1);
     printf("After inserting:\n");
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    j = 0;
+    lds_linkedlist_for_each(l, ptr)
     {
         if (j == 2)
         {
-            printf("%d. value of linked list: %s\n", j,
-                   (char *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %s\n", ++j, (char *)ptr);
         }
         else if (j == 1)
         {
-            printf("%d. value of linked list: %f\n", j,
-                   *(double *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
         }
         else
         {
-            printf("%d. value of linked list: %d\n", j,
-                   *(int *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
         }
     }
 
@@ -83,7 +80,7 @@ int main()
 
     /* Getting the length */
 
-    printf("This is the length of the list: %d\n", lds_linkedlist_length(l));
+    printf("This is the length of the list: %ld\n", lds_linkedlist_length(l));
 
     /* Extending the linked list with another linkedlist */
     lds_linkedlist *l2 =
@@ -96,17 +93,16 @@ int main()
     lds_linkedlist_extend(l, l2);
 
     /* Printing list after extending */
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    j = 0;
+    lds_linkedlist_for_each(l, ptr)
     {
         if (j == 1)
         {
-            printf("%d. value of linked list: %f\n", j,
-                   *(double *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
         }
         else
         {
-            printf("%d. value of linked list: %d\n", j,
-                   *(int *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
         }
     }
 
@@ -114,17 +110,16 @@ int main()
     lds_linkedlist_reverse(l);
 
     /* Printing list after reversing */
-    for (j = 0; j < lds_linkedlist_length(l); j++)
+    j = 0;
+    lds_linkedlist_for_each(l, ptr)
     {
         if (j == 3)
         {
-            printf("%d. value of linked list: %f\n", j,
-                   *(double *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
         }
         else
         {
-            printf("%d. value of linked list: %d\n", j,
-                   *(int *)lds_linkedlist_get(l, j));
+            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
         }
     }
 
@@ -184,7 +179,7 @@ int main()
     lds_map_add(m, &key3, sizeof(int), &value3, sizeof(int));
 
     /* Retrieving the length of map */
-    printf("Map length: %d\n", lds_map_length(m));
+    printf("Map length: %ld\n", lds_map_length(m));
 
     /* Getting some values from keys */
     printf("Value of key1: %d\n", *(int *)lds_map_get(m, &key1, sizeof(int)));
@@ -196,8 +191,8 @@ int main()
 
     lds_map_for_each(m, key, value)
     {
-        printf("%d. key: %d\n", ++j, *(int *)key);
-        printf("%d. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, *(int *)key);
+        printf("%ld. value: %d\n", j, *(int *)value);
     }
 
     /* Let's delete a key from map! */
@@ -207,8 +202,8 @@ int main()
     j = 0;
     lds_map_for_each(m, key, value)
     {
-        printf("%d. key: %d\n", ++j, *(int *)key);
-        printf("%d. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, *(int *)key);
+        printf("%ld. value: %d\n", j, *(int *)value);
     }
 
     /* Updating first key */
@@ -226,8 +221,8 @@ int main()
 
     lds_map_for_each(m, key, value)
     {
-        printf("%d. key: %d\n", ++j, *(int *)key);
-        printf("%d. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, *(int *)key);
+        printf("%ld. value: %d\n", j, *(int *)value);
     }
 
     /* Freeing map */
@@ -239,7 +234,7 @@ int main()
     lds_stack *s = lds_create_stack();
 
     /* Checking is stack empty */
-    printf("Is stack empty: %d\n", lds_stack_empty(s));
+    printf("Is stack empty: %d\n", lds_stack_is_empty(s));
 
     /* Pushing values to stack */
 
@@ -254,7 +249,7 @@ int main()
     lds_stack_push(s, &stack_val4, sizeof(int));
 
     /* Checking is stack empty */
-    printf("Is stack empty: %d\n", lds_stack_empty(s));
+    printf("Is stack empty: %d\n", lds_stack_is_empty(s));
 
     /* Popping some values from stack */
     int popped_val1;
@@ -412,13 +407,13 @@ int main()
     printf("Size of root node: %ld\n", lds_bintree_data_size(b));
 
     /* Deleting the left child */
-    lds_bintree_remove_left(b);
+    lds_bintree_delete_left(b);
     lds_bintree_insert_left(
         b, &bintree_val1,
         sizeof(int)); // Putting a dummy value so destroy function doesn't fail
 
     /* Deleting the right child */
-    lds_bintree_remove_right(b);
+    lds_bintree_delete_right(b);
     lds_bintree_insert_right(
         b, &bintree_val1,
         sizeof(int)); // Putting a dummy value so destroy function doesn't fail
@@ -428,7 +423,7 @@ int main()
     printf("\n");
 
     /* Cleaning up */
-    lds_bintree_destroy(b);
+    lds_bintree_free(b);
 
     /* Creating a vector */
     lds_vector *v = lds_create_vector();
@@ -462,7 +457,7 @@ int main()
 
     lds_vector_for_each(v, i)
     {
-        printf("%d. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
     /* Deleting items */
@@ -473,7 +468,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%d. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
     /* Inserting item */
@@ -485,7 +480,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%d. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
     /* Getting the length */
@@ -518,7 +513,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%d. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
     /* Reversing a vector */
@@ -529,7 +524,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%d. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
     /* Cleaning up */
@@ -617,7 +612,7 @@ int main()
     printf("\n");
 
     /* Cleaning up */
-    lds_tree_destroy(t);
+    lds_tree_free(t);
 
     /* Creating a graph */
     lds_graph *g = lds_create_graph();
@@ -675,7 +670,7 @@ int main()
     lds_graph_link_weighted(g, lds_graph_child(g_n2, 0), 314);
 
     /* Cleaning up */
-    lds_graph_destroy(g);
+    lds_graph_free(g);
 
     /* Creating a string */
     lds_string *str = lds_create_string();
@@ -789,7 +784,7 @@ int main()
 
     lds_vector_for_each(splitted, spart)
     {
-        printf("%d. part: %s\n", ++j, lds_string_cstr(*spart));
+        printf("%ld. part: %s\n", ++j, lds_string_cstr(*spart));
     }
 
     /* Reversing strings */

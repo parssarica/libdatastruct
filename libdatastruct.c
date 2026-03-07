@@ -85,9 +85,9 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
     return 1;
 }
 
-int lds_linkedlist_length(lds_linkedlist *ll)
+size_t lds_linkedlist_length(lds_linkedlist *ll)
 {
-    int length = 1;
+    size_t length = 1;
     lds_linkedlist *x = ll;
 
     if (ll == NULL)
@@ -593,7 +593,7 @@ int lds_map_add(lds_map *table, const void *key, size_t keysize,
     return 1;
 }
 
-int lds_map_length(const lds_map *table)
+size_t lds_map_length(const lds_map *table)
 {
     if (table != NULL)
     {
@@ -892,7 +892,7 @@ int lds_stack_minimize(lds_stack *s)
     return 1;
 }
 
-int lds_stack_empty(const lds_stack *s)
+int lds_stack_is_empty(const lds_stack *s)
 {
     if (s == NULL)
     {
@@ -1292,14 +1292,14 @@ static void lds_bintree_node_destroy(lds_bintree *b)
     lds_safefree(b);
 }
 
-int lds_bintree_destroy(lds_bintree *b)
+int lds_bintree_free(lds_bintree *b)
 {
     return lds_bintree_bfs(b, lds_bintree_node_destroy);
 }
 
-int lds_bintree_remove_left(lds_bintree *b)
+int lds_bintree_delete_left(lds_bintree *b)
 {
-    int i = lds_bintree_destroy(b->left);
+    int i = lds_bintree_free(b->left);
 
     if (i != 1)
     {
@@ -1311,9 +1311,9 @@ int lds_bintree_remove_left(lds_bintree *b)
     return 1;
 }
 
-int lds_bintree_remove_right(lds_bintree *b)
+int lds_bintree_delete_right(lds_bintree *b)
 {
-    int i = lds_bintree_destroy(b->right);
+    int i = lds_bintree_free(b->right);
 
     if (i != 1)
     {
@@ -2047,7 +2047,7 @@ static void lds_tree_node_destroy(lds_tree *t)
     lds_safefree(t);
 }
 
-int lds_tree_destroy(lds_tree *t)
+int lds_tree_free(lds_tree *t)
 {
     return lds_tree_bfs(t, lds_tree_node_destroy);
 }
@@ -2356,7 +2356,7 @@ int lds_graph_link_weighted(lds_graph *g1, lds_graph *g2, int weight)
     return 1;
 }
 
-int lds_graph_destroy(lds_graph *g)
+int lds_graph_free(lds_graph *g)
 {
     lds_graph **g_null_checker;
     lds_vector *visited = lds_create_vector();
