@@ -1832,6 +1832,16 @@ size_t lds_vector_capacity(const lds_vector *v)
     return v->capacity;
 }
 
+int lds_vector_is_empty(const lds_vector *v)
+{
+    if (v == NULL)
+    {
+        return 0;
+    }
+
+    return v->node_count == 0;
+}
+
 lds_trie *lds_trie_create(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));

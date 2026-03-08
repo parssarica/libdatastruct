@@ -466,6 +466,9 @@ int main()
     /* Creating a vector */
     lds_vector *v = lds_create_vector();
 
+    /* Checking is vector empty whether not */
+    printf("Is the vector empty: %d\n", lds_vector_is_empty(v));
+
     /* Reserving some space before multiple allocations, which can lead to
      * performance increase */
     lds_vector_reserve(v, 7);
@@ -487,6 +490,9 @@ int main()
     lds_vector_add(v, &vector_var6, sizeof(int));
     lds_vector_add(v, &vector_var7, sizeof(int));
     lds_vector_minimize(v);
+
+    /* Checking is vector empty whether not */
+    printf("Is the vector empty: %d\n", lds_vector_is_empty(v));
 
     /* Looping through the vector */
 
