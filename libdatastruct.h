@@ -231,6 +231,7 @@ lds_trie *lds_trie_create(void);
 int lds_trie_insert(lds_trie *, const char *);
 int lds_trie_search(const lds_trie *, const char *);
 int lds_trie_free(lds_trie *);
+int lds_trie_is_empty(const lds_trie *);
 lds_tree *lds_create_tree(void);
 int lds_tree_set(lds_tree *, const void *, size_t);
 lds_tree *lds_tree_add(lds_tree *, const void *, size_t);

@@ -582,6 +582,9 @@ int main()
 
     lds_trie *trie_obj = lds_trie_create();
 
+    /* Checking is trie empty whether not */
+    printf("Is trie empty: %d\n", lds_trie_is_empty(trie_obj));
+
     /* Inserting some words */
 
     lds_trie_insert(trie_obj, "ace");
@@ -589,6 +592,9 @@ int main()
     lds_trie_insert(trie_obj, "cat");
     lds_trie_insert(trie_obj, "pet");
     lds_trie_insert(trie_obj, "pen");
+
+    /* Checking is trie empty whether not */
+    printf("Is trie empty: %d\n", lds_trie_is_empty(trie_obj));
 
     /* Searching words in trie */
 

@@ -2009,6 +2009,16 @@ int lds_trie_free(lds_trie *t)
     return 1;
 }
 
+int lds_trie_is_empty(const lds_trie *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    return t->child_count == 0;
+}
+
 lds_tree *lds_create_tree(void)
 {
     lds_tree *t = malloc(sizeof(lds_tree));
