@@ -174,6 +174,10 @@ int main()
     int key3 = 5;
     int value3 = 6;
 
+    /* Reserving some space in order to increase performance */
+    lds_map_reserve(m, 3);
+
+    /* Adding values to map */
     lds_map_add(m, &key1, sizeof(int), &value1, sizeof(int));
     lds_map_add(m, &key2, sizeof(int), &value2, sizeof(int));
     lds_map_add(m, &key3, sizeof(int), &value3, sizeof(int));

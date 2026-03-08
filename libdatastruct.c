@@ -759,6 +759,29 @@ int lds_map_clear(lds_map *table)
     return 1;
 }
 
+int lds_map_reserve(lds_map *table, size_t newcapacity)
+{
+    if (table == NULL)
+    {
+        return 0;
+    }
+
+    if (table->capacity > newcapacity)
+    {
+        return 1;
+    }
+
+    table->items = realloc(table->items, sizeof(lds_mapitem) * newcapacity);
+    if (table->items == NULL)
+    {
+        return 0;
+    }
+
+    table->capacity = newcapacity;
+
+    return 1;
+}
+
 lds_stack *lds_create_stack(void)
 {
     lds_stack *s = malloc(sizeof(lds_stack));

@@ -171,6 +171,7 @@ int lds_map_update_value(lds_map *, const void *, size_t, const void *, size_t);
 int lds_map_free(lds_map *);
 int lds_map_minimize(lds_map *);
 int lds_map_clear(lds_map *);
+int lds_map_reserve(lds_map *, size_t);
 lds_stack *lds_create_stack(void);
 int lds_stack_push(lds_stack *, const void *, size_t);
 int lds_stack_pop(lds_stack *, void *);
