@@ -3323,3 +3323,13 @@ size_t lds_string_capacity(lds_string *s)
 
     return s->capacity;
 }
+
+int lds_string_is_empty(const lds_string *s)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    return s->len == 0;
+}

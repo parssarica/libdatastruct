@@ -740,9 +740,15 @@ int main()
     /* Creating a string */
     lds_string *str = lds_create_string();
 
+    /* Checking is string empty whether not */
+    printf("Is string empty: %d\n", lds_string_is_empty(str));
+
     /* Pushing some values to string */
     lds_string_append(str, "Hello, ");
     lds_string_append(str, "world!");
+
+    /* Checking is string empty whether not */
+    printf("Is string empty: %d\n", lds_string_is_empty(str));
 
     /* Getting value */
     printf("Value of string: %s\n", lds_string_cstr(str));
