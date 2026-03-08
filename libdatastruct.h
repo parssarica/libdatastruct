@@ -257,6 +257,7 @@ int lds_graph_link(lds_graph *, lds_graph *);
 int lds_graph_link_weighted(lds_graph *, lds_graph *, int);
 int lds_graph_free(lds_graph *);
 int lds_graph_is_empty(const lds_graph *);
+int lds_graph_bfs(lds_graph *, void (*)(lds_graph *));
 lds_string *lds_create_string(void);
 int lds_string_append(lds_string *, const char *);
 int lds_string_append_len(lds_string *, const char *, size_t);

@@ -2540,7 +2540,7 @@ int lds_graph_link_weighted(lds_graph *g1, lds_graph *g2, int weight)
     return 1;
 }
 
-int lds_graph_free(lds_graph *g)
+int lds_graph_bfs(lds_graph *g, void (*visit)(lds_graph *))
 {
     lds_graph **g_null_checker;
     lds_vector *visited = lds_create_vector();
@@ -2600,28 +2600,7 @@ int lds_graph_free(lds_graph *g)
             }
         }
 
-        if (g->data)
-        {
-            lds_safefree(g->data);
-        }
-
-        if (g->edges_from)
-        {
-            for (i = 0; i < g->child_count_from; i++)
-            {
-                lds_safefree(g->edges_from[i]);
-            }
-            lds_safefree(g->edges_from);
-        }
-
-        if (g->edges_to)
-        {
-            for (i = 0; i < g->child_count_to; i++)
-            {
-                lds_safefree(g->edges_to[i]);
-            }
-            lds_safefree(g->edges_to);
-        }
+        visit(g);
 
         if (!lds_vector_add(visited, &g, sizeof(lds_graph **)))
         {
@@ -2665,6 +2644,39 @@ int lds_graph_free(lds_graph *g)
     lds_vector_free(to_visit);
 
     return 1;
+}
+
+static void lds_graph_node_destroy(lds_graph *g)
+{
+    size_t i;
+
+    if (g->data)
+    {
+        lds_safefree(g->data);
+    }
+
+    if (g->edges_from)
+    {
+        for (i = 0; i < g->child_count_from; i++)
+        {
+            lds_safefree(g->edges_from[i]);
+        }
+        lds_safefree(g->edges_from);
+    }
+
+    if (g->edges_to)
+    {
+        for (i = 0; i < g->child_count_to; i++)
+        {
+            lds_safefree(g->edges_to[i]);
+        }
+        lds_safefree(g->edges_to);
+    }
+}
+
+int lds_graph_free(lds_graph *g)
+{
+    return lds_graph_bfs(g, lds_graph_node_destroy);
 }
 
 int lds_graph_is_empty(const lds_graph *g)
