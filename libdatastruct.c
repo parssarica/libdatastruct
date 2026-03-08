@@ -1678,6 +1678,16 @@ int lds_vector_reverse(lds_vector *v)
     return 1;
 }
 
+size_t lds_vector_capacity(const lds_vector *v)
+{
+    if (v == NULL)
+    {
+        return 0;
+    }
+
+    return v->capacity;
+}
+
 lds_trie *lds_trie_create(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));

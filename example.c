@@ -527,6 +527,9 @@ int main()
         printf("%ld. value of vector: %d\n", j++, *(int *)i);
     }
 
+    /* Accessing vector capacity */
+    printf("Vector capacity: %ld\n", lds_vector_capacity(v));
+
     /* Cleaning up */
     lds_vector_free(v);
     lds_vector_free(v2);
