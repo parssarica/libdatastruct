@@ -782,7 +782,7 @@ int lds_map_reserve(lds_map *table, size_t newcapacity)
     return 1;
 }
 
-size_t lds_map_capacity(lds_map *table)
+size_t lds_map_capacity(const lds_map *table)
 {
     if (table == NULL)
     {
@@ -933,6 +933,29 @@ int lds_stack_is_empty(const lds_stack *s)
     }
 
     return s->node_count == 0;
+}
+
+int lds_stack_reserve(lds_stack *s, size_t newcapacity)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    if (s->capacity > newcapacity)
+    {
+        return 1;
+    }
+
+    s->items = realloc(s->items, sizeof(lds_stackitem) * newcapacity);
+    if (s->items == NULL)
+    {
+        return 0;
+    }
+
+    s->capacity = newcapacity;
+
+    return 1;
 }
 
 lds_queue *lds_create_queue(void)

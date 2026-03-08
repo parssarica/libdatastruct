@@ -240,6 +240,10 @@ int main()
 
     lds_stack *s = lds_create_stack();
 
+    /* Reserving some space in stack before pushes in order to increase
+     * performance */
+    lds_stack_reserve(s, 4);
+
     /* Checking is stack empty */
     printf("Is stack empty: %d\n", lds_stack_is_empty(s));
 
