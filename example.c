@@ -740,6 +740,9 @@ int main()
     /* Reserving some space for performance */
     lds_string_reserve(str, 1000);
 
+    /* Checking capacity of string */
+    printf("Capacity of string: %ld\n", lds_string_capacity(str));
+
     /* Inserting data */
     lds_string_insert(str, 1, "n amazing");
 

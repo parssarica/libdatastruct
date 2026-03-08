@@ -2814,6 +2814,10 @@ int lds_string_reserve(lds_string *s1, size_t newcap)
 
     s1->capacity = newcap;
     s1->data = realloc(s1->data, newcap);
+    if (s1->data == NULL)
+    {
+        return 0;
+    }
 
     return 1;
 }
@@ -3218,4 +3222,14 @@ int lds_string_split_free(lds_vector *v)
 
     lds_safefree(v);
     return 1;
+}
+
+size_t lds_string_capacity(lds_string *s)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    return s->capacity;
 }

@@ -281,3 +281,4 @@ int lds_string_replace(lds_string *, size_t, const char *);
 lds_vector *lds_string_split_len(lds_string *, const char *, size_t);
 lds_vector *lds_string_split(lds_string *, const char *);
 int lds_string_split_free(lds_vector *);
+size_t lds_string_capacity(lds_string *);
