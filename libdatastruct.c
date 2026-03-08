@@ -501,6 +501,16 @@ const void *lds_linkedlist_data(const lds_linkedlist *ll)
     return ll->data;
 }
 
+int lds_linkedlist_is_empty(const lds_linkedlist *ll)
+{
+    if (ll == NULL || ll->data == NULL)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
 lds_map *lds_create_map(void)
 {
     lds_map *table = malloc(sizeof(lds_map));

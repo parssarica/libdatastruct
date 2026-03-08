@@ -10,6 +10,9 @@ int main()
 {
     lds_linkedlist *l = lds_create_linkedlist();
 
+    /* Checking linked list is empty whether not */
+    printf("Is linkedlist empty: %d\n", lds_linkedlist_is_empty(l));
+
     /* Let's add some variables */
     int var1 = 1;
     int var2 = 2;
@@ -17,6 +20,9 @@ int main()
     lds_linkedlist_add(l, &var1, sizeof(int));
     lds_linkedlist_add(l, &var2, sizeof(int));
     lds_linkedlist_add(l, &var3, sizeof(int));
+
+    /* Checking linked list is empty whether not */
+    printf("Is linkedlist empty: %d\n", lds_linkedlist_is_empty(l));
 
     /* Let's list them with a loop! */
     size_t j = 0;
