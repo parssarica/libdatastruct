@@ -177,6 +177,9 @@ int main()
     /* Reserving some space in order to increase performance */
     lds_map_reserve(m, 3);
 
+    /* Checking capacity */
+    printf("Capacity of map: %ld\n", lds_map_capacity(m));
+
     /* Adding values to map */
     lds_map_add(m, &key1, sizeof(int), &value1, sizeof(int));
     lds_map_add(m, &key2, sizeof(int), &value2, sizeof(int));

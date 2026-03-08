@@ -782,6 +782,16 @@ int lds_map_reserve(lds_map *table, size_t newcapacity)
     return 1;
 }
 
+size_t lds_map_capacity(lds_map *table)
+{
+    if (table == NULL)
+    {
+        return 0;
+    }
+
+    return table->capacity;
+}
+
 lds_stack *lds_create_stack(void)
 {
     lds_stack *s = malloc(sizeof(lds_stack));
