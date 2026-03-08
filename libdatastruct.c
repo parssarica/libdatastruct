@@ -766,7 +766,7 @@ int lds_map_reserve(lds_map *table, size_t newcapacity)
         return 0;
     }
 
-    if (table->capacity > newcapacity)
+    if (table->capacity >= newcapacity)
     {
         return 1;
     }
@@ -942,7 +942,7 @@ int lds_stack_reserve(lds_stack *s, size_t newcapacity)
         return 0;
     }
 
-    if (s->capacity > newcapacity)
+    if (s->capacity >= newcapacity)
     {
         return 1;
     }
@@ -958,7 +958,7 @@ int lds_stack_reserve(lds_stack *s, size_t newcapacity)
     return 1;
 }
 
-size_t lds_stack_capacity(lds_stack *s)
+size_t lds_stack_capacity(const lds_stack *s)
 {
     if (s == NULL)
     {
@@ -1109,6 +1109,29 @@ const void *lds_queue_front(const lds_queue *q)
         return NULL;
 
     return q->items[q->node_count - 1].item;
+}
+
+int lds_queue_reserve(lds_queue *q, size_t newcapacity)
+{
+    if (q == NULL)
+    {
+        return 0;
+    }
+
+    if (q->capacity >= newcapacity)
+    {
+        return 1;
+    }
+
+    q->items = realloc(q->items, sizeof(lds_queueitem) * newcapacity);
+    if (q->items == NULL)
+    {
+        return 0;
+    }
+
+    q->capacity = newcapacity;
+
+    return 1;
 }
 
 lds_bintree *lds_create_bintree(void)

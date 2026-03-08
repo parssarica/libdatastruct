@@ -299,6 +299,9 @@ int main()
 
     lds_queue *q = lds_create_queue();
 
+    /* Reserving some space before enqueueing */
+    lds_queue_reserve(q, 5);
+
     int queue_val1 = 1;
     int queue_val2 = 2;
     int queue_val3 = 3;
