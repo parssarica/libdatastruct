@@ -958,6 +958,16 @@ int lds_stack_reserve(lds_stack *s, size_t newcapacity)
     return 1;
 }
 
+size_t lds_stack_capacity(lds_stack *s)
+{
+    if (s == NULL)
+    {
+        return 0;
+    }
+
+    return s->capacity;
+}
+
 lds_queue *lds_create_queue(void)
 {
     lds_queue *q = malloc(sizeof(lds_queue));

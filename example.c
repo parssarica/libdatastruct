@@ -244,6 +244,9 @@ int main()
      * performance */
     lds_stack_reserve(s, 4);
 
+    /* Checking capacity */
+    printf("Stack capacity: %ld\n", lds_stack_capacity(s));
+
     /* Checking is stack empty */
     printf("Is stack empty: %d\n", lds_stack_is_empty(s));
 
