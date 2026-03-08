@@ -174,6 +174,7 @@ int lds_map_minimize(lds_map *);
 int lds_map_clear(lds_map *);
 int lds_map_reserve(lds_map *, size_t);
 size_t lds_map_capacity(const lds_map *);
+int lds_map_is_empty(const lds_map *);
 lds_stack *lds_create_stack(void);
 int lds_stack_push(lds_stack *, const void *, size_t);
 int lds_stack_pop(lds_stack *, void *);

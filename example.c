@@ -180,6 +180,9 @@ int main()
     int key3 = 5;
     int value3 = 6;
 
+    /* Checking map is empty whether not */
+    printf("Is map empty: %d\n", lds_map_is_empty(m));
+
     /* Reserving some space in order to increase performance */
     lds_map_reserve(m, 3);
 
@@ -237,6 +240,9 @@ int main()
         printf("%ld. key: %d\n", ++j, *(int *)key);
         printf("%ld. value: %d\n", j, *(int *)value);
     }
+
+    /* Checking map is empty whether not */
+    printf("Is map empty: %d\n", lds_map_is_empty(m));
 
     /* Freeing map */
 

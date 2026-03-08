@@ -802,6 +802,21 @@ size_t lds_map_capacity(const lds_map *table)
     return table->capacity;
 }
 
+int lds_map_is_empty(const lds_map *table)
+{
+    if (table == NULL)
+    {
+        return 0;
+    }
+
+    if (table->node_count == 0)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
 lds_stack *lds_create_stack(void)
 {
     lds_stack *s = malloc(sizeof(lds_stack));
