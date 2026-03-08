@@ -2667,6 +2667,21 @@ int lds_graph_free(lds_graph *g)
     return 1;
 }
 
+int lds_graph_is_empty(const lds_graph *g)
+{
+    if (g == NULL)
+    {
+        return 0;
+    }
+
+    if (g->datasize == 0 && g->child_count_from == 0 && g->child_count_to == 0)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
 lds_string *lds_create_string(void)
 {
     lds_string *s = malloc(sizeof(lds_string));

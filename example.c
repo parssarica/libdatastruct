@@ -679,6 +679,9 @@ int main()
     lds_graph *g_n2;
     lds_graph *g_n3;
 
+    /* Checking is graph empty whether not */
+    printf("Is graph empty: %d\n", lds_graph_is_empty(g));
+
     /* Putting some new values */
     int graph_val1 = 1;
     int graph_val2 = 2;
@@ -695,6 +698,9 @@ int main()
     lds_graph_add_weighted(g_n1, &graph_val5, sizeof(int), 5);
     lds_graph_add(g_n2, &graph_val6, sizeof(int));
     lds_graph_add_weighted(g_n2, &graph_val7, sizeof(int), 7);
+
+    /* Checking is graph empty whether not */
+    printf("Is graph empty: %d\n", lds_graph_is_empty(g));
 
     /* Changing node data */
     lds_graph_set(g, &graph_val1, sizeof(int));
