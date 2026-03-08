@@ -632,6 +632,9 @@ int main()
     int tree_val7 = 7;
     int tree_val8 = 8;
 
+    /* Checking is tree empty whether not */
+    printf("Is tree empty: %d\n", lds_tree_is_empty(t));
+
     /* Setting a value for root */
     lds_tree_set(t, &tree_val1, sizeof(int));
 
@@ -642,6 +645,9 @@ int main()
     lds_tree_add(n1, &tree_val5, sizeof(int));
     lds_tree_add(n2, &tree_val6, sizeof(int));
     lds_tree_add(n2, &tree_val7, sizeof(int));
+
+    /* Checking is tree empty whether not */
+    printf("Is tree empty: %d\n", lds_tree_is_empty(t));
 
     /* Changing a node's value, as we did in root */
     lds_tree_set(n1, &tree_val8, sizeof(int));

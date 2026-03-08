@@ -2226,6 +2226,16 @@ int lds_tree_free(lds_tree *t)
     return lds_tree_bfs(t, lds_tree_node_destroy);
 }
 
+int lds_tree_is_empty(const lds_tree *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    return t->datasize == 0 && t->child_count == 0;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));
