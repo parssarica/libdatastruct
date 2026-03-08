@@ -210,6 +210,7 @@ int lds_bintree_bfs(lds_bintree *, void (*)(lds_bintree *));
 int lds_bintree_free(lds_bintree *);
 int lds_bintree_delete_left(lds_bintree *);
 int lds_bintree_delete_right(lds_bintree *);
+int lds_bintree_is_empty(const lds_bintree *);
 lds_vector *lds_create_vector(void);
 int lds_vector_add(lds_vector *, const void *, int);
 int lds_vector_delete(lds_vector *, size_t);

@@ -375,6 +375,9 @@ int main()
 
     lds_bintree *b = lds_create_bintree();
 
+    /* Checking is binary tree empty whether not */
+    printf("Is binary tree empty: %d\n", lds_bintree_is_empty(b));
+
     /* Setting values */
     int bintree_val1 = 1;
     int bintree_val2 = 2;
@@ -394,6 +397,9 @@ int main()
 
     /* Changing values */
     lds_bintree_set(b, &bintree_val1, sizeof(int));
+
+    /* Checking is binary tree empty whether not */
+    printf("Is binary tree empty: %d\n", lds_bintree_is_empty(b));
 
     /* Accessing values */
 

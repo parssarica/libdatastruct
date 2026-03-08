@@ -503,7 +503,12 @@ const void *lds_linkedlist_data(const lds_linkedlist *ll)
 
 int lds_linkedlist_is_empty(const lds_linkedlist *ll)
 {
-    if (ll == NULL || ll->data == NULL)
+    if (ll == NULL)
+    {
+        return 0;
+    }
+
+    if (ll->data == NULL)
     {
         return 1;
     }
@@ -1447,6 +1452,21 @@ int lds_bintree_delete_right(lds_bintree *b)
     b->right = NULL;
 
     return 1;
+}
+
+int lds_bintree_is_empty(const lds_bintree *b)
+{
+    if (b == NULL)
+    {
+        return 0;
+    }
+
+    if (b->data == NULL && b->left == NULL && b->right == NULL)
+    {
+        return 1;
+    }
+
+    return 0;
 }
 
 lds_vector *lds_create_vector(void)
