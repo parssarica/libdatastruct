@@ -1134,6 +1134,16 @@ int lds_queue_reserve(lds_queue *q, size_t newcapacity)
     return 1;
 }
 
+size_t lds_queue_capacity(const lds_queue *q)
+{
+    if (q == NULL)
+    {
+        return 0;
+    }
+
+    return q->capacity;
+}
+
 lds_bintree *lds_create_bintree(void)
 {
     lds_bintree *b = malloc(sizeof(lds_bintree));

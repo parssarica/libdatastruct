@@ -302,6 +302,9 @@ int main()
     /* Reserving some space before enqueueing */
     lds_queue_reserve(q, 5);
 
+    /* Checking the capacity of queue */
+    printf("Capacity of queue: %ld\n", lds_queue_capacity(q));
+
     int queue_val1 = 1;
     int queue_val2 = 2;
     int queue_val3 = 3;

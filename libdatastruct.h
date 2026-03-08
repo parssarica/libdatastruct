@@ -192,6 +192,7 @@ int lds_queue_clear(lds_queue *);
 int lds_queue_is_empty(const lds_queue *);
 const void *lds_queue_front(const lds_queue *);
 int lds_queue_reserve(lds_queue *, size_t);
+size_t lds_queue_capacity(const lds_queue *);
 lds_bintree *lds_create_bintree(void);
 int lds_bintree_set_nodes(lds_bintree *);
 int lds_bintree_set(lds_bintree *, const void *, size_t);
