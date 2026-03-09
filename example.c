@@ -670,6 +670,10 @@ int main()
     lds_tree_bfs(t, print_tree_bfs);
     printf("\n");
 
+    /* Accessing the root node from a child node */
+    lds_tree *n5 = lds_tree_child(n2, 0);
+    printf("Value of root node: %d\n", *(int *)lds_tree_get(lds_tree_root(n5)));
+
     /* Cleaning up */
     lds_tree_free(t);
 

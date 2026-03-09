@@ -243,6 +243,7 @@ lds_tree *lds_tree_parent(const lds_tree *);
 int lds_tree_bfs(lds_tree *, void (*)(lds_tree *));
 int lds_tree_free(lds_tree *);
 int lds_tree_is_empty(const lds_tree *);
+lds_tree *lds_tree_root(lds_tree *);
 lds_graph *lds_create_graph(void);
 lds_graph *lds_graph_add(lds_graph *, const void *, size_t);
 lds_graph *lds_graph_add_weighted(lds_graph *, const void *, size_t, int);

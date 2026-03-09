@@ -2236,6 +2236,23 @@ int lds_tree_is_empty(const lds_tree *t)
     return t->datasize == 0 && t->child_count == 0;
 }
 
+lds_tree *lds_tree_root(lds_tree *t)
+{
+    if (t == NULL)
+    {
+        return NULL;
+    }
+
+    lds_tree *parent_node = t->parent;
+
+    while (parent_node->parent)
+    {
+        parent_node = parent_node->parent;
+    }
+
+    return parent_node;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));
