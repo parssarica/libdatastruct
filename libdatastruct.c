@@ -2283,6 +2283,16 @@ lds_tree *lds_tree_sibling(const lds_tree *t, size_t index)
     return t->parent->children[index];
 }
 
+size_t lds_tree_sibling_count(const lds_tree *t)
+{
+    if (t == NULL || t->parent == NULL)
+    {
+        return 0;
+    }
+
+    return t->parent->child_count;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));

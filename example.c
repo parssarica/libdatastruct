@@ -683,6 +683,9 @@ int main()
     printf("Second sibling of root's child: %d\n",
            *(int *)lds_tree_get(lds_tree_sibling(n1, 1)));
 
+    /* Getting the sibling count */
+    printf("Sibling count of root's child: %ld\n", lds_tree_sibling_count(n1));
+
     /* Cleaning up */
     lds_tree_free(t);
 
