@@ -696,8 +696,12 @@ int main()
     printf("Is root's child node root: %d\n", lds_tree_is_root(n1));
     printf("Is root's grand child node root: %d\n", lds_tree_is_root(n5));
 
+    /* Detaching sub-trees */
+    lds_tree_detach(n1);
+
     /* Cleaning up */
     lds_tree_free(t);
+    lds_tree_free(n1); /* You should free detached sub-trees manually */
 
     /* Creating a graph */
     lds_graph *g = lds_create_graph();

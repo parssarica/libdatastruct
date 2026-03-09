@@ -2313,6 +2313,40 @@ int lds_tree_is_root(const lds_tree *t)
     return t->parent == NULL;
 }
 
+int lds_tree_detach(lds_tree *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    if (t->parent == NULL)
+    {
+        return 1;
+    }
+
+    size_t i;
+
+    for (i = 0; i < t->parent->child_count; i++)
+    {
+        if (t == t->parent->children[i])
+        {
+            break;
+        }
+    }
+
+    if (i + 1 < t->parent->child_count)
+    {
+        memmove(&t->parent->children[i], &t->parent->children[i + 1],
+                sizeof(lds_tree *) * (t->parent->child_count - i - 1));
+    }
+
+    t->parent->child_count--;
+    t->parent = NULL;
+
+    return 1;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));
