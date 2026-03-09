@@ -679,6 +679,10 @@ int main()
     printf("Depth of root node's child: %ld\n", lds_tree_depth(n2));
     printf("Depth of root node's grand child: %ld\n", lds_tree_depth(n5));
 
+    /* Getting the nth sibling */
+    printf("Second sibling of root's child: %d\n",
+           *(int *)lds_tree_get(lds_tree_sibling(n1, 1)));
+
     /* Cleaning up */
     lds_tree_free(t);
 
