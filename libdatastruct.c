@@ -2293,6 +2293,16 @@ size_t lds_tree_sibling_count(const lds_tree *t)
     return t->parent->child_count;
 }
 
+int lds_tree_is_leaf(const lds_tree *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    return t->child_count == 0;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));

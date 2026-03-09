@@ -686,6 +686,11 @@ int main()
     /* Getting the sibling count */
     printf("Sibling count of root's child: %ld\n", lds_tree_sibling_count(n1));
 
+    /* Checking is the node leaf node whether not */
+    printf("Is root leaf node: %d\n", lds_tree_is_leaf(t));
+    printf("Is root's child leaf node: %d\n", lds_tree_is_leaf(n1));
+    printf("Is root's grand child leaf node: %d\n", lds_tree_is_leaf(n5));
+
     /* Cleaning up */
     lds_tree_free(t);
 
