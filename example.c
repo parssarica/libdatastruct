@@ -691,6 +691,11 @@ int main()
     printf("Is root's child leaf node: %d\n", lds_tree_is_leaf(n1));
     printf("Is root's grand child leaf node: %d\n", lds_tree_is_leaf(n5));
 
+    /* Checking is the node root node or not */
+    printf("Is root node root: %d\n", lds_tree_is_root(t));
+    printf("Is root's child node root: %d\n", lds_tree_is_root(n1));
+    printf("Is root's grand child node root: %d\n", lds_tree_is_root(n5));
+
     /* Cleaning up */
     lds_tree_free(t);
 
