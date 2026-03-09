@@ -2243,7 +2243,7 @@ lds_tree *lds_tree_root(lds_tree *t)
         return NULL;
     }
 
-    lds_tree *parent_node = t->parent;
+    lds_tree *parent_node = t;
 
     while (parent_node->parent)
     {
@@ -2251,6 +2251,25 @@ lds_tree *lds_tree_root(lds_tree *t)
     }
 
     return parent_node;
+}
+
+size_t lds_tree_depth(lds_tree *t)
+{
+    if (t == NULL)
+    {
+        return 0;
+    }
+
+    lds_tree *r = lds_tree_root(t);
+    lds_tree *parent = t;
+    size_t depth = 0;
+    while (r != parent)
+    {
+        parent = parent->parent;
+        depth++;
+    }
+
+    return depth;
 }
 
 lds_graph *lds_create_graph(void)
