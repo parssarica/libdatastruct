@@ -696,6 +696,13 @@ int main()
     printf("Is root's child node root: %d\n", lds_tree_is_root(n1));
     printf("Is root's grand child node root: %d\n", lds_tree_is_root(n5));
 
+    /* Finding LCAs of nodes */
+    lds_tree *n6 = lds_tree_child(n2, 1);
+    printf("LCA of n5 and n6: %d\n",
+           *(int *)lds_tree_get(lds_tree_lca(n5, n6)));
+    printf("LCA of n1 and n2: %d\n",
+           *(int *)lds_tree_get(lds_tree_lca(n1, n2)));
+
     /* Detaching sub-trees */
     lds_tree_detach(n1);
 

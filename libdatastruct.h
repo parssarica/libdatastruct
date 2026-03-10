@@ -250,6 +250,7 @@ size_t lds_tree_sibling_count(const lds_tree *);
 int lds_tree_is_leaf(const lds_tree *);
 int lds_tree_is_root(const lds_tree *);
 int lds_tree_detach(lds_tree *);
+lds_tree *lds_tree_lca(lds_tree *, lds_tree *);
 lds_graph *lds_create_graph(void);
 lds_graph *lds_graph_add(lds_graph *, const void *, size_t);
 lds_graph *lds_graph_add_weighted(lds_graph *, const void *, size_t, int);

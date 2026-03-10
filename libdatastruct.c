@@ -2347,6 +2347,50 @@ int lds_tree_detach(lds_tree *t)
     return 1;
 }
 
+lds_tree *lds_tree_lca(lds_tree *n1, lds_tree *n2)
+{
+    if (n1 == NULL || n2 == NULL || ((n1 != n2) && n1->parent == NULL) ||
+        ((n1 != n2) && n2->parent == NULL) ||
+        lds_tree_root(n1) != lds_tree_root(n2))
+    {
+        return NULL;
+    }
+
+    if (n1 == n2)
+    {
+        return n1;
+    }
+
+    size_t n1_depth = lds_tree_depth(n1);
+    size_t n2_depth = lds_tree_depth(n2);
+    size_t n;
+    lds_tree *node;
+
+    if (n1_depth > n2_depth)
+    {
+        n = n2_depth;
+        node = n1;
+        n2_depth = n1_depth;
+        n1_depth = n;
+        n1 = n2;
+        n2 = node;
+    }
+
+    while (n1_depth < n2_depth)
+    {
+        n1 = n1->parent;
+        n1_depth--;
+    }
+
+    while (n1 != n2)
+    {
+        n1 = n1->parent;
+        n2 = n2->parent;
+    }
+
+    return n1;
+}
+
 lds_graph *lds_create_graph(void)
 {
     lds_graph *g = malloc(sizeof(lds_graph));
