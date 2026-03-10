@@ -141,6 +141,11 @@ typedef struct
          lds__i < (v)->node_count && ((out) = (v)->items[lds__i].item, 1);     \
          lds__i++)
 
+#define lds_cast_char(lds_ptr) ((char *)lds_ptr)
+#define lds_deref_int(lds_ptr) (*(int *)lds_ptr)
+#define lds_deref_double(lds_ptr) (*(double *)lds_ptr)
+#define lds_deref_type(lds_ptr, lds_type) (*(lds_type *)lds_ptr)
+
 lds_linkedlist *lds_create_linkedlist(void);
 int lds_linkedlist_add(lds_linkedlist *, const void *, size_t);
 size_t lds_linkedlist_length(lds_linkedlist *);

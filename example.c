@@ -29,7 +29,7 @@ int main()
     void *ptr;
     lds_linkedlist_for_each(l, ptr)
     {
-        printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+        printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
     }
 
     /* Let's delete an element */
@@ -38,7 +38,7 @@ int main()
     j = 0;
     lds_linkedlist_for_each(l, ptr)
     {
-        printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+        printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
     }
 
     /* Let's update an element */
@@ -50,11 +50,11 @@ int main()
     {
         if (j == 1)
         {
-            printf("%ld. value of linked list: %s\n", ++j, (char *)ptr);
+            printf("%ld. value of linked list: %s\n", ++j, lds_cast_char(ptr));
         }
         else
         {
-            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+            printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
         }
     }
 
@@ -67,15 +67,16 @@ int main()
     {
         if (j == 2)
         {
-            printf("%ld. value of linked list: %s\n", ++j, (char *)ptr);
+            printf("%ld. value of linked list: %s\n", ++j, lds_cast_char(ptr));
         }
         else if (j == 1)
         {
-            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
+            printf("%ld. value of linked list: %f\n", ++j,
+                   lds_deref_double(ptr));
         }
         else
         {
-            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+            printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
         }
     }
 
@@ -104,11 +105,12 @@ int main()
     {
         if (j == 1)
         {
-            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
+            printf("%ld. value of linked list: %f\n", ++j,
+                   lds_deref_double(ptr));
         }
         else
         {
-            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+            printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
         }
     }
 
@@ -121,11 +123,12 @@ int main()
     {
         if (j == 3)
         {
-            printf("%ld. value of linked list: %f\n", ++j, *(double *)ptr);
+            printf("%ld. value of linked list: %f\n", ++j,
+                   lds_deref_double(ptr));
         }
         else
         {
-            printf("%ld. value of linked list: %d\n", ++j, *(int *)ptr);
+            printf("%ld. value of linked list: %d\n", ++j, lds_deref_int(ptr));
         }
     }
 
@@ -198,7 +201,8 @@ int main()
     printf("Map length: %ld\n", lds_map_length(m));
 
     /* Getting some values from keys */
-    printf("Value of key1: %d\n", *(int *)lds_map_get(m, &key1, sizeof(int)));
+    printf("Value of key1: %d\n",
+           lds_deref_int(lds_map_get(m, &key1, sizeof(int))));
 
     /* Looping through map */
     void *key;
@@ -207,8 +211,8 @@ int main()
 
     lds_map_for_each(m, key, value)
     {
-        printf("%ld. key: %d\n", ++j, *(int *)key);
-        printf("%ld. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, lds_deref_int(key));
+        printf("%ld. value: %d\n", j, lds_deref_int(value));
     }
 
     /* Let's delete a key from map! */
@@ -218,8 +222,8 @@ int main()
     j = 0;
     lds_map_for_each(m, key, value)
     {
-        printf("%ld. key: %d\n", ++j, *(int *)key);
-        printf("%ld. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, lds_deref_int(key));
+        printf("%ld. value: %d\n", j, lds_deref_int(value));
     }
 
     /* Updating first key */
@@ -237,8 +241,8 @@ int main()
 
     lds_map_for_each(m, key, value)
     {
-        printf("%ld. key: %d\n", ++j, *(int *)key);
-        printf("%ld. value: %d\n", j, *(int *)value);
+        printf("%ld. key: %d\n", ++j, lds_deref_int(key));
+        printf("%ld. value: %d\n", j, lds_deref_int(value));
     }
 
     /* Checking map is empty whether not */
@@ -296,7 +300,7 @@ int main()
 
     int popped_val5;
     lds_stack_push(s, &stack_val1, sizeof(int));
-    printf("Peeked: %d\n", *(int *)lds_stack_peek(s));
+    printf("Peeked: %d\n", lds_deref_int(lds_stack_peek(s)));
 
     lds_stack_pop(s, &popped_val5);
     printf("Popped: %d\n", popped_val5);
@@ -351,7 +355,7 @@ int main()
     printf("Value dequeued: %d\n", dequeued_val2);
     printf("Value dequeued: %d\n", dequeued_val3);
     printf("Value dequeued: %d\n", dequeued_val4);
-    printf("Value to be dequeued: %d\n", *(int *)lds_queue_front(q));
+    printf("Value to be dequeued: %d\n", lds_deref_int(lds_queue_front(q)));
     lds_queue_dequeue(q, &dequeued_val5);
 
     /* Dequeue returns an error code, so you can detect failures */
@@ -404,11 +408,13 @@ int main()
     /* Accessing values */
 
     printf("Value of tree's left node: %d\n",
-           *(int *)lds_bintree_get(lds_bintree_left(b)));
-    printf("Value of tree's left node's right node: %d\n",
-           *(int *)lds_bintree_get(lds_bintree_right(lds_bintree_left(b))));
-    printf("Value of tree's right node's left node: %d\n",
-           *(int *)lds_bintree_get(lds_bintree_left(lds_bintree_right(b))));
+           lds_deref_int(lds_bintree_get(lds_bintree_left(b))));
+    printf(
+        "Value of tree's left node's right node: %d\n",
+        lds_deref_int(lds_bintree_get(lds_bintree_right(lds_bintree_left(b)))));
+    printf(
+        "Value of tree's right node's left node: %d\n",
+        lds_deref_int(lds_bintree_get(lds_bintree_left(lds_bintree_right(b)))));
 
     /* Checking nodes have left children */
 
@@ -501,7 +507,7 @@ int main()
 
     lds_vector_for_each(v, i)
     {
-        printf("%ld. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Deleting items */
@@ -512,7 +518,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%ld. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Inserting item */
@@ -524,7 +530,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%ld. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Getting the length */
@@ -532,7 +538,7 @@ int main()
     printf("Vector length: %ld\n", lds_vector_length(v));
 
     /* Accessing by index */
-    printf("Vector's third item: %d\n", *(int *)lds_vector_get(v, 2));
+    printf("Vector's third item: %d\n", lds_deref_int(lds_vector_get(v, 2)));
 
     /* Popping a value */
     int vector_popped_val;
@@ -557,7 +563,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%ld. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Reversing a vector */
@@ -568,7 +574,7 @@ int main()
     j = 1;
     lds_vector_for_each(v, i)
     {
-        printf("%ld. value of vector: %d\n", j++, *(int *)i);
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Accessing vector capacity */
@@ -653,18 +659,19 @@ int main()
     lds_tree_set(n1, &tree_val8, sizeof(int));
 
     /* Accessing values */
-    printf("Node value: %d\n", *(int *)lds_tree_get(n1));
+    printf("Node value: %d\n", lds_deref_int(lds_tree_get(n1)));
     printf("Node value size: %ld\n", lds_tree_data_size(n1));
     printf("Node child count: %d\n", lds_tree_child_count(n1));
 
     /* Getting the nth child */
     lds_tree *n3 = lds_tree_child(t, 0);
-    printf("Value of tree's first child: %d\n", *(int *)lds_tree_get(n3));
+    printf("Value of tree's first child: %d\n",
+           lds_deref_int(lds_tree_get(n3)));
 
     /* Getting the parent */
     lds_tree *n4 = lds_tree_parent(n3);
     printf("Value of the previous node's parent: %d\n",
-           *(int *)lds_tree_get(n4));
+           lds_deref_int(lds_tree_get(n4)));
 
     /* Looping through the tree */
     lds_tree_bfs(t, print_tree_bfs);
@@ -672,7 +679,8 @@ int main()
 
     /* Accessing the root node from a child node */
     lds_tree *n5 = lds_tree_child(n2, 0);
-    printf("Value of root node: %d\n", *(int *)lds_tree_get(lds_tree_root(n5)));
+    printf("Value of root node: %d\n",
+           lds_deref_int(lds_tree_get(lds_tree_root(n5))));
 
     /* Getting the depth of tree nodes */
     printf("Depth of root node: %ld\n", lds_tree_depth(t));
@@ -681,7 +689,7 @@ int main()
 
     /* Getting the nth sibling */
     printf("Second sibling of root's child: %d\n",
-           *(int *)lds_tree_get(lds_tree_sibling(n1, 1)));
+           lds_deref_int(lds_tree_get(lds_tree_sibling(n1, 1))));
 
     /* Getting the sibling count */
     printf("Sibling count of root's child: %ld\n", lds_tree_sibling_count(n1));
@@ -699,9 +707,9 @@ int main()
     /* Finding LCAs of nodes */
     lds_tree *n6 = lds_tree_child(n2, 1);
     printf("LCA of n5 and n6: %d\n",
-           *(int *)lds_tree_get(lds_tree_lca(n5, n6)));
+           lds_deref_int(lds_tree_get(lds_tree_lca(n5, n6))));
     printf("LCA of n1 and n2: %d\n",
-           *(int *)lds_tree_get(lds_tree_lca(n1, n2)));
+           lds_deref_int(lds_tree_get(lds_tree_lca(n1, n2))));
 
     /* Detaching sub-trees */
     lds_tree_detach(n1);
@@ -751,7 +759,7 @@ int main()
 
     /* Accessing values */
     printf("Value of root's first node's second child: %d\n",
-           *(int *)lds_graph_get(g_n3));
+           lds_deref_int(lds_graph_get(g_n3)));
 
     /* Accessing edge weights */
     printf("Weight of edge between graph's root's first child and its second "
