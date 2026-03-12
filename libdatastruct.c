@@ -1944,6 +1944,62 @@ int lds_trie_search(const lds_trie *t, const char *word)
     return strlen(word) == --j;
 }
 
+int lds_trie_remove(lds_trie *t, const char *word)
+{
+    if (t == NULL || t->children == NULL)
+    {
+        return 0;
+    }
+
+    ssize_t word_index = 0;
+    size_t i;
+    int found = 0;
+    int return_code = 1;
+
+    while (1)
+    {
+        found = 0;
+        for (i = 0; i < t->child_count; i++)
+        {
+            if (t->children[i]->character == word[word_index])
+            {
+                found = 1;
+                break;
+            }
+        }
+
+        if (found && t->child_count == 1)
+        {
+            break;
+        }
+
+        if (!found)
+        {
+            return 0;
+        }
+
+        word_index++;
+        t = t->children[i];
+        if (t == NULL)
+        {
+            return 1;
+        }
+    }
+
+    t->child_count = 0;
+    if (t->children[0]->child_count != 0)
+    {
+        return_code = lds_trie_free(t->children[0]);
+    }
+    else
+    {
+        lds_safefree(t->children[0]);
+    }
+    lds_safefree(t->children);
+
+    return return_code;
+}
+
 int lds_trie_free(lds_trie *t)
 {
     lds_trie **t_null_checker;

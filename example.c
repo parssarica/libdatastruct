@@ -621,6 +621,11 @@ int main()
     printf("Is 'dog' in trie: %s\n",
            lds_trie_search(trie_obj, "dog") ? "Yes" : "No");
 
+    /* Removing words from trie */
+    lds_trie_remove(trie_obj, "ace");
+    printf("Is 'ace' in trie: %s\n",
+           lds_trie_search(trie_obj, "ace") ? "Yes" : "No");
+
     /* Cleaning up */
     lds_trie_free(trie_obj);
 
