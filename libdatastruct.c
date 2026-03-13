@@ -1842,7 +1842,7 @@ int lds_vector_is_empty(const lds_vector *v)
     return v->node_count == 0;
 }
 
-lds_trie *lds_trie_create(void)
+lds_trie *lds_create_trie(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));
 
@@ -1909,7 +1909,7 @@ int lds_trie_insert(lds_trie *t, const char *word)
             return 0;
         }
 
-        t->children[t->child_count - 1] = lds_trie_create();
+        t->children[t->child_count - 1] = lds_create_trie();
         if (t->children[t->child_count - 1] == NULL)
         {
             return 0;

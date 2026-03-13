@@ -586,7 +586,7 @@ int main()
 
     /* Initializing a trie */
 
-    lds_trie *trie_obj = lds_trie_create();
+    lds_trie *trie_obj = lds_create_trie();
 
     /* Checking is trie empty whether not */
     printf("Is trie empty: %d\n", lds_trie_is_empty(trie_obj));
