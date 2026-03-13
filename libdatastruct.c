@@ -1854,6 +1854,7 @@ lds_trie *lds_trie_create(void)
     t->character = 0;
     t->child_count = 0;
     t->children = NULL;
+    t->parent = NULL;
 
     return t;
 }
@@ -1915,6 +1916,7 @@ int lds_trie_insert(lds_trie *t, const char *word)
         }
 
         t->children[t->child_count - 1]->character = word[j++];
+        t->children[t->child_count - 1]->parent = t;
         if (word[j] == '\0')
             break;
         t = t->children[t->child_count - 1];
@@ -1951,10 +1953,10 @@ int lds_trie_remove(lds_trie *t, const char *word)
         return 0;
     }
 
+    lds_trie *parent_node;
     ssize_t word_index = 0;
     size_t i;
     int found = 0;
-    int return_code = 1;
 
     while (1)
     {
@@ -1968,7 +1970,7 @@ int lds_trie_remove(lds_trie *t, const char *word)
             }
         }
 
-        if (found && t->child_count == 1)
+        if (found && t->children[i]->child_count == 0)
         {
             break;
         }
@@ -1986,18 +1988,33 @@ int lds_trie_remove(lds_trie *t, const char *word)
         }
     }
 
-    t->child_count = 0;
-    if (t->children[0]->child_count != 0)
+    t = t->children[i];
+    while (t->child_count <= 1)
     {
-        return_code = lds_trie_free(t->children[0]);
-    }
-    else
-    {
-        lds_safefree(t->children[0]);
-    }
-    lds_safefree(t->children);
+        parent_node = t->parent;
+        if (t->children)
+        {
+            lds_safefree(t->children);
+        }
+        if (t->parent != NULL && t->parent->child_count != 1)
+        {
+            for (i = 0; i < t->parent->child_count; i++)
+            {
+                if (t->parent->children[i]->character == t->character)
+                {
+                    break;
+                }
+            }
+            memmove(&t->parent->children[i], &t->parent->children[i + 1],
+                    sizeof(lds_trie *) * (t->parent->child_count - i - 1));
+        }
+        lds_safefree(t);
 
-    return return_code;
+        t = parent_node;
+    }
+    t->child_count--;
+
+    return 1;
 }
 
 int lds_trie_free(lds_trie *t)

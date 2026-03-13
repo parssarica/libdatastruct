@@ -85,6 +85,7 @@ typedef struct _trie
     char character;
     size_t child_count;
     struct _trie **children;
+    struct _trie *parent;
 } lds_trie;
 
 typedef struct _tree
