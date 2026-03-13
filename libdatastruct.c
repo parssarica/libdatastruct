@@ -2017,6 +2017,25 @@ int lds_trie_remove(lds_trie *t, const char *word)
     return 1;
 }
 
+int lds_trie_update(lds_trie *t, const char *oldword, const char *newword)
+{
+    if (t == NULL || oldword == NULL || newword == NULL ||
+        lds_trie_search(t, oldword) == 0)
+    {
+        return 0;
+    }
+
+    int returncode = 1;
+
+    lds_trie_remove(t, oldword);
+    if (!lds_trie_search(t, newword))
+    {
+        returncode = lds_trie_insert(t, newword);
+    }
+
+    return returncode;
+}
+
 int lds_trie_free(lds_trie *t)
 {
     lds_trie **t_null_checker;

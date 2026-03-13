@@ -626,6 +626,13 @@ int main()
     printf("Is 'ace' in trie: %s\n",
            lds_trie_search(trie_obj, "ace") ? "Yes" : "No");
 
+    /* Updating words in trie */
+    printf("Is 'hello' in trie: %s\n",
+           lds_trie_search(trie_obj, "hello") ? "Yes" : "No");
+    lds_trie_update(trie_obj, "pen", "hello");
+    printf("Is 'hello' in trie: %s\n",
+           lds_trie_search(trie_obj, "hello") ? "Yes" : "No");
+
     /* Cleaning up */
     lds_trie_free(trie_obj);
 
