@@ -60,7 +60,7 @@ int main()
 
     /* Inserting an element */
     double pi = 3.14;
-    lds_linkedlist_insert(l, &pi, sizeof(double), 1);
+    lds_linkedlist_insert(l, 1, &pi, sizeof(double));
     printf("After inserting:\n");
     j = 0;
     lds_linkedlist_for_each(l, ptr)
@@ -505,6 +505,16 @@ int main()
     void *i;
     j = 1;
 
+    lds_vector_for_each(v, i)
+    {
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
+    }
+
+    /* Updating items in a vector */
+    int vector_var8 = 8;
+    lds_vector_update(v, 3, &vector_var8, sizeof(int));
+    printf("Vector after updating:\n");
+    j = 1;
     lds_vector_for_each(v, i)
     {
         printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));

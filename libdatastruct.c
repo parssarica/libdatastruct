@@ -215,8 +215,8 @@ int lds_linkedlist_free(lds_linkedlist *ll)
     return 1;
 }
 
-int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
-                          size_t datatype_size, size_t index)
+int lds_linkedlist_insert(lds_linkedlist *ll, size_t index, const void *data,
+                          size_t datatype_size)
 {
     lds_linkedlist_node *newnode;
     lds_linkedlist_node *ll_node;
@@ -1868,6 +1868,29 @@ int lds_vector_is_empty(const lds_vector *v)
     }
 
     return v->node_count == 0;
+}
+
+int lds_vector_update(lds_vector *v, size_t index, const void *newvar,
+                      size_t newvar_size)
+{
+    if (v == NULL || v->items == NULL || newvar == NULL ||
+        newvar_size >= v->node_count)
+    {
+        return 0;
+    }
+
+    lds_safefree(v->items[index].item);
+    v->items[index].item = malloc(newvar_size);
+    if (v->items[index].item == NULL)
+    {
+        return 0;
+    }
+
+    v->items[index].size = newvar_size;
+
+    memcpy(v->items[index].item, newvar, newvar_size);
+
+    return 1;
 }
 
 lds_trie *lds_create_trie(void)
