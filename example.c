@@ -157,14 +157,14 @@ int main()
 
     /* Accessing the head node, if only have a node in middle of the linked list
      */
-    lds_linkedlist *middle_node = lds_linkedlist_get_node(
+    lds_linkedlist_node *middle_node = lds_linkedlist_get_node(
         l, 3); /* Simulating the case we only have a middle node */
     printf("Size of head of linked list: %ld\n",
-           lds_linkedlist_data_size(lds_linkedlist_head(middle_node)));
+           lds_linkedlist_data_size(lds_linkedlist_node_head(middle_node)));
 
     /* Accessing the tail node, if you don't have */
     printf("Size of tail of the linked list: %ld\n",
-           lds_linkedlist_data_size(lds_linkedlist_tail(middle_node)));
+           lds_linkedlist_data_size(lds_linkedlist_node_tail(middle_node)));
 
     /* Getting the data of an lds_linkedlist* object */
     printf("The data of the fourth node: %f\n",
@@ -172,7 +172,7 @@ int main()
 
     /* Cleaning up */
     lds_linkedlist_free(l);
-    lds_linkedlist_free(l2);
+    /* You don't have to free l2 because l1 is extended with l2 */
 
     /* Let's create a map! */
     lds_map *m = lds_create_map();

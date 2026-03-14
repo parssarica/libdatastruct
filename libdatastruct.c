@@ -17,10 +17,9 @@ lds_linkedlist *lds_create_linkedlist(void)
         return NULL;
     }
 
-    llist->data = NULL;
-    llist->prev = NULL;
-    llist->next = NULL;
-    llist->datasize = 0;
+    llist->head = NULL;
+    llist->tail = NULL;
+    llist->length = 0;
 
     return llist;
 }
@@ -28,87 +27,71 @@ lds_linkedlist *lds_create_linkedlist(void)
 int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
                        size_t datatype_size)
 {
-    lds_linkedlist *obj;
-
     if (ll == NULL)
     {
         return 0;
     }
 
-    if (ll->data == NULL)
+    if (ll->head == NULL)
     {
-        ll->data = malloc(datatype_size);
-        if (ll->data == NULL)
+        ll->head = malloc(sizeof(lds_linkedlist_node));
+        if (ll->head == NULL)
         {
             return 0;
         }
 
-        ll->datasize = datatype_size;
-        ll->prev = NULL;
-        ll->next = NULL;
-
-        memcpy(ll->data, data, datatype_size);
-
-        return 1;
-    }
-
-    obj = ll;
-    while (obj)
-    {
-        if (obj->next == NULL)
+        ll->head->data = malloc(datatype_size);
+        if (ll->head->data == NULL)
         {
-            ll = obj;
+            lds_safefree(ll->head);
+            return 0;
         }
 
-        obj = obj->next;
-    }
+        memcpy(ll->head->data, data, datatype_size);
 
-    obj = malloc(sizeof(lds_linkedlist));
-    if (obj == NULL)
+        ll->head->datasize = datatype_size;
+        ll->head->prev = NULL;
+        ll->head->next = NULL;
+
+        ll->tail = ll->head;
+    }
+    else
     {
-        return 0;
-    }
-    obj->datasize = datatype_size;
-    obj->data = malloc(datatype_size);
-    if (obj->data == NULL)
-    {
-        free(obj);
-        return 0;
-    }
-    obj->prev = ll;
-    obj->next = NULL;
+        ll->tail->next = malloc(sizeof(lds_linkedlist_node));
+        if (ll->tail == NULL)
+        {
+            return 0;
+        }
 
-    memcpy(obj->data, data, datatype_size);
+        ll->tail->next->data = malloc(datatype_size);
+        if (ll->tail->next->data == NULL)
+        {
+            lds_safefree(ll->tail);
+            return 0;
+        }
 
-    ll->next = obj;
+        memcpy(ll->tail->next->data, data, datatype_size);
+
+        ll->tail->next->datasize = datatype_size;
+        ll->tail->next->prev = ll->tail;
+        ll->tail->next->next = NULL;
+
+        ll->tail = ll->tail->next;
+    }
+
+    ll->length++;
 
     return 1;
 }
 
-size_t lds_linkedlist_length(lds_linkedlist *ll)
+size_t lds_linkedlist_length(const lds_linkedlist *ll)
 {
-    size_t length = 1;
-    lds_linkedlist *x = ll;
-
     if (ll == NULL)
     {
         return 0;
     }
 
-    while (1)
-    {
-        if (x->next == NULL)
-        {
-            break;
-        }
-        else
-        {
-            x = x->next;
-        }
-        length++;
-    }
-
-    return length;
+    return ll->length;
 }
 
 const void *lds_linkedlist_get(lds_linkedlist *ll, size_t index)
@@ -118,7 +101,7 @@ const void *lds_linkedlist_get(lds_linkedlist *ll, size_t index)
 
 int lds_linkedlist_delete(lds_linkedlist *ll, size_t index)
 {
-    lds_linkedlist *x;
+    lds_linkedlist_node *x;
 
     if (ll == NULL)
     {
@@ -131,22 +114,33 @@ int lds_linkedlist_delete(lds_linkedlist *ll, size_t index)
         return 0;
     }
 
+    if (x == ll->tail)
+    {
+        ll->tail = x->prev;
+    }
+    else if (x == ll->head)
+    {
+        ll->head = x->next;
+    }
+
     lds_safefree(x->data);
     if (x->next != NULL && x->prev != NULL)
     {
         x->prev->next = x->next;
         x->next->prev = x->prev;
     }
-    else if (x->next == NULL)
+    else if (x->next == NULL && x->prev != NULL)
     {
         x->prev->next = NULL;
     }
-    else if (x->prev == NULL)
+    else if (x->prev == NULL && x->next != NULL)
     {
         x->next->prev = NULL;
     }
 
     lds_safefree(x);
+
+    ll->length--;
 
     return 1;
 }
@@ -154,7 +148,7 @@ int lds_linkedlist_delete(lds_linkedlist *ll, size_t index)
 int lds_linkedlist_update(lds_linkedlist *ll, int index, const void *newvar,
                           size_t datatype_size)
 {
-    lds_linkedlist *x;
+    lds_linkedlist_node *x;
 
     if (ll == NULL)
     {
@@ -182,36 +176,24 @@ int lds_linkedlist_update(lds_linkedlist *ll, int index, const void *newvar,
 
 int lds_linkedlist_free(lds_linkedlist *ll)
 {
-    lds_linkedlist *tmp;
-    int to_break = 0;
-
     if (ll == NULL)
     {
         return 0;
     }
 
-    while (1)
-    {
-        tmp = ll;
-        if (tmp->data != NULL)
-        {
-            lds_safefree(tmp->data);
-        }
-        if (ll->next == NULL)
-        {
-            to_break = 1;
-        }
-        else
-        {
-            ll = ll->next;
-        }
+    lds_linkedlist_node *x = ll->head;
 
-        lds_safefree(tmp);
-        if (to_break)
-        {
-            break;
-        }
+    while (x->next != NULL)
+    {
+        x = x->next;
+        lds_safefree(x->prev->data);
+        lds_safefree(x->prev);
     }
+
+    lds_safefree(x->data);
+    lds_safefree(x);
+
+    lds_safefree(ll);
 
     return 1;
 }
@@ -219,83 +201,98 @@ int lds_linkedlist_free(lds_linkedlist *ll)
 int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
                           size_t datatype_size, size_t index)
 {
-    lds_linkedlist *previous;
+    lds_linkedlist_node *newnode;
+    lds_linkedlist_node *ll_node;
+    lds_linkedlist_node *ll_node2;
 
     if (ll == NULL)
     {
         return 0;
     }
 
-    ll = lds_linkedlist_get_node(ll, index);
-    if (ll == NULL)
-    {
-        return 0;
-    }
-    previous = ll->prev;
-    previous->next = malloc(sizeof(lds_linkedlist));
-    if (previous->next == NULL)
+    ll_node = lds_linkedlist_get_node(ll, index);
+    if (ll_node == NULL)
     {
         return 0;
     }
 
-    previous->next->data = malloc(datatype_size);
-    if (previous->next->data == NULL)
+    newnode = malloc(sizeof(lds_linkedlist_node));
+    if (newnode == NULL)
     {
-        lds_safefree(previous->next);
         return 0;
     }
 
-    previous->next->datasize = datatype_size;
-    previous->next->prev = previous;
-    previous->next->next = ll;
-    ll->prev = previous->next;
-    memcpy(previous->next->data, data, datatype_size);
+    newnode->data = malloc(datatype_size);
+    if (newnode->data == NULL)
+    {
+        lds_safefree(newnode);
+        return 0;
+    }
+
+    newnode->datasize = datatype_size;
+
+    memcpy(newnode->data, data, datatype_size);
+
+    if (index == 0)
+    {
+        newnode->prev = NULL;
+        newnode->next = ll->head;
+        ll->head->prev = newnode;
+        ll->head = newnode->next;
+    }
+    else if (index == ll->length)
+    {
+        newnode->prev = ll->tail;
+        newnode->next = NULL;
+        ll->tail->next = newnode;
+        ll->tail = newnode;
+    }
+    else
+    {
+        ll_node2 = ll_node->prev;
+        ll_node->prev = newnode;
+        newnode->prev = ll_node2;
+        ll_node2->next = newnode;
+        newnode->next = ll_node;
+    }
+
+    ll->length++;
 
     return 1;
 }
 
 int lds_linkedlist_pop(lds_linkedlist *ll, void *out)
 {
-    int length = 0;
-    int ll_length = 0;
-    lds_linkedlist *x = ll;
-
     if (ll == NULL)
     {
         return 0;
     }
 
-    ll_length = lds_linkedlist_length(ll) - 1;
-    while (1)
-    {
-        if (x->next == NULL || length == ll_length)
-        {
-            break;
-        }
-        else
-        {
-            x = x->next;
-        }
-        length++;
-    }
+    lds_linkedlist_node *newtail = ll->tail->prev;
 
-    memcpy(out, x->data, x->datasize);
-    lds_linkedlist_delete(ll, lds_linkedlist_length(ll) - 1);
+    if (out != NULL)
+    {
+        memcpy(out, ll->tail->data, ll->tail->datasize);
+    }
+    lds_safefree(ll->tail->data);
+    lds_safefree(ll->tail);
+
+    ll->tail = newtail;
+
+    ll->length--;
 
     return 1;
 }
 
-lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *ll, size_t index)
+lds_linkedlist_node *lds_linkedlist_get_node(lds_linkedlist *ll, size_t index)
 {
     size_t length = 0;
-    lds_linkedlist *x = ll;
+    lds_linkedlist_node *x = ll->head;
 
     if (ll == NULL)
     {
         return NULL;
     }
-
-    // index++;
 
     while (1)
     {
@@ -320,53 +317,46 @@ int lds_linkedlist_extend(lds_linkedlist *ll1, lds_linkedlist *ll2)
         return 0;
     }
 
-    size_t i = 0;
-    lds_linkedlist *x;
-    size_t length = lds_linkedlist_length(ll2);
-
-    while (i < length)
+    while (ll2->head != NULL)
     {
-        x = lds_linkedlist_get_node(ll2, i++);
-        if (x == NULL)
-        {
-            return 0;
-        }
-
-        if (lds_linkedlist_add(ll1, x->data, x->datasize) == 0)
-        {
-            return 0;
-        }
+        ll1->tail->next = ll2->head;
+        ll2->head->prev = ll1->tail;
+        ll1->tail = ll2->head;
+        ll2->head = ll2->head->next;
     }
+
+    ll1->length += ll2->length;
+
+    lds_safefree(ll2);
 
     return 1;
 }
 
 ssize_t lds_linkedlist_index(lds_linkedlist *ll, void *data, size_t datasize)
 {
-    lds_linkedlist *x;
-    ssize_t i = 0;
-
     if (ll == NULL || data == NULL || datasize == 0)
     {
         return -1;
     }
 
-    x = ll;
-    while (x)
+    ssize_t i = 0;
+    lds_linkedlist_node *n = ll->head;
+
+    while (1)
     {
-        if (x->datasize == datasize && memcmp(x->data, data, datasize) == 0)
+        if (n->datasize == datasize && memcmp(n->data, data, datasize) == 0)
         {
             return i;
         }
 
-        x = x->next;
+        n = n->next;
         i++;
     }
 
     return -1;
 }
 
-ssize_t lds_linkedlist_data_size(const lds_linkedlist *ll)
+ssize_t lds_linkedlist_data_size(const lds_linkedlist_node *ll)
 {
     if (ll == NULL)
     {
@@ -376,25 +366,24 @@ ssize_t lds_linkedlist_data_size(const lds_linkedlist *ll)
     return ll->datasize;
 }
 
-lds_linkedlist *lds_linkedlist_find(lds_linkedlist *ll, void *data,
-                                    size_t datasize)
+lds_linkedlist_node *lds_linkedlist_find(lds_linkedlist *ll, void *data,
+                                         size_t datasize)
 {
-    lds_linkedlist *x;
-
     if (ll == NULL || data == NULL || datasize == 0)
     {
         return NULL;
     }
 
-    x = ll;
-    while (x)
+    lds_linkedlist_node *n = ll->head;
+
+    while (1)
     {
-        if (x->datasize == datasize && memcmp(x->data, data, datasize) == 0)
+        if (n->datasize == datasize && memcmp(n->data, data, datasize) == 0)
         {
-            return x;
+            return n;
         }
 
-        x = x->next;
+        n = n->next;
     }
 
     return NULL;
@@ -407,37 +396,33 @@ int lds_linkedlist_reverse(lds_linkedlist *ll)
         return 0;
     }
 
+    lds_linkedlist_node *n1 = ll->head;
+    lds_linkedlist_node *n2 = ll->tail;
     size_t i = 0;
-    size_t j = lds_linkedlist_length(ll) - 1;
-    lds_linkedlist *l1;
-    lds_linkedlist *l2;
-    lds_linkedlist l3;
+    size_t j = ll->length - 1;
+    void *ptr;
+    size_t datatype_size;
 
     while (i < j)
     {
-        l1 = lds_linkedlist_get_node(ll, i);
-        l2 = lds_linkedlist_get_node(ll, j);
-        if (l1 == NULL || l2 == NULL)
-        {
-            return 0;
-        }
+        ptr = n1->data;
+        n1->data = n2->data;
+        n2->data = ptr;
 
-        l3.data = l2->data;
-        l2->data = l1->data;
-        l1->data = l3.data;
-
-        l3.datasize = l2->datasize;
-        l2->datasize = l1->datasize;
-        l1->datasize = l3.datasize;
+        datatype_size = n1->datasize;
+        n1->datasize = n2->datasize;
+        n2->datasize = datatype_size;
 
         i++;
         j--;
+        n1 = n1->next;
+        n2 = n2->prev;
     }
 
     return 1;
 }
 
-lds_linkedlist *lds_linkedlist_next(lds_linkedlist *ll)
+lds_linkedlist_node *lds_linkedlist_next(const lds_linkedlist_node *ll)
 {
     if (ll == NULL)
     {
@@ -447,7 +432,7 @@ lds_linkedlist *lds_linkedlist_next(lds_linkedlist *ll)
     return ll->next;
 }
 
-lds_linkedlist *lds_linkedlist_prev(lds_linkedlist *ll)
+lds_linkedlist_node *lds_linkedlist_prev(const lds_linkedlist_node *ll)
 {
     if (ll == NULL)
     {
@@ -457,41 +442,27 @@ lds_linkedlist *lds_linkedlist_prev(lds_linkedlist *ll)
     return ll->prev;
 }
 
-lds_linkedlist *lds_linkedlist_head(lds_linkedlist *ll)
+lds_linkedlist_node *lds_linkedlist_head(const lds_linkedlist *ll)
 {
     if (ll == NULL)
     {
         return NULL;
     }
 
-    lds_linkedlist *x = ll;
-
-    while (x->prev)
-    {
-        x = x->prev;
-    }
-
-    return x;
+    return ll->head;
 }
 
-lds_linkedlist *lds_linkedlist_tail(lds_linkedlist *ll)
+lds_linkedlist_node *lds_linkedlist_tail(const lds_linkedlist *ll)
 {
     if (ll == NULL)
     {
         return NULL;
     }
 
-    lds_linkedlist *x = ll;
-
-    while (x->next)
-    {
-        x = x->next;
-    }
-
-    return x;
+    return ll->tail;
 }
 
-const void *lds_linkedlist_data(const lds_linkedlist *ll)
+const void *lds_linkedlist_data(const lds_linkedlist_node *ll)
 {
     if (ll == NULL)
     {
@@ -508,12 +479,37 @@ int lds_linkedlist_is_empty(const lds_linkedlist *ll)
         return 0;
     }
 
-    if (ll->data == NULL)
+    return ll->length == 0;
+}
+
+lds_linkedlist_node *lds_linkedlist_node_head(lds_linkedlist_node *ll)
+{
+    if (ll == NULL)
     {
-        return 1;
+        return NULL;
     }
 
-    return 0;
+    while (ll->prev != NULL)
+    {
+        ll = ll->prev;
+    }
+
+    return ll;
+}
+
+lds_linkedlist_node *lds_linkedlist_node_tail(lds_linkedlist_node *ll)
+{
+    if (ll == NULL)
+    {
+        return NULL;
+    }
+
+    while (ll->next != NULL)
+    {
+        ll = ll->next;
+    }
+
+    return ll;
 }
 
 lds_map *lds_create_map(void)

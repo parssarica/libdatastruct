@@ -9,12 +9,19 @@ Pars SARICA <pars@parssarica.com>
     free(x);                                                                   \
     x = NULL
 
-typedef struct _linkedlist
+typedef struct _linkedlist_node
 {
     void *data;
     size_t datasize;
-    struct _linkedlist *prev;
-    struct _linkedlist *next;
+    struct _linkedlist_node *prev;
+    struct _linkedlist_node *next;
+} lds_linkedlist_node;
+
+typedef struct _linkedlist
+{
+    lds_linkedlist_node *head;
+    lds_linkedlist_node *tail;
+    size_t length;
 } lds_linkedlist;
 
 typedef struct
@@ -124,7 +131,7 @@ typedef struct
 } lds_string;
 
 #define lds_linkedlist_for_each(lds_linkedlist_l, lds_node)                    \
-    for (lds_linkedlist *lds_n = lds_linkedlist_head(lds_linkedlist_l);        \
+    for (lds_linkedlist_node *lds_n = lds_linkedlist_head(lds_linkedlist_l);   \
          lds_n && ((lds_node = lds_n->data) || 1); lds_n = lds_n->next)
 
 #define lds_map_for_each(m, key, value)                                        \
@@ -149,25 +156,27 @@ typedef struct
 
 lds_linkedlist *lds_create_linkedlist(void);
 int lds_linkedlist_add(lds_linkedlist *, const void *, size_t);
-size_t lds_linkedlist_length(lds_linkedlist *);
+size_t lds_linkedlist_length(const lds_linkedlist *);
 const void *lds_linkedlist_get(lds_linkedlist *, size_t);
 int lds_linkedlist_delete(lds_linkedlist *, size_t);
 int lds_linkedlist_update(lds_linkedlist *, int, const void *, size_t);
 int lds_linkedlist_insert(lds_linkedlist *, const void *, size_t, size_t);
 int lds_linkedlist_free(lds_linkedlist *);
 int lds_linkedlist_pop(lds_linkedlist *, void *);
-lds_linkedlist *lds_linkedlist_get_node(lds_linkedlist *, size_t);
+lds_linkedlist_node *lds_linkedlist_get_node(lds_linkedlist *, size_t);
 int lds_linkedlist_extend(lds_linkedlist *, lds_linkedlist *);
 ssize_t lds_linkedlist_index(lds_linkedlist *, void *, size_t);
-ssize_t lds_linkedlist_data_size(const lds_linkedlist *);
-lds_linkedlist *lds_linkedlist_find(lds_linkedlist *, void *, size_t);
+ssize_t lds_linkedlist_data_size(const lds_linkedlist_node *);
+lds_linkedlist_node *lds_linkedlist_find(lds_linkedlist *, void *, size_t);
 int lds_linkedlist_reverse(lds_linkedlist *);
-lds_linkedlist *lds_linkedlist_next(lds_linkedlist *);
-lds_linkedlist *lds_linkedlist_prev(lds_linkedlist *);
-lds_linkedlist *lds_linkedlist_head(lds_linkedlist *);
-lds_linkedlist *lds_linkedlist_tail(lds_linkedlist *);
-const void *lds_linkedlist_data(const lds_linkedlist *);
+lds_linkedlist_node *lds_linkedlist_next(const lds_linkedlist_node *);
+lds_linkedlist_node *lds_linkedlist_prev(const lds_linkedlist_node *);
+lds_linkedlist_node *lds_linkedlist_head(const lds_linkedlist *);
+lds_linkedlist_node *lds_linkedlist_tail(const lds_linkedlist *);
+const void *lds_linkedlist_data(const lds_linkedlist_node *);
 int lds_linkedlist_is_empty(const lds_linkedlist *);
+lds_linkedlist_node *lds_linkedlist_node_head(lds_linkedlist_node *);
+lds_linkedlist_node *lds_linkedlist_node_tail(lds_linkedlist_node *);
 lds_map *lds_create_map(void);
 int lds_map_add(lds_map *, const void *, size_t, const void *, size_t);
 size_t lds_map_length(const lds_map *);
