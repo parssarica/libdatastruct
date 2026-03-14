@@ -183,14 +183,20 @@ int lds_linkedlist_free(lds_linkedlist *ll)
 
     lds_linkedlist_node *x = ll->head;
 
-    while (x->next != NULL)
+    if (x != NULL)
     {
-        x = x->next;
-        lds_safefree(x->prev->data);
-        lds_safefree(x->prev);
+        while (x->next != NULL)
+        {
+            x = x->next;
+            lds_safefree(x->prev->data);
+            lds_safefree(x->prev);
+        }
     }
 
-    lds_safefree(x->data);
+    if (x != NULL)
+    {
+        lds_safefree(x->data);
+    }
     lds_safefree(x);
 
     lds_safefree(ll);
@@ -280,6 +286,11 @@ int lds_linkedlist_pop(lds_linkedlist *ll, void *out)
     ll->tail = newtail;
 
     ll->length--;
+
+    if (ll->length == 0)
+    {
+        ll->head = NULL;
+    }
 
     return 1;
 }
