@@ -57,8 +57,13 @@ int lds_linkedlist_add(lds_linkedlist *ll, const void *data,
     }
     else
     {
-        ll->tail->next = malloc(sizeof(lds_linkedlist_node));
         if (ll->tail == NULL)
+        {
+            return 0;
+        }
+
+        ll->tail->next = malloc(sizeof(lds_linkedlist_node));
+        if (ll->tail->next == NULL)
         {
             return 0;
         }
@@ -96,7 +101,13 @@ size_t lds_linkedlist_length(const lds_linkedlist *ll)
 
 const void *lds_linkedlist_get(lds_linkedlist *ll, size_t index)
 {
-    return lds_linkedlist_get_node(ll, index)->data;
+    lds_linkedlist_node *n = lds_linkedlist_get_node(ll, index);
+    if (n == NULL)
+    {
+        return NULL;
+    }
+
+    return n->data;
 }
 
 int lds_linkedlist_delete(lds_linkedlist *ll, size_t index)
@@ -244,7 +255,7 @@ int lds_linkedlist_insert(lds_linkedlist *ll, const void *data,
         newnode->prev = NULL;
         newnode->next = ll->head;
         ll->head->prev = newnode;
-        ll->head = newnode->next;
+        ll->head = newnode;
     }
     else if (index == ll->length)
     {
@@ -355,6 +366,11 @@ ssize_t lds_linkedlist_index(lds_linkedlist *ll, void *data, size_t datasize)
 
     while (1)
     {
+        if (n == NULL)
+        {
+            break;
+        }
+
         if (n->datasize == datasize && memcmp(n->data, data, datasize) == 0)
         {
             return i;
@@ -389,6 +405,11 @@ lds_linkedlist_node *lds_linkedlist_find(lds_linkedlist *ll, void *data,
 
     while (1)
     {
+        if (n == NULL)
+        {
+            break;
+        }
+
         if (n->datasize == datasize && memcmp(n->data, data, datasize) == 0)
         {
             return n;
