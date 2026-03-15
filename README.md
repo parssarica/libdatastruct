@@ -86,8 +86,8 @@ int var2 = 2;
 int var3 = 3;
 
 lds_linkedlist_add(l, &var1, sizeof(int));
-lds_linkedlist_add(l, &var1, sizeof(int));
-lds_linkedlist_add(l, &var1, sizeof(int));
+lds_linkedlist_add(l, &var2, sizeof(int));
+lds_linkedlist_add(l, &var3, sizeof(int));
 ```
 
 You pass a pointer and a size because libdatastruct stores the data itself, not the pointer.
