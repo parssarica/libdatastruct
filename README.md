@@ -1,6 +1,6 @@
 # libdatastruct
 
-A lightweight C library providing easy implementations for linked lists, maps, stacks, queues, binary trees, vectors, tries, trees, graphs and strings.
+An easy to use C library providing linked lists, maps, stacks, queues, binary trees, vectors, tries, trees, graphs and strings.
 
 ---
 
