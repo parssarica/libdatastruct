@@ -928,6 +928,13 @@ int main()
         printf("%ld. part: %s\n", ++j, lds_string_cstr(*spart));
     }
 
+    /* Formatting strings */
+    printf("String before formatting: <%s>\n", lds_string_cstr(str));
+    lds_string_printf(
+        str, "This is a %s and it will stay as a %s with %ld characters.",
+        "string", "char *", 6);
+    printf("String after formatting: <%s>\n", lds_string_cstr(str));
+
     /* Reversing strings */
     printf("String before reversing: <%s>\n", lds_string_cstr(str));
     lds_string_reverse(str);

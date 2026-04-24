@@ -4,7 +4,9 @@ Pars SARICA <pars@parssarica.com>
 
 #include "libdatastruct.h"
 #include <assert.h>
+#include <stdarg.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -3622,6 +3624,40 @@ int lds_string_split_free(lds_vector *v)
 
     lds_safefree(v);
     return 1;
+}
+
+int lds_string_vprintf(lds_string *s, const char *fmt, va_list args)
+{
+    if (s == NULL || fmt == NULL)
+    {
+        return 0;
+    }
+    va_list args_copy;
+
+    va_copy(args_copy, args);
+
+    ssize_t length = vsnprintf(NULL, 0, fmt, args_copy) + 1;
+    if (length < 0)
+    {
+        return 0;
+    }
+
+    lds_string_reserve(s, length);
+    vsnprintf(s->data, length, fmt, args);
+    s->len = length - 1;
+
+    return 1;
+}
+
+int lds_string_printf(lds_string *s, const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    int return_val = lds_string_vprintf(s, fmt, args);
+
+    va_end(args);
+
+    return return_val;
 }
 
 size_t lds_string_capacity(lds_string *s)

@@ -2,6 +2,7 @@
 Pars SARICA <pars@parssarica.com>
 */
 
+#include <stdarg.h>
 #include <stddef.h>
 #include <sys/types.h>
 
@@ -315,5 +316,7 @@ int lds_string_replace(lds_string *, size_t, const char *);
 lds_vector *lds_string_split_len(lds_string *, const char *, size_t);
 lds_vector *lds_string_split(lds_string *, const char *);
 int lds_string_split_free(lds_vector *);
+int lds_string_vprintf(lds_string *, const char *, va_list);
+int lds_string_printf(lds_string *, const char *, ...);
 size_t lds_string_capacity(lds_string *);
 int lds_string_is_empty(const lds_string *);

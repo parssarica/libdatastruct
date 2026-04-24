@@ -884,9 +884,16 @@ printf("%s\n", lds_string_cstr(s1));
 
 ### Getting the length
 
-To get the length, you should use `lds_string_len` functon.
+To get the length, you should use `lds_string_len` function.
 ```c
 size_t length = lds_string_len(s1);
+```
+
+### Formatting strings
+
+To format strings, you should use `lds_string_printf` function.
+```c
+lds_string_printf(s1, "%s are awesome!", "Strings");
 ```
 
 ### Copying strings
