@@ -590,6 +590,15 @@ int main()
     /* Accessing vector capacity */
     printf("Vector capacity: %ld\n", lds_vector_capacity(v));
 
+    /* Cloning the vector */
+    lds_vector* cloned = lds_vector_clone(v);
+    printf("Cloned vector:\n");
+    j = 1;
+    lds_vector_for_each(cloned, i)
+    {
+        printf("%ld. value of vector: %d\n", j++, ld>
+    }
+
     /* Cleaning up */
     lds_vector_free(v);
     lds_vector_free(v2);
