@@ -244,6 +244,7 @@ int lds_vector_reverse(lds_vector *);
 size_t lds_vector_capacity(const lds_vector *);
 int lds_vector_is_empty(const lds_vector *);
 int lds_vector_update(lds_vector *, size_t, const void *, size_t);
+lds_vector* lds_vector_clone(lds_vector *);
 lds_trie *lds_create_trie(void);
 int lds_trie_insert(lds_trie *, const char *);
 int lds_trie_search(const lds_trie *, const char *);

@@ -1895,6 +1895,26 @@ int lds_vector_update(lds_vector *v, size_t index, const void *newvar,
     return 1;
 }
 
+lds_vector *lds_vector_clone(lds_vector *v)
+{
+    if (v == NULL)
+    {
+        return NULL;
+    }
+
+    lds_vector *cloned_vector = lds_create_vector();
+    void* vector_ptr = NULL;
+    int i = 0;
+
+    lds_vector_for_each(v, vector_ptr)
+    {
+        lds_vector_add(cloned_vector, vector_ptr, v->
+        i += 1;
+    }
+
+    return cloned_vector;
+}
+
 lds_trie *lds_create_trie(void)
 {
     lds_trie *t = malloc(sizeof(lds_trie));
