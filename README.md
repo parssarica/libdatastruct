@@ -331,6 +331,16 @@ lds_vector_for_each(v, ptr)
 }
 ```
 
+#### Cloning Vectors
+
+To clone the vector, use `lds_vector_clone` function:
+```c
+lds_vector* v = lds_create_vector();
+lds_vector* cloned = lds_vector_clone(v);
+```
+
+Try to avoid clone whenever possible because cloning is an expensive process. It duplicates every element in the source vector and allocates memory for each item. Note that you should free cloned vectors too.
+
 #### Freeing vectors
 
 You can free vectors via `lds_vector_free` function:
