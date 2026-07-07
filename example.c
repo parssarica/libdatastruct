@@ -6,7 +6,7 @@
 void print_tree_bfs(lds_tree *);
 void print_bintree_bfs(lds_bintree *);
 
-int main(int argc, char** argv)
+int main(void)
 {
     lds_linkedlist *l = lds_create_linkedlist();
 
