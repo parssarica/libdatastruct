@@ -1906,9 +1906,11 @@ lds_vector *lds_vector_clone(lds_vector *v)
     void* vector_ptr = NULL;
     int i = 0;
 
+    lds_vector_reserve(cloned_vector, v->capacity);
+
     lds_vector_for_each(v, vector_ptr)
     {
-        lds_vector_add(cloned_vector, vector_ptr, v->
+        lds_vector_add(cloned_vector, vector_ptr, v->items[i].size);
         i += 1;
     }
 
