@@ -6,7 +6,7 @@
 void print_tree_bfs(lds_tree *);
 void print_bintree_bfs(lds_bintree *);
 
-int main()
+int main(int argc, char** argv)
 {
     lds_linkedlist *l = lds_create_linkedlist();
 
@@ -596,7 +596,7 @@ int main()
     j = 1;
     lds_vector_for_each(cloned, i)
     {
-        printf("%ld. value of vector: %d\n", j++, ld>
+        printf("%ld. value of vector: %d\n", j++, lds_deref_int(i));
     }
 
     /* Cleaning up */
