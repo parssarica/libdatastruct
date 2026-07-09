@@ -352,7 +352,7 @@ lds_vector_free(v);
 
 The choice is important, because linked lists are better solution for some problems and a vector being the better solution for another.
 
-The difference happens in the design. Linked lists are consisting of nodes. Each node has pointers inside pointing to the next and previous nodes. This will require allocation every time when adding a node. But operations such as deleting, inserting are faster in linked lists, as it only needs to allocate a new node and modify a few pointers.
+The difference relies in the design. Linked lists are consisting of nodes. Each node has pointers inside pointing to the next and previous nodes. This will require allocation every time when adding a node. But operations such as deleting, inserting are faster in linked lists, as it only needs to allocate a new node and modify a few pointers.
 
 On the other hand, vectors have a large memory area. When you add an item, data is written to the remained part. This doesn't require allocation every time. When the memory area ends, it is doubled. But as all the items are side by side, every element has to be moved when an insertion or deletion is done. However, it is much faster than linked lists in adding an element, updating an element and especially accessing an element by index. Because it's `O(1)` in vectors, while it is `O(n)` in linked lists.
 
