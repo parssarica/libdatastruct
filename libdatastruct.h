@@ -321,3 +321,4 @@ int lds_string_vprintf(lds_string *, const char *, va_list);
 int lds_string_printf(lds_string *, const char *, ...);
 size_t lds_string_capacity(lds_string *);
 int lds_string_is_empty(const lds_string *);
+lds_string* lds_string_clone(const lds_string *);
