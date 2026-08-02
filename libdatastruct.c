@@ -3701,3 +3701,18 @@ int lds_string_is_empty(const lds_string *s)
 
     return s->len == 0;
 }
+
+lds_string* lds_string_clone(const lds_string *s)
+{
+    if (s == NULL)
+    {
+        return NULL;
+    }
+
+    lds_string* cloned = lds_create_string();
+    lds_string_reserve(cloned, s->capacity);
+    cloned->len = s->len;
+    memcpy(cloned->data, s->data, s->len);
+
+    return cloned;
+}
