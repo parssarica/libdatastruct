@@ -591,7 +591,7 @@ int main(void)
     printf("Vector capacity: %ld\n", lds_vector_capacity(v));
 
     /* Cloning the vector */
-    lds_vector* cloned = lds_vector_clone(v);
+    lds_vector *cloned = lds_vector_clone(v);
     printf("Cloned vector:\n");
     j = 1;
     lds_vector_for_each(cloned, i)
@@ -602,6 +602,7 @@ int main(void)
     /* Cleaning up */
     lds_vector_free(v);
     lds_vector_free(v2);
+    lds_vector_free(cloned);
 
     /* Initializing a trie */
 
@@ -949,6 +950,10 @@ int main(void)
     lds_string_reverse(str);
     printf("String after reversing: <%s>\n", lds_string_cstr(str));
 
+    /* Cloning the string */
+    lds_string *cloned_str = lds_string_clone(str);
+    printf("Cloned string: <%s>\n", lds_string_cstr(cloned_str));
+
     /* Cleaning the string */
     printf("String before cleaning: <%s>\n", lds_string_cstr(str));
     lds_string_clear(str);
@@ -960,6 +965,7 @@ int main(void)
                               is transfered */
     lds_string_free(str3);
     lds_string_free(str4);
+    lds_string_free(cloned_str);     /* Cloned strings also need clean up */
     lds_string_split_free(splitted); /* You should also clean up the vector
                                   returned by lds_string_split function */
 }

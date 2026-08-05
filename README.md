@@ -968,6 +968,14 @@ To reverse strings, you should use `lds_string_reverse` function.
 lds_string_reverse(s1);
 ```
 
+### Reversing strings
+To clone strings, you should use `lds_string_clone` function.
+```c
+lds_string* cloned = lds_string_clone(s1);
+```
+
+You need to free cloned strings with `lds_string_free` function.
+
 ### Freeing strings
 
 To free strings, you should use `lds_string_free` function.

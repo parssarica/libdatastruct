@@ -1903,7 +1903,7 @@ lds_vector *lds_vector_clone(lds_vector *v)
     }
 
     lds_vector *cloned_vector = lds_create_vector();
-    void* vector_ptr = NULL;
+    void *vector_ptr = NULL;
     int i = 0;
 
     lds_vector_reserve(cloned_vector, v->capacity);
@@ -3702,17 +3702,17 @@ int lds_string_is_empty(const lds_string *s)
     return s->len == 0;
 }
 
-lds_string* lds_string_clone(const lds_string *s)
+lds_string *lds_string_clone(const lds_string *s)
 {
     if (s == NULL)
     {
         return NULL;
     }
 
-    lds_string* cloned = lds_create_string();
+    lds_string *cloned = lds_create_string();
     lds_string_reserve(cloned, s->capacity);
     cloned->len = s->len;
-    memcpy(cloned->data, s->data, s->len);
+    memcpy(cloned->data, s->data, s->capacity);
 
     return cloned;
 }
